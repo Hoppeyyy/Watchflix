@@ -3,19 +3,31 @@ import ax from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
 import {useRouter} from 'next/router';
-import Detail from '@/comps/Detail';
+import styled from 'styled-components';
 
-export default function Books() {
+const Cont = styled.div`
+  width: ${props => props.width}100%;
+  display: flex;
+  flex-direction: row;
+  justify-contents: flex-start;
+  align-items: center;
+
+`
+
+const Detail = ({
+
+
+}) => {
   const router = useRouter()
 
   return (
-    <div>
+    <Cont>
       
       <button onClick={()=>{
         //make a new fav list!
       }}>New Favs</button>
-
-      <Detail />
-    </div>
+    </Cont>
   )
 }
+
+export default Detail;
