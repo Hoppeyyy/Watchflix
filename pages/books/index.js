@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
 import {useRouter} from 'next/router';
 import Detail from '@/comps/Detail';
+import DetailTit from '@/comps/DetailTit';
 
 export default function Books() {
   const router = useRouter()
@@ -16,6 +17,7 @@ export default function Books() {
       }}>New Favs</button>
 
       <Detail />
+      <DetailTit />
     </div>
   )
 }
