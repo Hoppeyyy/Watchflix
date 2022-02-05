@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import ax from 'axios';
+import { useState, useEffect } from "react";
 import styled from 'styled-components';
 
 const Cont = styled.div`
@@ -16,7 +17,8 @@ const Cont = styled.div`
 const Title = styled.h4`
   padding-left: 1em;
   min-width: ${props => props.minWidth};
-  background: url(${props => props.barUrl});
+  // background: url(${props => props.barUrl});
+  // background: url(${props => props.barUrl === 'light' ? `url('./images/icon_verBar.svg)` : `url('./images/icon_verBar.svg)`});
   background-size: auto;
   background-repeat: no-repeat;
   background-position: left center;  
@@ -41,10 +43,12 @@ const DetailTit = ({
   minWidth = "8.75em",
   title = "Title",
   movieTitle = "Alive",
-  barUrl = "./images/icon_verBar.svg",
+  // barUrl = "bar ? 'url(./images/icon_verBarLight.svg)' : 'url(./images/icon_verBarDark.svg)'",
   text = "",
 
 }) => {
+
+  const [bar, setBar] = useState("light");
 
   return (
     <Cont
@@ -56,7 +60,11 @@ const DetailTit = ({
       {/* <Rect /> */}
       <Title
         minWidth = {minWidth}
-        barUrl = {barUrl}
+        style = {{
+          background: bar ? "url(./images/icon_verBarLight.svg)" : "url(./images/icon_verBarDark.svg)",
+          backgroundRepeat: bar ? "no-repeat" : "no-repeat",
+        }}
+        // barUrl = {barUrl}
       >
         {title}
       </Title>

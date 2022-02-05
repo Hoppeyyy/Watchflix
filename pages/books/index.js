@@ -6,6 +6,7 @@ import {useRouter} from 'next/router';
 import { useItems, useTheme } from "@/utils/provider";
 import Detail from '@/comps/Detail';
 import DetailTit from '@/comps/DetailTit';
+import PosterBox from '@/comps/PosterBox'
 
 export default function Books() {
   
@@ -20,6 +21,7 @@ export default function Books() {
       }}>New Favs</button>
 
       <Detail />
+      <PosterBox />
     </div>
   )
 }
