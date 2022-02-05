@@ -1,6 +1,13 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
+import React from 'react';
+import { useTheme } from "@/utils/provider";
 
 export default function Home() {
+
+  const {theme, setTheme} = useTheme();
+  
   return (
     <div>
       <Head>
