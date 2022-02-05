@@ -23,7 +23,9 @@ const Title = styled.h3`
   margin: 0; padding: 0;
 `
 
-const 
+const Text  = styled.p`
+  font-size: 16px;
+`
 
 const DetailTit = ({
   conWidth = "100%",
