@@ -47,3 +47,15 @@ export const hovColor = {
   light: '#FFFFFF',
   dark: '#ADADAD'
 }
+export const bgpopup = {
+  light: "#FFF",
+  dark:"#333333",
+  
+}
+export const popuptext = {
+  light: "#000000",
+  dark:"#FFF",
+}
+
+
+
