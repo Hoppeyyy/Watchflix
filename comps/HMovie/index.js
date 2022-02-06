@@ -1,4 +1,3 @@
-import react from 'react';
 import ax from "axios";
 import * as React from 'react';
 import styled from 'styled-components';
