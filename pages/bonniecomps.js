@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import React from 'react';
 import { useTheme } from "@/utils/provider";
 import Pagination from '@/comps/Pagination';
+import Comment from '@/comps/Comment';
 
 export default function Home() {
 
@@ -18,6 +19,7 @@ export default function Home() {
       </Head>
 
       <Pagination></Pagination>
+      <Comment></Comment>
 
     </div>
   )
