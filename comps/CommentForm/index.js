@@ -21,6 +21,7 @@ const FormBox = styled.form`
 const LabelFor = styled.label`
   font-size: ${props => props.fsize}px; 
   font-family: 'Montserrat', sans-serif;
+  color: #E50914;
   margin-bottom: 10px;
   margin-left: 20px;
   font-weight:600;
@@ -28,23 +29,19 @@ const LabelFor = styled.label`
 const InputBox = styled.input`
   width:${props => props.iwidth};
   height: ${props => props.iheight}px; 
-  border-radius: 20px;
-  border: 3px solid #5333ED;
+  border-radius: 10px;
+  border: 3px solid #666666;
   font-size: 24px;
   padding: 16px;
   box-sizing: border-box;
   margin-bottom: ${props => props.imarginB}px;
-  ::-webkit-input-placeholder {
-    font-family: 'Heebo', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-  }
+  
 `
-const CmBox = styled.input`
+const CmBox = styled.textarea`
   width:${props => props.mwidth};
   height: ${props => props.iheight}px; 
-  border-radius: 20px;
-  border: 3px solid #666666;
+  border-radius: 10px;
+  border: 3px solid c;
   font-size: 24px;
   padding: 16px;
   box-sizing: border-box;
