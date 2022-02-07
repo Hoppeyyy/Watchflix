@@ -97,7 +97,7 @@ const CommentForm =({
                 placeholder='Leave your comment in here'/>
         <BCont>
         <SubButton 
-        text = "Submit"
+        text = "Post"
         margintop = "0px"
         border = "none"
         bgcolor = "#5333ED"
