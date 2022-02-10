@@ -1,22 +1,26 @@
-import Head from 'next/head';
 import styled from 'styled-components';
-import React from 'react';
-import {useRouter} from 'next/router';
+import React,{useState } from 'react';
+import { useTheme } from "@/utils/provider";
+import {
+  bkColor,
+  themes,
+  bttnBkColor,
+  hovBkColor,
+  hovColor,
+} from "@/utils/variables";
+import PopUp from 'comps/PopUp';
 
 
 const ButtonCont = styled.div`
-    margin-top: ${props=>props.mtop}px;
-    margin-right: ${props=>props.mright}px;
     width: ${props=>props.cwidth};
     display:flex;
-    justify-content:${props=>props.justify};
 `;
 
 const ButtonInput = styled.button`
     type: ${props=>props.type};
     display:flex;
-    background-color:${props=>props.bg};
-    border: ${props=>props.border};
+    background-color:${(props)=>props.bkColor};
+    border:none;
     border-radius:${props=>props.radius}px;
     width: ${props=>props.width}px;
     min-width: ${props=>props.minWidth}px;
@@ -25,7 +29,6 @@ const ButtonInput = styled.button`
     justify-content:center;
     box-shadow: ${props=>props.bshadow}; 
     cursor: pointer;
-    
     :hover{
         transform: scale(0.85);
         transition-duration: 0.5s;
@@ -46,7 +49,6 @@ const ClickButton = ({
     text="Share With Your Friend",
     margintop = 100,
     marginright="",
-    bgcolor = "#F9E7E7",
     radius = 20,
     cwidth = "100%",
     width = 360,
@@ -55,31 +57,29 @@ const ClickButton = ({
     color="#000",
     fontSize="24px",
     justify="center",
-
-    clickHandler = () => {},
-    href="/posts"
-
 }) => {
-    // const router = useRouter();
-
-    return (
-        <ButtonCont 
+    const { theme, setTheme } = useTheme();
+    const [isOpen, setIsOpen] = useState(false);
+    const togglePopup = () => {
+    setIsOpen(!isOpen);
+  }
+    return <ButtonCont 
             mtop={margintop}
             mright={marginright}
             justify={justify}
             cwidth={cwidth}
-
-            onClick={()=>{ clickHandler()} }
-            href={href}
-            // onClick={()=>router.push(routeTo)}
+            onClick={togglePopup}
         >
+        {isOpen && <PopUp
+     
+     handleClose={togglePopup}
+   />}
             <ButtonInput
                 type={type}
-                bg={bgcolor}
+                bkColor={bkColor[theme]}
                 radius={radius}
                 width={width}
                 height={height}
-                border={border}
                 bshadow={bshadow}
             >
                 <ButtonText
@@ -89,7 +89,6 @@ const ClickButton = ({
                     {text}</ButtonText>
             </ButtonInput>
         </ButtonCont>
-    );
 }
 
 export default ClickButton;
