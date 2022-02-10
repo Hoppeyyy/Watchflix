@@ -150,7 +150,6 @@ const PosterBox = ({
 
         <BkCont
           bkColor={bkColor[theme]}
-          bkConWidth={bkConWidth}
           bkConHeight={bkConHeight}
         >
           <TitCont>

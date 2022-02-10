@@ -1,9 +1,12 @@
 import styled from 'styled-components'
 import HMovie from '../comps/HMovie'
 import Head from 'next/head'
-import PopUp from 'comps/PopUp'
 import { useEffect, useState } from "react";
 import { useTheme } from "@/utils/provider";
+
+import PopUp from 'comps/PopUp';
+import PosterBox from '@/comps/PosterBox';
+import { useRouter  } from 'next/router';
 
 const Cont = styled.div`
 width:100%;
@@ -14,12 +17,23 @@ display:flex;
 flex-direction:row;
 flex-wrap:wrap;
 `
-export default function Test() {
+const Test = ({
+  href = "/testing",
+}) => {
+  
   const [isOpen, setIsOpen] = useState(false);
   const {theme, setTheme} = useTheme();
   const togglePopup = () => {
     setIsOpen(!isOpen);
+  } 
+
+  const router = useRouter();
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    router.push(href)
   }
+
   return (
     <Cont>
       <Wrap>
@@ -48,6 +62,11 @@ export default function Test() {
      
       handleClose={togglePopup}
     />}
+
+    <PosterBox
+      onClick={handleClick }
+    />
+
        <title>Watchflix</title>
       <h1>Hello</h1>
       <h2>hi</h2>
@@ -60,3 +79,5 @@ export default function Test() {
     </Cont>
   )
 }
+
+export default Test;
