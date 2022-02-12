@@ -56,6 +56,10 @@ export const popuptext = {
   light: "#000000",
   dark:"#FFF",
 }
+export const hovpopbg = {
+  light:'#B08584',
+  dark:'#333333',
+}
 
 
 
