@@ -14,6 +14,7 @@ import Slider from '@mui/material/Slider';
 import { Search, Radio, Button, Icon, Input } from "semantic-ui-react";
 import { FormControl } from "@mui/material";
 
+
 const FlexRow = styled.div`
   display:flex;
   align-items:center;
@@ -56,8 +57,10 @@ const sortby = [
   "Most Reviews"
 ]
 
+
 const Header = ({
 
+  onInputChange=()=>{},
 }) => {
   const [genreName, setGenreName] = React.useState([]);
   const handleGenre = (event) => {
@@ -107,11 +110,13 @@ const Header = ({
     setDur(newDur)
   }
 
+
+
   return (
     <FlexCol>
       <FlexRow>
         <Image src={logo} alt="Watchflix logo" width={182} height={45}/>
-        <Search/>
+        <Search onChange={onInputChange}/>
         <Input icon='search' type='text' placeholder='Search...'/>
         <Switch/>
         <Radio toggle/>
