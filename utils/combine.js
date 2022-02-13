@@ -1,6 +1,7 @@
 // ---------------------- movie 1 and movie2 combine ------------------------ //
 const movie1 = require("./movie.json");
 const movie2 = require("./movie2.json");
+const { duration } = require("@mui/material");
 
 /*
 const movie = [];
@@ -36,7 +37,8 @@ const found = movie1.find(function(o){
     const newObj = Object.assign({},obj);
     newObj.description = found.description;
     newObj.release_year = found.release_year;
-    newObj.duration = found.duration;
+    //newObj.duration = found.duration;
+    newObj.duration = parseInt(found.duration);
     newObj.country = found.country;
 
     res.push(newObj);
@@ -51,9 +53,11 @@ return result
 movie();
 // --------------------------- filtering ---------------------------------- //
 const rating = 'IMDB Score';
+
 function filtering(
   arr =[],
   config={Title: null, Genre:null, duration:null, rating:null, country:null}
+  
 ){
 
   const {Title, Genre,duration,rating,country} = config;
@@ -71,7 +75,8 @@ function filtering(
       }
 
       if(duration){
-        cond = cond && o.duration.includes(duration);
+       // cond = cond && o.duration.includes(duration); 
+       cond = cond && Number(o.duration) >= Number(duration);
       }
 
       if(rating){
@@ -91,7 +96,7 @@ function filtering(
 }
 /*
 console.log(filtering(movie(),{
-  Title:"The"
+  duration:120
 }))
 */
 // -------------------- sorting ---------------------------- //
@@ -142,7 +147,8 @@ function sortArr(
 }
 /*
 console.log(sortArr(movie(),{
-  key:'IMDB Score',type:'asc'
+  //key:'IMDB Score',type:'asc',
+  //key:'duration', type:"asc"
 }))
 */
 export {movie, filtering, sortArr}

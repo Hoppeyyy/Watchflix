@@ -6,6 +6,11 @@ import PopUp from 'comps/PopUp'
 import { useEffect, useState } from "react";
 import { useTheme } from "@/utils/provider";
 import {movie, filtering, sortArr} from '@/utils/combine';
+import ax from 'axios';
+import { AccordionTitle } from 'semantic-ui-react'
+import HMovie from '@/comps/HMovie'
+import PosterBox from '@/comps/PosterBox'
+
 
 
 
@@ -21,21 +26,87 @@ flex-wrap:wrap;
 `
 const Button = styled.button`
 `
+
+var timer = null;
 export default function Test() {
+const[data,setData] = useState([]);
  const [View, setView] = useState(false);
+ const [sbr, setSbr] = useState(false);
+ const[sbr_type, setSbrType] = useState("asc");
  const onChangeView = ()=>{
+   if(View === false){
     setView(true);
-    console.log("clicked")
+    console.log("set to horizontal");
+   }else if (View === true){
+     setView(false);
+     console.log("set to posterbox");
+   }
  }
+
+ const inputFilter = async (txt) =>{
+  console.log(txt);
+
+  // results the timer if the inputs keeps changing
+  if(timer){
+    clearTimeout(timer);
+    timer = null;
+    //inputData = null;
+  }
+  // start a timer to wait 2 seconds before making an asynchronous call
+  if(timer === null){
+    timer = setTimeout(async ()=>{
+      console.log("async call");
+      const res = await ax.get("/api/movie", {
+        params:{
+          txt:txt,
+          sort_rating:sbr,
+          sort_type:sbr_type,
+        
+        }
+      })
+        console.log(res.data);
+        setData(res.data);
+        //inputData = res.data;
+        //localStorage.setItem("/api/movie",JSON.stringify(inputData));
+        timer = null;
+        
+    },1000);
+    }
+  }
   return (
     <Cont>
+      <input placeholder="Search" onChange={(e)=>inputFilter(e.target.value)}/>
+      <Button
+      onClick={()=>setSbrType(sbr_type === "asc" ? "desc" : "asc")}
+      >{sbr_type === "asc" ? "Sort By Ascending" : "Sort By Decending"}</Button>
+      <Button 
+      style={{backgroundColor:sbr?"pink":"white"}} 
+      onClick={()=>setSbr(!sbr)}>Sory By Ratings</Button>
       <Button 
       onClick={onChangeView}
-      >Change</Button>
-
+      >Change Layout</Button>
       <Wrap>
-        {View ?(<HMovieData/>):(<PosterBoxData/>)}
-      </Wrap> 
+        {/*View ?(<HMovieData/>):(<PosterBoxData/>)*/}
+      </Wrap>
+      {View ? (<Wrap>
+      {data.map((item)=> <HMovie
+        title={item.Title} 
+        alt={item.Title}
+        year={item.release_year}
+        src={item.Poster}
+        place={item.country}
+        text={item.description}
+      />)}
+      </Wrap>):(<Wrap>
+        {data.map((item)=><PosterBox
+         title={item.Title} 
+         alt={item.Title}
+         year={item.release_year}
+         src={item.Poster}
+         place={item.country}
+         text={item.description}
+        />)}
+      </Wrap>)}
     </Cont>
   )
 }
