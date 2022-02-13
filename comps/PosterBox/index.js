@@ -10,6 +10,7 @@ import {
   hovBkColor,
   hovColor,
 } from "@/utils/variables";
+import {movie} from '@/utils/combine';
 
 const Cont = styled.div`
   width: ${(props) => props.conWidth};
@@ -117,15 +118,15 @@ const PosterBox = ({
   cardConHeight = conHeight,
   imgWidth = conWidth,
   imgHeight = "auto",
-  src = "./images/img_barry.png",
+  src = "http://placekitten.com/297/397",
   fit = "cover",
-  alt = "Barry poster",
+  alt ="",
   bkConWidth = "297px",
   bkConHeight = "440px",
-  title = "Barry",
-  year = "2018",
-  country = "U.S.",
-  synop = "A young Barack Obama forges his identity while dealing with race, divergent cultures and ordinary life as a New York City college student.",
+  title = "Undefined",
+  year = "Undefined",
+  place = "Undefined",
+  text = "Undefined",
   bttnTxt = "check this movie",
   onClick = ()=>{},
 }) => {
@@ -156,10 +157,10 @@ const PosterBox = ({
           <TitCont>
             <Title>{title}</Title>
             <SubTit>{year}</SubTit>
-            <SubTit>{country}</SubTit>
+            <SubTit>{place}</SubTit>
           </TitCont>
 
-          <Synop>{synop}</Synop>
+          <Synop>{text}</Synop>
 
           <Bttn
             bkColor={bttnBkColor[theme]}
