@@ -1,6 +1,6 @@
 import {Save, Read} from '@/utils/helpers';
-import movie from '@/utils/movie.json';
-import movie2 from '@/utils/movie2.json';
+import {movie, filtering, sortArr} from '@/utils/combine';
+
 
 export default async function handler(req, res) {
 
@@ -10,6 +10,22 @@ export default async function handler(req, res) {
   //const files = await Read();
 
   //detect if filter/save/read
-  const lists = [];
-  res.status(200).json([]);
+  //const lists = [];
+  //res.status(200).json([]);
+
+  const { txt,sort_rating,sbr_type } = req.query;
+  var lists =[];
+  if(txt){
+    lists = filtering(movie(),{
+      Title:txt,
+     })
+  }
+  if(sort_rating){
+    lists = sortArr(lists,{
+      key:'IMDB Score',
+      type:sbr_type
+    })
+  }
+  //lists = lists.slice(0,10);
+  res.status(200).json(lists);
 }

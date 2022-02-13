@@ -15,8 +15,9 @@ function HMovieData(){
   return(
     <Cont>
       {
-        data.map((item)=><HMovie 
+        data.map((o,item)=><HMovie 
         title={item.Title} 
+        alt={item.Title}
         year={item.release_year}
         src={item.Poster}
         place={item.country}
