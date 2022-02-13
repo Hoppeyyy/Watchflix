@@ -11,6 +11,8 @@ import {
   hovpopbg,
   hovBkColor,
 } from "@/utils/variables";
+import { v4 as uuidv4 } from 'uuid';
+import {useResult} from '@/utils/resultProvider';
 
 
 const Cont = styled.div`

@@ -57,6 +57,7 @@ const ClickButton = ({
     color="#000",
     fontSize="24px",
     justify="center",
+    src={src}
 }) => {
     const { theme, setTheme } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
@@ -71,7 +72,7 @@ const ClickButton = ({
             onClick={togglePopup}
         >
         {isOpen && <PopUp
-     
+     src={src}
      handleClose={togglePopup}
    />}
             <ButtonInput

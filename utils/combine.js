@@ -40,6 +40,8 @@ const found = movie1.find(function(o){
     //newObj.duration = found.duration;
     newObj.duration = parseInt(found.duration);
     newObj.country = found.country;
+    newObj.cast = found.cast;
+    newObj.director = found.director;
 
     res.push(newObj);
   }
