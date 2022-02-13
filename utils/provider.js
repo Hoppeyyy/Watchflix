@@ -6,6 +6,7 @@ import { themes } from './variables';
 const initialStates = {
     theme: "light",
     setTheme:()=>{}, 
+  
 }
 
 const MyContext = createContext(initialStates);
@@ -13,7 +14,7 @@ const MyContext = createContext(initialStates);
 export default function AppProvider({children}){
 
     const [theme, setTheme] = useState(initialStates.theme)
-    
+  
     return <MyContext.Provider value={{
         theme, setTheme,
     }}>
@@ -34,3 +35,4 @@ export function useTheme(){
     const {theme, setTheme} = useContext(MyContext);    
     return {theme, setTheme}
 }
+

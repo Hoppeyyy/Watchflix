@@ -7,9 +7,11 @@ import { useEffect, useState } from "react";
 import { useTheme } from "@/utils/provider";
 import {movie, filtering, sortArr} from '@/utils/combine';
 import ax from 'axios';
-import { AccordionTitle } from 'semantic-ui-react'
 import HMovie from '@/comps/HMovie'
 import PosterBox from '@/comps/PosterBox'
+import { v4 as uuidv4 } from 'uuid';
+import {useResult} from '@/utils/resultProvider';
+import { useRouter } from 'next/router';
 
 
 
@@ -28,11 +30,15 @@ const Button = styled.button`
 `
 
 var timer = null;
+
 export default function Test() {
 const[data,setData] = useState([]);
  const [View, setView] = useState(false);
  const [sbr, setSbr] = useState(false);
  const[sbr_type, setSbrType] = useState("asc");
+ const r = useRouter();
+ const[clicked, setClicked] = useState(false);
+ const {result, setResult} = useResult();
  const onChangeView = ()=>{
    if(View === false){
     setView(true);
@@ -50,7 +56,7 @@ const[data,setData] = useState([]);
   if(timer){
     clearTimeout(timer);
     timer = null;
-    //inputData = null;
+ 
   }
   // start a timer to wait 2 seconds before making an asynchronous call
   if(timer === null){
@@ -66,13 +72,38 @@ const[data,setData] = useState([]);
       })
         console.log(res.data);
         setData(res.data);
-        //inputData = res.data;
-        //localStorage.setItem("/api/movie",JSON.stringify(inputData));
         timer = null;
         
     },1000);
     }
   }
+ 
+  const StoreResult = (clicked, item) => {
+    //store the favourites to be used on the next page
+  
+   console.log(clicked,item);
+   if(clicked){
+     setClicked(true);
+     console.log("clicked")
+     const b_obj = {
+       ...result
+     };
+     b_obj[item.imdbId] = item;
+     setResult(b_obj);
+   }else{
+     setClicked(false);
+     const b_obj = {
+       ...result
+     }
+
+     delete b_obj[item.imdbId];
+     setResult(b_obj);
+   }
+  }
+  
+
+
+ 
   return (
     <Cont>
       <input placeholder="Search" onChange={(e)=>inputFilter(e.target.value)}/>
@@ -96,6 +127,13 @@ const[data,setData] = useState([]);
         src={item.Poster}
         place={item.country}
         text={item.description}
+        clicked={result[item.imdbId] != undefined && result[item.imdbId] !== null }
+        onClick={()=>{r.push(`/result/${uuidv4()}`);
+          (e)=>StoreResult(e.target.clicked,item);
+          
+        }}
+        
+        
       />)}
       </Wrap>):(<Wrap>
         {data.map((item)=><PosterBox
@@ -105,6 +143,12 @@ const[data,setData] = useState([]);
          src={item.Poster}
          place={item.country}
          text={item.description}
+         clicked={result[item.imdbId] != undefined && result[item.imdbId] !== null }
+         onClick={()=>{r.push(`/result/${uuidv4()}`);
+         (e)=>StoreResult(e.target.clicked,item);
+       
+          }}
+          
         />)}
       </Wrap>)}
     </Cont>
