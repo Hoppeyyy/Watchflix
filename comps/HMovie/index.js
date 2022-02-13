@@ -10,6 +10,7 @@ import {
   hovBkColor,
   hovColor,
 } from "@/utils/variables";
+import {movie} from '@/utils/combine';
 
 const Cont = styled.div`
 @media only screen and (max-width: 600px){
@@ -148,17 +149,18 @@ const HMovie = ({
 conWidth = "594px",
 imgWidth = "297px",
 imgHeight = "auto",
-src = "./images/img_barry.png",
+src="http://placekitten.com/297/397",
 fit = "cover",
-alt = "Barry poster",
-title="Movie Title",
-year="1997",
-contry="Canada",
+alt = "Undifined",
+year = "Undefined",
+place = "Undefined",
 text="Movie description",
 bttnTxt = "check this movie",
+title="Undefined",
 onClick = ()=>{},
 }) => {
   const { theme, setTheme } = useTheme();
+ 
 return<Cont>
   <Img    
   imgWidth={imgWidth}
@@ -172,7 +174,7 @@ return<Cont>
     <Title>{title}</Title>
     <SubWrap>
     <SubText>{year}</SubText>
-    <SubText>{contry}</SubText>
+    <SubText>{place}</SubText>
     </SubWrap>
     </Top>
     <Desc>{text}</Desc>
