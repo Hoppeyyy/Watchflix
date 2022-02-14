@@ -96,9 +96,10 @@ const ClickButton = ({
             cwidth={cwidth}
             onClick={togglePopup}
         >
-        {isOpen && <PopUp src={uuid}
-        
+        {isOpen && <PopUp src={uuid} 
+        myurl={uuid}
      handleClose={togglePopup}
+     
    />}
             <ButtonInput
                 type={type}
