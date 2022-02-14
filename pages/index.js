@@ -7,7 +7,6 @@ import { useTheme } from "@/utils/provider";
 import Header from '../comps/Header';
 import  {movie, filtering, sortArr} from '@/utils/combine';
 import ax from 'axios';
-import { useRouter } from 'next/router'
 
 const Cont = styled.div`
 width:100%;
@@ -21,8 +20,8 @@ var inputData = null;
 export default function Home() {
 
   const {theme, setTheme} = useTheme();
-/*
 
+/*=
   const [data, setData] = useState([]);
   // sort by asc, des
   const[sbr_type, setSbrType] = useState("asc");
@@ -39,11 +38,11 @@ export default function Home() {
   // sort by release year
   const [year, setYear] = useState(false);
 
-*/
+= */
   return (
     <Cont>
      <Header
-     onInputChange={(e)=>inputFilter(e.target.value)}
+      onInputChange={(e)=>inputFilter(e.target.value)}
      />
     </Cont>
   )

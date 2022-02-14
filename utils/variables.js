@@ -38,6 +38,11 @@ export const bttnBkColor = {
   dark:'#F9E7E7',
 }
 
+export const hBttnBkColor = { 
+  light:'#F9E7E7',
+  dark:'#F9E7E7',
+}
+
 export const hovBkColor = {
   light: '#B08584',
   dark: '#333333'

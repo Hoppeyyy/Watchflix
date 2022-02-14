@@ -1,5 +1,6 @@
 import {Save, Read} from '@/utils/helpers';
 import {movie, filtering, sortArr} from '@/utils/combine';
+import { GoToPage } from '@/utils/func';
 
 
 export default async function handler(req, res) {
@@ -26,6 +27,7 @@ export default async function handler(req, res) {
       type:sbr_type
     })
   }
-  //lists = lists.slice(0,10);
+
+  lists = lists.slice(0,10);
   res.status(200).json(lists);
 }

@@ -13,17 +13,33 @@ import PosterBoxData from "@/comps/PosterBox/index2";
 import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
 import PopUp from "comps/PopUp";
+import Pagination from "@/comps/Pagination";
 
 const Cont = styled.div`
   width: 100%;
   height: 100%;
 `;
+
+const PagCont = styled.div`
+  width: 100%;
+  dislplay: flex; 
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50px;
+`
+
 const Wrap = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 70px;
 `;
-const Button = styled.button``;
+
+const Button = styled.button`
+  margin-bottom: 50px;
+`;
 
 var timer = null;
 
@@ -117,47 +133,51 @@ export default function Test() {
     {/*<Wrap>View ?(<HMovieData/>):(<PosterBoxData/>)</Wrap>*/}
 
       {View ? (
-        <Wrap>
-          {data.map((item) => (
-            <HMovie
-              title={item.Title}
-              alt={item.Title}
-              year={item.release_year}
-              src={item.Poster}
-              place={item.country}
-              text={item.description}
-              clicked={
-                result[item.imdbId] != undefined && result[item.imdbId] !== null
-              }
-              onClick={() => {
-                r.push(`/result/${uuidv4()}`);
-                (e) => StoreResult(e.target.clicked, item);
-              }}
-            />
-          ))}
-        </Wrap>
+        <PagCont>
+          <Wrap>
+            {data.map((item) => (
+              <HMovie
+                title={item.Title}
+                alt={item.Title}
+                year={item.release_year}
+                src={item.Poster}
+                place={item.country}
+                text={item.description}
+                clicked={
+                  result[item.imdbId] != undefined && result[item.imdbId] !== null
+                }
+                onClick={() => {
+                  r.push(`/result/${uuidv4()}`);
+                  (e) => StoreResult(e.target.clicked, item);
+                }}
+              />
+            ))}
+          </Wrap>
+          <Pagination />
+        </PagCont>
       ) : (
-        <Wrap>
-          {data.map((item) => (
-            <PosterBox
-              title={item.Title}
-              alt={item.Title}
-              year={item.release_year}
-              src={item.Poster}
-              place={item.country}
-              text={item.description}
-              clicked={
-                result[item.imdbId] != undefined && result[item.imdbId] !== null
-              }
-              onClick={() => {
-                r.push(`/result/${uuidv4()}`);
-                (e) => {
-                  return StoreResult(e.target.clicked, item);
-                };
-              }}
-            />s
-          ))}
-        </Wrap>
+        <PagCont>
+          <Wrap>
+            {data.map((item) => (
+              <PosterBox
+                title={item.Title}
+                alt={item.Title}
+                year={item.release_year}
+                src={item.Poster}
+                place={item.country}
+                text={item.description}
+                clicked={
+                  result[item.imdbId] != undefined && result[item.imdbId] !== null
+                }
+                onClick={() => {
+                  r.push(`/result/${uuidv4()}`);
+                  (e) => StoreResult(e.target.clicked, item);
+                }}
+              />
+            ))}
+          </Wrap>
+          <Pagination />
+        </PagCont>
       )}
     </Cont>
   );
