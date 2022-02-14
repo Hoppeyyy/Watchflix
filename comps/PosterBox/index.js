@@ -107,7 +107,7 @@ const Synop = styled.p`
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   text-align: left;
-  word-break: break-all;
+  // word-break: break-all;
 `;
 
 const Bttn = styled.button`

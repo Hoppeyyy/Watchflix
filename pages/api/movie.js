@@ -14,20 +14,28 @@ export default async function handler(req, res) {
   //const lists = [];
   //res.status(200).json([]);
 
-  const { txt,sort_rating,sbr_type } = req.query;
+  const { txt, sort_rating, sbr_type } = req.query;
+  
   var lists =[];
+  
   if(txt){
     lists = filtering(movie(),{
       Title:txt,
-     })
+    })
   }
   if(sort_rating){
     lists = sortArr(lists,{
       key:'IMDB Score',
       type:sbr_type
     })
+  }  
+  
+  if(req.query.page){
+    const numresults = req.query.num || 10;
+    lists = GoToPage(req.query.page, movie(), numresults);
   }
 
   lists = lists.slice(0,10);
+
   res.status(200).json(lists);
 }
