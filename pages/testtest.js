@@ -103,11 +103,9 @@ export default function Test() {
     }
   };
 
-  const StoreResult = (clicked, item) => {
-    console.log(clicked, item);
+  const StoreResult = (item) => {
+    console.log(item);
 
-    if (clicked) {
-      setClicked(true);
       console.log("clicked");
       const b_obj = {
         ...result,
@@ -115,15 +113,6 @@ export default function Test() {
 
       b_obj[item.imdbId] = item;
       setResult(b_obj);
-    } else {
-      setClicked(false);
-      const b_obj = {
-        ...result,
-      };
-
-      delete b_obj[item.imdbId];
-      setResult(b_obj);
-    }
   };
 
 // ============== Pagination 
@@ -153,7 +142,11 @@ export default function Test() {
     ind++
   }
 
-  butt_arr = butt_arr.slice(cur_page-5 < 0 ? 0 : cur_page-5, cur_page+5 < 5 ? 10 : cur_page+5);
+  var lastpage = cur_page+5;
+  if(cur_page < 5){
+    lastpage = 10;
+  }
+  butt_arr = butt_arr.slice(cur_page-5 < 0 ? 0 : cur_page-5, lastpage);
 
 // ============== Pagination ends
 
@@ -218,8 +211,9 @@ export default function Test() {
                   result[item.imdbId] != undefined && result[item.imdbId] !== null
                 }
                 onClick={() => {
+
+                  StoreResult(item);
                   r.push(`/result/${uuidv4()}`);
-                  (e) => StoreResult(e.target.clicked, item);
                 }}
                 pages = {item.num_pages}
               />
