@@ -47,10 +47,15 @@ const Detail = ({
   conWidth = "100%",
   picConWidth = "auto",
   picConHeight = "596px",
-  src = "./images/img_alive.png",
+  src="http://placekitten.com/297/397",
   fit = "cover",
-  alt = "Alive poster",
+  alt = "Undifined",
   detConWidth = "60%",
+  title="undifined",
+  director="undifined",
+  genre="undifined",
+  cast="undifined",
+  description="undifined"
 }) => {
 
   const {theme, setTheme} = useTheme();
@@ -75,27 +80,29 @@ const Detail = ({
         detConHeight = {picConHeight}
         bkColor = {bkColor[theme]}
       >
-        <DetailTit />
+        <DetailTit 
+        movieTitle ={title}
+        />
         <DetailTit 
           title = "Director"
           movieTitle = ""
-          text="Cho Il	Yoo "
+          text={director}
         />
         <DetailTit 
           title = "Genre"
           movieTitle = ""
-          text="Horror Movies, International Movies, Thrillers"
+          text={genre}
         />
         <DetailTit
           title = "Cast" 
           movieTitle = ""
-          text="Yoo Ah-in, Park Shin-hye"
+          text={cast}
         />
         <DetailTit 
           title = "Synopsys"
           conAlign = "flex-start"
           movieTitle = ""
-          text="As a grisly virus rampages a city, a lone man stays locked inside his apartment, digitally cut off from seeking help and desperate to find a way out."
+          text={description}
         />
 
       </DetailCont>

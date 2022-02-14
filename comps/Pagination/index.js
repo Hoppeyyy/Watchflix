@@ -4,33 +4,41 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 const Cont = styled.div`
-    display:flex;
-    width:500px;
-    justify-content:space-between;
+  display:flex;
+  width: 100%;
+  dislplay: flex; 
+  justify-content: center;
+  align-items: center;
+`
+
+const ContCont = styled.div`
+  display:flex;
+  width: 60%;
+  justify-content:space-between;
 `
 
 const FirstBttn = styled.a`
-    font-size:24px;
-    color:${props=>props.firstColor};
-    padding:10px;
+  font-size: 1.5em;
+  color:${props=>props.firstColor};
+  padding:10px;
 `
 
 const PrevBttn = styled.a`
-    font-size:24px;
-    color:${props=>props.prevColor};
-    padding:10px;
+  font-size: 1.5em;
+  color:${props=>props.prevColor};
+  padding:10px;
 `
 
 const NextBttn = styled.a`
-    font-size:24px;
-    color:${props=>props.nextColor};
-    padding:10px;
+  font-size: 1.5em;
+  color:${props=>props.nextColor};
+  padding:10px;
 `
 
 const LastBttn = styled.a`
-    font-size:24px;
-    color:${props=>props.lastColor};
-    padding:10px;
+  font-size: 1.5em;
+  color:${props=>props.lastColor};
+  padding:10px;
 `
 
 const BackCont = styled.div`
@@ -46,22 +54,20 @@ const PageNum = styled.button`
     cursor:pointer;
 `
 
-
-
 const Pagination = ({
     nextColor="black",
     prevColor="black",
     lastColor="pink",
-    firstColor="yellow"
+    firstColor="yellow",
     
 }) => {
 
-    const numBooks = 45000;
+    const numMovies = 45000;
     const [cur_page, setCurPage] = useState(0);
     const [bs, setBS] = useState([]);
 
     const PageClick = async(p)=>{
-        const res = await ax.get("/api/books", {
+        const res = await ax.get("/api/movie", {
           params:{
             page:p,
             num:15
@@ -74,7 +80,7 @@ const Pagination = ({
 
     var pageArr = [];
     var ind = 1;
-    for(var i = 0; i<numBooks; i+= 15){
+    for(var i = 0; i<numMovies; i+= 15){
       pageArr.push(
         <PageNum 
         onClick={PageClick.bind(this, ind)}
@@ -87,10 +93,10 @@ const Pagination = ({
     pageArr = pageArr.slice(cur_page-5 < 0 ? 0 : cur_page-5, cur_page+5);
 
     return <Cont>
-
+      <ContCont>
         <BackCont>
-        <FirstBttn href="#" nextColor={firstColor}>&laquo;</FirstBttn>
-        <PrevBttn href="#" prevColor={prevColor}>&lt;</PrevBttn>
+          <FirstBttn href="#" nextColor={firstColor}>&laquo;</FirstBttn>
+          <PrevBttn href="#" prevColor={prevColor}>&lt;</PrevBttn>
         </BackCont>
 
         {/* <PageNum>1</PageNum> */}
@@ -99,10 +105,10 @@ const Pagination = ({
         </div>
 
         <NextCont>
-        <NextBttn href="#" nextColor={nextColor}>&gt;</NextBttn>
-        <LastBttn href="#" nextColor={lastColor}>&raquo;</LastBttn>
+          <NextBttn href="#" nextColor={nextColor}>&gt;</NextBttn>
+          <LastBttn href="#" nextColor={lastColor}>&raquo;</LastBttn>
         </NextCont>
-
+      </ContCont>
     </Cont>
 }
 

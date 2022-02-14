@@ -10,10 +10,11 @@ import {
   hovBkColor,
   hovColor,
 } from "@/utils/variables";
+import {movie} from '@/utils/combine';
 
 const Cont = styled.div`
-  width: ${(props) => props.conWidth};
-  height: ${(props) => props.conHeight};
+  max-width: ${(props) => props.conWidth};
+  max-height: ${(props) => props.conHeight};
   background-color: transparent;
   perspective: 1000px;
 
@@ -38,11 +39,15 @@ const FrtCont = styled.div`
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 `;
+
 const Image = styled.img`
-  width: ${(props) => props.imgWidth};
+  min-width: ${(props) => props.imgWidth};
   height: ${(props) => props.imgHeight};
   src: ${(props) => props.src};
   object-fit: ${(props) => props.fit};
+  background-color: ${props => props.imgBkColor};
+  display: block;
+  min-height: 440px;
 `;
 
 const BkCont = styled.div`
@@ -60,23 +65,38 @@ const BkCont = styled.div`
 `;
 
 const TitCont = styled.div`
+  WIDTH: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-end;
-  justify-contents: flex-start;
   margin-bottom: 20px;
 `;
 
 const Title = styled.h3`
-  width: 50%;
+  width: 100%;
   text-align: left;
+  word-break: break-all;
+  margin-bottom: 1em;
+`;
+
+const SubWrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-contents: flex-start;
 `;
 
 const SubTit = styled.p`
   font-weight: 600;
   font-size: 1em;
-  width: 25%;
+  width: ${props => props.width}%;
   text-align: left;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Synop = styled.p`
@@ -84,9 +104,10 @@ const Synop = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 8;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   text-align: left;
+  word-break: break-all;
 `;
 
 const Bttn = styled.button`
@@ -103,6 +124,7 @@ const Bttn = styled.button`
   position: absolute;
   bottom: 50px; right: 40px;
   transition: all 0.3s;
+  cursor: pointer;
 
   :hover {
     background-color: ${(props) => props.hovBkColor};
@@ -117,15 +139,17 @@ const PosterBox = ({
   cardConHeight = conHeight,
   imgWidth = conWidth,
   imgHeight = "auto",
-  src = "./images/img_barry.png",
+  src = "http://placekitten.com/297/397",
   fit = "cover",
-  alt = "Barry poster",
+  alt ="",
   bkConWidth = "297px",
   bkConHeight = "440px",
-  title = "Barry",
-  year = "2018",
-  country = "U.S.",
-  synop = "A young Barack Obama forges his identity while dealing with race, divergent cultures and ordinary life as a New York City college student.",
+  ywidth = '50',
+  cwidth = '50',
+  title = "Undefined",
+  year = "Undefined",
+  place = "Undefined",
+  text = "Undefined",
   bttnTxt = "check this movie",
   onClick = ()=>{},
 }) => {
@@ -145,20 +169,24 @@ const PosterBox = ({
             src={src}
             fit={fit}
             alt={alt}
+            imgBkColor={hovBkColor[theme]}
           />
         </FrtCont>
 
         <BkCont
           bkColor={bkColor[theme]}
           bkConHeight={bkConHeight}
+          bkConWidth={bkConWidth}
         >
           <TitCont>
             <Title>{title}</Title>
-            <SubTit>{year}</SubTit>
-            <SubTit>{country}</SubTit>
+            <SubWrap>
+              <SubTit width = {ywidth}>{year}</SubTit>
+              <SubTit width = {cwidth}>{place}</SubTit>
+            </SubWrap>
           </TitCont>
 
-          <Synop>{synop}</Synop>
+          <Synop>{text}</Synop>
 
           <Bttn
             bkColor={bttnBkColor[theme]}
