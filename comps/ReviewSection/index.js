@@ -50,6 +50,8 @@ const ReviewSection = ({
     const [open, setOpen] = useState(true);
     const onClick = () => setOpen(!open);
 
+    const [arrow, setArrow] = useState(true);
+
     return <Cont>
 
         <HeaderCont>
@@ -59,7 +61,7 @@ const ReviewSection = ({
         <RightLine></RightLine>
         </HeaderCont>
 
-        {open ? <Comment/> : null}
+        {open ? <Comment/>: null}
 
     </Cont>
 }

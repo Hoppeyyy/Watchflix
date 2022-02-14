@@ -7,7 +7,6 @@ import { useTheme } from "@/utils/provider";
 import Header from '../comps/Header';
 import  {movie, filtering, sortArr} from '@/utils/combine';
 import ax from 'axios';
-import { useRouter } from 'next/router'
 
 const Cont = styled.div`
 width:100%;

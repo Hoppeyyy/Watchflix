@@ -13,10 +13,6 @@ import { v4 as uuidv4 } from 'uuid';
 import {useResult} from '@/utils/resultProvider';
 import { useRouter } from 'next/router';
 
-
-
-
-
 const Cont = styled.div`
 width:100%;
 height:100%;
