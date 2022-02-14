@@ -35,7 +35,13 @@ const InputBox = styled.input`
   padding: 16px;
   box-sizing: border-box;
   margin-bottom: ${props => props.imarginB}px;
-  
+`
+const TopCont = styled.div`
+  width:70%;
+  display:flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: left;
 `
 const CmBox = styled.textarea`
   width:${props => props.mwidth};
@@ -62,9 +68,9 @@ const CommentForm =({
           fwidth = "100%",
           fheight = "100%",
           fsize = 24,
-          iwidth = "100%",
+          iwidth = "30%",
           iheight = 57,
-          placeholder = "Type here...",
+          placeholder = "Your Name",
         
           title = "Nickname",
           type ="text",
@@ -79,6 +85,7 @@ const CommentForm =({
               fwidth={fwidth} 
               fheight={fheight}
             >
+            <TopCont>
             <LabelFor 
               for={title} 
               fsize = {fsize}
@@ -90,6 +97,7 @@ const CommentForm =({
               iheight={iheight}
               placeholder={placeholder}
             />
+            </TopCont>
             <CmBox
                 type="text"
                 width="350px"
