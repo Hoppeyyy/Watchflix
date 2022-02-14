@@ -7,6 +7,7 @@ import { movie, filtering, sortArr } from "@/utils/combine";
 import ax from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { useResult } from "@/utils/resultProvider";
+import { setRequestMeta } from "next/dist/server/request-meta";
 
 import HMovieData from "@/comps/HMovie/index2";
 import PosterBoxData from "@/comps/PosterBox/index2";
@@ -14,6 +15,7 @@ import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
 import PopUp from "comps/PopUp";
 import Pagination from "@/comps/Pagination";
+import PageBttn from '@/comps/PageBttn';
 
 const Cont = styled.div`
   width: 100%;
@@ -41,7 +43,16 @@ const Button = styled.button`
   margin-bottom: 50px;
 `;
 
+const PageCont = styled.div`
+  width: 100%; 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`
+
 var timer = null;
+const numMovies = 8806;
 
 export default function Test() {
   const r = useRouter();
@@ -52,6 +63,7 @@ export default function Test() {
   const [sbr_type, setSbrType] = useState("asc");
   const [clicked, setClicked] = useState(false);
   const { result, setResult } = useResult();
+  const [cur_page, setCurPage] = useState([]);
 
   const onChangeView = () => {
     if (View === false) {
@@ -113,6 +125,37 @@ export default function Test() {
     }
   };
 
+// ============== Pagination 
+
+  const PageClick = async(p) => {
+    const res = await ax.get("/api/movie", {
+      params: {
+        page: p,
+        num: 10,
+      }
+    });
+
+    setData(res.data);
+    setCurPage(p);
+  }
+
+  var butt_arr = [];
+  var ind = 1;
+  for(var i = 0; i < numMovies; i += 10){
+    butt_arr.push(
+      <PageBttn 
+        onClick={PageClick.bind(this, ind)}
+        bgcolor = {cur_page === ind ? '#F9E7E7' : "#fff"}
+        number = {ind}
+      />
+    );
+    ind++
+  }
+
+  butt_arr = butt_arr.slice(cur_page-5 < 0 ? 0 : cur_page-5, cur_page+5 < 5 ? 10 : cur_page+5);
+
+// ============== Pagination ends
+
   return (
     <Cont>
       <input
@@ -150,10 +193,14 @@ export default function Test() {
                   r.push(`/result/${uuidv4()}`);
                   (e) => StoreResult(e.target.clicked, item);
                 }}
+                pages = {item.num_pages}
               />
             ))}
           </Wrap>
-          <Pagination />
+          {/* <Pagination /> */}
+          <PageCont>
+            {butt_arr}
+          </PageCont>
         </PagCont>
       ) : (
         <PagCont>
@@ -173,10 +220,14 @@ export default function Test() {
                   r.push(`/result/${uuidv4()}`);
                   (e) => StoreResult(e.target.clicked, item);
                 }}
+                pages = {item.num_pages}
               />
             ))}
           </Wrap>
-          <Pagination />
+          {/* <Pagination /> */}
+          <PageCont>
+            {butt_arr}
+          </PageCont>
         </PagCont>
       )}
     </Cont>

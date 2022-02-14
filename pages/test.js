@@ -155,7 +155,7 @@ export default function Test() {
                   return StoreResult(e.target.clicked, item);
                 };
               }}
-            />s
+            />
           ))}
         </Wrap>
       )}
