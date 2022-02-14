@@ -16,6 +16,7 @@ import PosterBox from "@/comps/PosterBox";
 import PopUp from "comps/PopUp";
 import Pagination from "@/comps/Pagination";
 import PageBttn from '@/comps/PageBttn';
+import Detail from "@/comps/Detail";
 
 const Cont = styled.div`
   width: 100%;
@@ -228,6 +229,8 @@ export default function Test() {
           <PageCont>
             {butt_arr}
           </PageCont>
+
+          <Detail />
         </PagCont>
       )}
     </Cont>
