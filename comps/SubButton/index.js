@@ -16,8 +16,8 @@ const ButtonInput = styled.button`
     type: ${props=>props.type};
     display:flex;
     background-color:${props=>props.bg};
-    border: ${props=>props.border};
     border-radius:${props=>props.radius}px;
+    border: none; 
     width: ${props=>props.width}px;
     min-width: ${props=>props.minWidth}px;
     height: ${props=>props.height}px;
@@ -26,45 +26,37 @@ const ButtonInput = styled.button`
     box-shadow: ${props=>props.bshadow}; 
     cursor: pointer;
     
-    :hover{
-        transform: scale(0.85);
-        transition-duration: 0.5s;
-    }
 `;
 
 const ButtonText = styled.p`
     color:${props=>props.color} ;
     font-size: ${props=>props.fontSize};
     text-align:center;
-    font-weight: ${props=>props.fontWeight};
 `;
 
 
 const SubButton = ({
 
-// ============ Props
     type = "submit",
     text="Post",
     margintop = 100,
     marginright="",
     bgcolor = "#F9E7E7",
     radius = 20,
-    cwidth = "100%",
+    cwidth = "20%",
     width = 360,
     height = 72,
     bshadow = "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
     color="#000",
     fontSize="24px",
     justify="center",
-
     clickHandler = () => {},
     href="/posts"
 
 }) => {
     // const router = useRouter();
 
-    return (
-        <ButtonCont 
+    return <ButtonCont 
             mtop={margintop}
             mright={marginright}
             justify={justify}
@@ -80,7 +72,6 @@ const SubButton = ({
                 radius={radius}
                 width={width}
                 height={height}
-                border={border}
                 bshadow={bshadow}
             >
                 <ButtonText
@@ -90,7 +81,7 @@ const SubButton = ({
                     {text}</ButtonText>
             </ButtonInput>
         </ButtonCont>
-    );
+
 }
 
 export default SubButton;
