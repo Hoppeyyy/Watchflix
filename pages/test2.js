@@ -37,6 +37,14 @@ const Wrap = styled.div`
   align-items: center;
   margin-bottom: 70px;
 `;
+const Default = styled.div`
+  width: 100%;
+  display:${props=>props.display};
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 70px;
+`;
 
 const Button = styled.button`
   margin-bottom: 50px;
@@ -55,15 +63,15 @@ const numMovies = 8806;
 
 export default function Test() {
   const r = useRouter();
+  const [Alldata,setAllData] = useState(movie);
   const [data, setData] = useState([]);
-  
   const [View, setView] = useState(false);
   const [sbr, setSbr] = useState(false);
   const [sbr_type, setSbrType] = useState("asc");
   const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
+  const [Def, setDef] = useState(false);
  
-
   const onChangeView = () => {
     if (View === false) {
       setView(true);
@@ -73,10 +81,10 @@ export default function Test() {
       console.log("set to posterbox");
     }
   };
-
+  
   const inputFilter = async (txt) => {
     console.log(txt);
-
+    
     // results the timer if the inputs keeps changing
     if (timer) {
       clearTimeout(timer);
@@ -95,9 +103,13 @@ export default function Test() {
           },
         });
         console.log(res.data);
+        setDef(true);
         setData(res.data);
         timer = null;
       }, 1000);
+    }
+    else{
+      setDef(false);
     }
   };
  
@@ -126,6 +138,7 @@ export default function Test() {
       }
     });
 
+    setAllData(res.Alldata);
     setData(res.data);
     setCurPage(p);
   }
@@ -169,7 +182,59 @@ export default function Test() {
       </Button>
       <Button onClick={onChangeView}>Change Layout</Button>
  {/* ====================== Default result show below  ==================================== */}     
-    {/*<Wrap>View ?(<HMovieData/>):(<PosterBoxData/>)</Wrap>*/}
+    <Default display={ Def === true ? 'none':'flex'}>
+      {View ?(
+      <PagCont>
+      <Wrap>
+      {
+        Alldata.map((item)=><HMovie 
+        title={item.Title} 
+        alt={item.Title}
+        year={item.release_year}
+        src={item.Poster}
+        place={item.country}
+        text={item.description}
+        onClick={() => {
+          StoreResult(item);
+          r.push(`/result/${uuidv4()}`);
+          
+        }}
+        pages = {item.num_pages}
+        />)
+      }
+      </Wrap>
+          {/* <Pagination /> */}
+          <PageCont>
+            {butt_arr}
+          </PageCont>
+        </PagCont>
+      ):(
+      <PagCont>
+      <Wrap>
+      {
+        Alldata.map((item)=><PosterBox 
+        title={item.Title} 
+        alt={item.Title}
+        year={item.release_year}
+        src={item.Poster}
+        place={item.country}
+        text={item.description}
+        onClick={() => {
+          StoreResult(item);
+          r.push(`/result/${uuidv4()}`);
+          
+        }}
+        pages = {item.num_pages}
+        />)
+      }
+      </Wrap>
+          {/* <Pagination /> */}
+          <PageCont>
+            {butt_arr}
+          </PageCont>
+      </PagCont>
+      )}
+    </Default>
 {/* ====================== Filtering result show below  ==================================== */}
       {View ? (
         <PagCont>

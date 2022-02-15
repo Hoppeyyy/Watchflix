@@ -8,20 +8,23 @@ width:100%;
 display:flex;
 flex-wrap:wrap;
 `
-function HMovieData(){
+function HMovieData(
+  onClick=()=>{},
+){
   
-  const [data,setData] = useState(movie);
+  const [data, setData] = useState(movie);
 
   return(
     <Cont>
       {
-        data.map((o,item)=><HMovie 
+        data.map((item)=><HMovie 
         title={item.Title} 
         alt={item.Title}
         year={item.release_year}
         src={item.Poster}
         place={item.country}
         text={item.description}
+        onClick={onClick}
         />)
       }
     </Cont>

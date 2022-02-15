@@ -11,7 +11,9 @@ display:flex;
 flex-wrap:wrap;
 
 `
-function PosterBoxData(){
+function PosterBoxData(
+onClick=()=>{},
+){
   
   const [data,setData] = useState(movie);
 
@@ -30,6 +32,7 @@ function PosterBoxData(){
         src={item.Poster}
         place={item.country}
         text={item.description}
+        onClick={onClick}
         />)
       }
     </Cont>
