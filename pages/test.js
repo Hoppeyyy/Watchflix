@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { movie, filtering, sortArr } from "@/utils/combine";
 import ax from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { useResult } from "@/utils/resultProvider";
+import { useResult } from "@/utils/provider";
 
 import HMovieData from "@/comps/HMovie/index2";
 import PosterBoxData from "@/comps/PosterBox/index2";

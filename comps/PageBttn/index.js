@@ -2,9 +2,9 @@ import ax from "axios";
 import * as React from 'react';
 import styled from 'styled-components';
 import { useEffect, useState } from "react";
-import { useTheme } from "@/utils/provider";
+import { useTheme, useResult } from "@/utils/provider";
 import { hovColor, themes, bgpopup, popuptext, hovpopbg, hBttnBkColor } from "@/utils/variables";
-import {useResult} from '@/utils/resultProvider';
+
 
 const Cont = styled.div`
   width: 3em;
