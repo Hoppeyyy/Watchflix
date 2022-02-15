@@ -4,6 +4,7 @@ import {useResult} from '@/utils/resultProvider';
 import ax from 'axios';
 import ClickButton from "@/comps/ClickButton";
 import Detail from "@/comps/Detail";
+import Divider from "@/comps/Divider";
 
 export default function Result(){
   const r = useRouter();
@@ -39,6 +40,8 @@ useEffect(()=>{
    return (
     <div>
       
+    <Divider text="Result"></Divider>
+
       <h3>{uuid}</h3>
       Result
       {Object.values(result).map((item)=><div>{item.Title}</div>)}

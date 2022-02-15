@@ -32,39 +32,25 @@ const Title = styled.h3`
     padding-right:20px;
 `
 
-const Dropdown = styled.div`
-    font-size:30px;
-    padding-right:20px;
-    cursor:pointer
-`
-
 const HeaderCont = styled.div`
     display:flex;
     align-items:center;
 `
 
-const ReviewSection = ({
-    text="Reviews"
+const Divider = ({
+    text="Review"
 }) => {
-
-    const [open, setOpen] = useState(true);
-    const onClick = () => setOpen(!open);
-
-    const [arrow, setArrow] = useState(true);
 
     return <Cont>
 
         <HeaderCont>
         <LeftLine></LeftLine>
         <Title>{text}</Title>
-        <Dropdown onClick={onClick}>&#x25BC;</Dropdown>
         <RightLine></RightLine>
         </HeaderCont>
-
-        {open ? <Comment/>: null}
 
     </Cont>
 }
 
-export default ReviewSection
+export default Divider
 
