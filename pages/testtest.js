@@ -1,14 +1,12 @@
 import styled from "styled-components";
 import Head from "next/head";
-import { useEffect, useState } from "react";
-import { useTheme } from "@/utils/provider";
+import { useEffect, useState} from "react";
+import { useTheme, useResult} from "@/utils/provider";
 import { useRouter } from "next/router";
 import { movie, filtering, sortArr } from "@/utils/combine";
 import ax from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { useResult } from "@/utils/resultProvider";
 import { setRequestMeta } from "next/dist/server/request-meta";
-
 import HMovieData from "@/comps/HMovie/index2";
 import PosterBoxData from "@/comps/PosterBox/index2";
 import HMovie from "@/comps/HMovie";
@@ -62,9 +60,9 @@ export default function Test() {
   const [View, setView] = useState(false);
   const [sbr, setSbr] = useState(false);
   const [sbr_type, setSbrType] = useState("asc");
-  const [clicked, setClicked] = useState(false);
   const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
+ 
 
   const onChangeView = () => {
     if (View === false) {
@@ -102,19 +100,22 @@ export default function Test() {
       }, 1000);
     }
   };
-
+ 
   const StoreResult = (item) => {
     console.log(item);
-
+    
+    console.log(item);
       console.log("clicked");
       const b_obj = {
+        
         ...result,
       };
 
       b_obj[item.imdbId] = item;
       setResult(b_obj);
   };
-
+  
+ 
 // ============== Pagination 
 
   const PageClick = async(p) => {
@@ -184,8 +185,9 @@ export default function Test() {
                   result[item.imdbId] != undefined && result[item.imdbId] !== null
                 }
                 onClick={() => {
+                  StoreResult(item);
                   r.push(`/result/${uuidv4()}`);
-                  (e) => StoreResult(e.target.clicked, item);
+                  
                 }}
                 pages = {item.num_pages}
               />
@@ -211,7 +213,6 @@ export default function Test() {
                   result[item.imdbId] != undefined && result[item.imdbId] !== null
                 }
                 onClick={() => {
-
                   StoreResult(item);
                   r.push(`/result/${uuidv4()}`);
                 }}
@@ -224,7 +225,7 @@ export default function Test() {
             {butt_arr}
           </PageCont>
 
-          <Detail />
+         
         </PagCont>
       )}
     </Cont>

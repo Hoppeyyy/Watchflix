@@ -7,6 +7,7 @@ import Comment from '../Comment';
 const Cont = styled.div`
     display:flex;
     flex-direction:column;
+
 `
 
 const LeftLine = styled.hr`
@@ -25,6 +26,8 @@ const RightLine = styled.hr`
     border:none;
     width:800px;
     height:20px;
+   
+    
 `
 
 const Title = styled.h3`
@@ -41,6 +44,7 @@ const Dropdown = styled.div`
 const HeaderCont = styled.div`
     display:flex;
     align-items:center;
+    justify-content:space-between;
 `
 
 const ReviewSection = ({

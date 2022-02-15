@@ -14,6 +14,10 @@ import PopUp from 'comps/PopUp';
 const ButtonCont = styled.div`
     width: ${props=>props.cwidth};
     display:flex;
+    justify-content: flex-end;
+    padding:1.5rem;
+    padding-right:0;
+    padding-top:4rem;
 `;
 
 const ButtonInput = styled.button`
@@ -57,7 +61,7 @@ const ClickButton = ({
     color="#000",
     fontSize="24px",
     justify="center",
-    src={src}
+    src="url src here",
 }) => {
     const { theme, setTheme } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
