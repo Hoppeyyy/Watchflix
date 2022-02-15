@@ -51,7 +51,7 @@ useEffect(()=>{
         }
       })
       if(res.data !== false){
-        Reset();
+    
         setResult(res.data);
         console.log(res.data);
        
