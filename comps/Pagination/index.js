@@ -90,7 +90,7 @@ const Pagination = ({
       ind++;
     }
     
-    pageArr = pageArr.slice(cur_page-5 < 0 ? 0 : cur_page-5, cur_page+5);
+    pageArr = pageArr.slice(cur_page-5 < 0 ? 0 : cur_page-2, cur_page+3);
 
     return <Cont>
       <ContCont>

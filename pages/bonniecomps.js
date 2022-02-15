@@ -6,6 +6,7 @@ import { useTheme } from "@/utils/provider";
 import Pagination from '@/comps/Pagination';
 import Comment from '@/comps/Comment';
 import ReviewSection from '@/comps/ReviewSection';
+import TestComment from '@/comps/TestComment';
 
 export default function Home() {
 
@@ -22,6 +23,8 @@ export default function Home() {
       <Pagination></Pagination>
       <Comment></Comment>
       <ReviewSection></ReviewSection>
+
+      <TestComment></TestComment>
 
     </div>
   )

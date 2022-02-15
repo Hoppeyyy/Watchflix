@@ -1,8 +1,11 @@
 import ax from "axios";
 import * as React from 'react';
 import styled from 'styled-components';
+
+=======
 import { useEffect, useState } from "react";
 import { useTheme, useResult } from "@/utils/provider";
+
 import {
   bkColor,
   themes,
@@ -12,7 +15,6 @@ import {
   hovBkColor,
 } from "@/utils/variables";
 import { v4 as uuidv4 } from 'uuid';
-
 
 
 const Cont = styled.div`
@@ -66,19 +68,43 @@ filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.20));
   color:#FFFFFF;
 }
 `
+
+const UrlArea = styled.textarea`
+  width:500px;
+  height:30px;
+`
+
 const PopUp = ({
 src="url src here",
 handleClose=()=>{},
+myurl="myurl"
+
 })=>{
   const { theme, setTheme } = useTheme();
+
+  const [copySuccess, setCopySuccess] = useState('');
+  const textAreaRef = useRef(null);
+  function copyToClipboard(e) {
+    textAreaRef.current.select();
+    document.execCommand('copy');
+  };
+
+
   return<Cont >
     <Box bgcolor={bgpopup[theme]}>
       <Title color={popuptext[theme]}>Share with your friend</Title>
-      <Link src={src}>{src}</Link>
+      {/* <Link src={src}>{src}</Link> */}
+      <UrlArea
+        ref={textAreaRef}
+        value={myurl}
+      />
       <BtnCont>
         <Btn onClick={handleClose} bgcolor={bkColor[theme]} hovpopbg={hovpopbg[theme]}>Cancel</Btn>
-        <Btn bgcolor={bkColor[theme]} hovpopbg={hovpopbg[theme]}>Copy link</Btn>
+        <Btn bgcolor={bkColor[theme]} hovpopbg={hovpopbg[theme]} onClick={copyToClipboard}>Copy link</Btn>
       </BtnCont>
+
+
+    
     </Box>
   </Cont>
 }
