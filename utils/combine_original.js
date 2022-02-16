@@ -52,22 +52,19 @@ const found = movie1.find(function(o){
 return result
 }
 
-// movie();
+movie();
 // --------------------------- filtering ---------------------------------- //
 const rating = 'IMDB Score';
 
 function filtering(
-  arr = [],
-  
+  arr =[],
   config={Title: null, Genre:null, duration:null, rating:null, country:null}
   
 ){
 
   const {Title, Genre,duration,rating,country} = config;
-  const keyword = arr.value;
-  
+
   if(Title || Genre || duration || rating || country ){
-    
     const filtered_arr = arr.filter((o)=>{
       var cond = true;
 
@@ -94,8 +91,10 @@ function filtering(
       return cond;
     })
     return filtered_arr;
-    // console.log(filtered_arr);
-  } 
+    //console.log(filtered_arr);
+  } else{
+    return [];
+  }
 }
 /*
 console.log(filtering(movie(),{
@@ -149,13 +148,52 @@ function sortArr(
 }
 }
 
+// Testing default
+function defaultFilter(
+  arr =[],
+  config={Title: ' ', Genre:' ', duration:' ', rating:' ', country:' '}
+  
+){
 
+  const {Title, Genre,duration,rating,country} = config;
+
+  if(Title || Genre || duration || rating || country ){
+    const nofilter_arr = arr.filter((o)=>{
+      var cond = true;
+
+      if(Title){
+        cond = cond && o.Title.includes(Title);
+      }
+
+      if(Genre){
+        cond = cond && o.Genre.includes(Genre);
+      }
+
+      if(duration){
+       cond = cond && Number(o.duration) >= Number(duration);
+      }
+
+      if(rating){
+        cond = cond && Number(o.rating)>= Number(rating);
+      }
+
+      if(country){
+        cond = cond && o.country.includes(country);
+      }
+      return cond;
+    })
+    return nofilter_arr;
+    console.log(nofilter_arr);
+  } else{
+    return [];
+  }
+}
 /*
 console.log(sortArr(movie(),{
   //key:'IMDB Score',type:'asc',
   //key:'duration', type:"asc"
 }))
 */
-export {movie, filtering, sortArr }
+export {movie, filtering, sortArr, defaultFilter }
 
 
