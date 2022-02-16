@@ -90,7 +90,7 @@ useEffect(()=>{
       />
       </ButCont>
       <ReviewSection text="Reviews"/>
-      <ReviewSection text="Add Review"/>
+      <Divider text="Add Review"></Divider>
     </Cont>
   )
 }
