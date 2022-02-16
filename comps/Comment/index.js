@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import ax from 'axios';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+// import { useEffect, useState } from 'react';
+// import { useRouter } from 'next/router';
 
 const Cont = styled.div`
     display:flex;
@@ -42,28 +42,38 @@ const Dot = styled.div`
     border:${props=>props.border}
 `
 
-const Comment = ({
-    username="HooWoo",
-    date="01/12/2022",
-    comment="OMG, I cried while watching this movie too !",
-    border="1px solid red"
+// const Comment = ({
+//     // username="HooWoo",
+//     // date="01/12/2022",
+//     // comment="OMG, I cried while watching this movie too !",
+//     border="1px solid red"
     
-}) => {
+// }) => {
+export default function Comment({contacts}) {
 
-    return <Cont>
+        return (
+
+    <Cont>
         <CommentCont>
             <TopCont>
                 <Dot border={border}></Dot>
-                <Username>{username}</Username>
-                <Date>{date}</Date>
+                <Username>
+                {contacts.map((contact) => (
+            contact.name
+        ))}
+                </Username>
+                {/* <Date>{date}</Date> */}
             </TopCont>
 
             <BotCont>
-                <UserComment>{comment}</UserComment>
+                <UserComment> 
+                    {contacts.map((contact) => (
+            contact.comment
+            ))}
+            </UserComment>
             </BotCont>
         </CommentCont>
 
     </Cont>
+ );
 }
-
-export default Comment

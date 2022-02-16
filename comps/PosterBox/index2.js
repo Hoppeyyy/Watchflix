@@ -16,10 +16,6 @@ function PosterBoxData(){
   const [data,setData] = useState(movie);
 
 
-
-
-
-
   return(
     <Cont>
       {

@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import SubButton from '../SubButton'
+import { useState } from "react";
 
 const Cont = styled.div`
   width: ${props => props.cwidth};
@@ -65,27 +66,36 @@ const BCont = styled.div`
   justify-content:right;
 `
 
+export default function SendForm({addContact}) {
 
-const CommentForm =({
+  const [contactInfo, setContactInfo] = useState({
+    name: "",
+    comment: "",
+  });
+
+  const handleChange = (event) => {
+    setContactInfo({ ...contactInfo, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    addContact(contactInfo);
+    setContactInfo({ name: "", comment: "" });
+  };
   
+        
+           
+            return( 
           cwidth = "100%",  
           fwidth = "100%",
           fheight = "100%",
           fsize = 24,
           iwidth = "30%",
           iheight = 35,
-          placeholder = "Your Name",
-        
-          title = "Nickname",
-          type ="text",
-        
-        }) => {  
-           
-            return( 
             <Cont
             cwidth={cwidth}
           >
-            <FormBox 
+            <FormBox onSubmit={handleSubmit}
               fwidth={fwidth} 
               fheight={fheight}
             >
@@ -95,18 +105,22 @@ const CommentForm =({
               fsize = {fsize}
             > {title}</LabelFor>
             <InputBox 
-              type={type} 
-              name={title} required 
+              type="text" 
+              name="Nickname" required 
               iwidth={iwidth} 
               iheight={iheight}
-              placeholder={placeholder}
+              placeholder="Your Name"
+              value={contactInfo.name}
+              onChange={handleChange}
             />
             </TopCont>
             <CmBox
                 type="text"
                 width="350px"
                 height="480px"
-                placeholder='Leave your comment in here'/>
+                placeholder='Leave your comment in here'
+                value={contactInfo.comment}
+                onChange={handleChange}/>
         <BCont>
         <SubButton 
         type = "submit"
@@ -124,5 +138,4 @@ const CommentForm =({
     </Cont> 
             )
         }
-
-export default CommentForm; 
+      

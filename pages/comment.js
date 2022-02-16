@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import React from 'react';
 import { useTheme } from "@/utils/provider";
-import SubButton from '@/comps/SubButton';
 import CommentForm from '@/comps/CommentForm';
 
 import Comment from '@/comps/Comment';
 import ReviewSection from '@/comps/ReviewSection';
+
 
 
 export default function Home() {
@@ -19,12 +19,20 @@ export default function Home() {
   height: 100%;
 `;
 
+const [contacts, updateContacts] = useState([]);
+
+const addContact = (contact) => {
+  updateContacts([...contacts, contact]);
+};
+
+
   return (
     <Cont>
     <ReviewSection></ReviewSection>
-    <Comment/>
+    <Comment contacts={contacts}/>
    
-    <CommentForm> </CommentForm>
+    <CommentForm addContact={addContact}>  </CommentForm>
+
     </Cont>
   )
 }
