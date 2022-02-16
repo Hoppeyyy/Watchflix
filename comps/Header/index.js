@@ -1,10 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import Image from 'next/image';
 import logo from '@/public/images/watchflix_logo.png';
+import ax from 'axios'
 import { useState } from 'react';
-import { TextField, Switch, InputLabel, Select, MenuItem, Checkbox, ListItemText, OutlinedInput, Box, Slider, FormControl, InputAdornment, IconButton } from '@mui/material'
+import { TextField, Switch, InputLabel, Select, MenuItem, Checkbox, ListItemText, OutlinedInput, Box, Slider, FormControl, InputAdornment, IconButton } from '@mui/material';
+import { bgpopup, popuptext } from '@/utils/variables';
+import { useTheme } from '@/utils/provider';
 import SearchIcon from '@mui/icons-material/Search';
-import { Search, Radio, Button, Icon } from "semantic-ui-react";
+import { Search, Radio, Button, Icon } from 'semantic-ui-react';
 
 const FlexHeader = styled.div`
   display:flex;
@@ -12,16 +15,17 @@ const FlexHeader = styled.div`
   justify-content:space-around;
 `
 
-
 const FlexRow = styled.div`
   display:flex;
   align-items:center;
   justify-content:center;
+  background-color:${props=>props.rowbg};
 `
 
 const FlexCol = styled.div`
   display:flex;
   flex-direction:column;
+  background-color:${props=>props.colbg};
 `
 
 const DurationCont = styled.div`
@@ -57,9 +61,17 @@ const sortby = [
 
 
 const Header = ({
+  rowbg = bgpopup,
+  colbg = bgpopup,
+  onInput = (event) => {},
+  changeView = () => {},
+  changeColor = () => {},
+  // onPosterBox = () => {},
+  // onHorizontal = () => {}
 
-  onInputChange=()=>{},
 }) => {
+  const { theme } = useTheme();
+
   const [genreName, setGenreName] = useState([]);
   const handleGenre = (event) => {
     const {
@@ -108,10 +120,8 @@ const Header = ({
     setDur(newDur)
   }
 
-
-
   return (
-    <FlexCol>
+    <FlexCol colbg={colbg[theme]}>
       <FlexHeader>
         <Image src={logo} alt='Watchflix logo' width={144} height={36} objectPosition="left center"/>
         {/* <Search fluid/> */}
@@ -124,16 +134,21 @@ const Header = ({
               <IconButton aria-label='search' edge='end'/>
             </InputAdornment>
           }
+          onChange={(event) => onInput(event.target.value)}
         />
-        <FlexRow>
+        <FlexRow rowbg={rowbg[theme]}>
           {/* <Input icon='search' type='text' placeholder='Search...' autoWidth/> */}
-          <Switch/>
+          <Switch onChange={changeColor}/>
+          <Switch onChange={changeView}/>
           {/* <Radio toggle/> */}
-          <Button.Group
-            buttons={[
-              {key: "a", icon: 'grid layout'},
-              {key: "a", icon: 'list'},
-            ]}/>
+          {/* <Button.Group>
+            <Button icon onClick={() => {onPosterBox()}}>
+              <Icon name='grid layout'/>
+            </Button>
+            <Button icon >
+              <Icon name='list'/>
+            </Button>
+          </Button.Group> */}
         </FlexRow>
       </FlexHeader>
       <FlexRow>  
@@ -246,7 +261,7 @@ const Header = ({
           >
             {sortby.map((sortby) => (
               <MenuItem key={sortby} value ={sortby}>
-                {/* <ListItemText primary={rating}/> */}
+                <ListItemText primary={sortby}/>
               </MenuItem>
             ))}
             <FlexRow>
