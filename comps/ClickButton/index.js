@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React,{useState } from 'react';
+import React,{useEffect, useState } from 'react';
 import { useTheme } from "@/utils/provider";
 import {
   bkColor,
@@ -9,7 +9,9 @@ import {
   hovColor,
 } from "@/utils/variables";
 import PopUp from 'comps/PopUp';
-
+import { useRouter } from 'next/router';
+import Link from "next/link";
+import axios from 'axios';
 
 const ButtonCont = styled.div`
     width: ${props=>props.cwidth};
@@ -46,7 +48,6 @@ const ButtonText = styled.p`
     font-weight: ${props=>props.fontWeight};
 `;
 
-
 const ClickButton = ({
 
     type = "submit",
@@ -61,13 +62,37 @@ const ClickButton = ({
     color="#000",
     fontSize="24px",
     justify="center",
-    src="url src here",
+
 }) => {
     const { theme, setTheme } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
     const togglePopup = () => {
     setIsOpen(!isOpen);
   }
+
+  //----------------Share button to get url--------------
+
+  const router = useRouter();
+  const {uuid} = router.query
+//   console.log('my stored id',storeId)
+
+  useEffect(()=>{
+      if(uuid){
+          const GetUuid = async () =>{
+              const res = await axios.get("/api/save", {
+                  params:{
+                      uuid 
+                  }
+              })
+
+              if(res.data !==false){
+                  setFav(res.data);
+              }
+          }
+          GetUuid();
+      }
+  }, [uuid])
+
     return <ButtonCont 
             mtop={margintop}
             mright={marginright}
@@ -75,9 +100,10 @@ const ClickButton = ({
             cwidth={cwidth}
             onClick={togglePopup}
         >
-        {isOpen && <PopUp
-     src={src}
+        {isOpen && <PopUp src={uuid} 
+        myurl={uuid}
      handleClose={togglePopup}
+     
    />}
             <ButtonInput
                 type={type}

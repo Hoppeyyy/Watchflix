@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/utils/provider";
+
 import { useRouter } from "next/router";
 import { movie, filtering, sortArr } from "@/utils/combine";
 import ax from "axios";

@@ -4,8 +4,12 @@ import {useResult} from '@/utils/provider';
 import ax from 'axios';
 import ClickButton from "@/comps/ClickButton";
 import Detail from "@/comps/Detail";
+
+import Divider from "@/comps/Divider";
+
 import ReviewSection from '@/comps/ReviewSection';
 import styled from 'styled-components';
+
 
 const Cont = styled.div`
 width: 100%;
@@ -51,7 +55,7 @@ useEffect(()=>{
         }
       })
       if(res.data !== false){
-        Reset();
+    
         setResult(res.data);
         console.log(res.data);
        
@@ -62,10 +66,13 @@ useEffect(()=>{
   }
   },[uuid])
    return (
+
+
     <Cont>
-      <ReviewSection text="Detail"/>
+      <Divider text="Result"></Divider>
       <PageCont>
      {/* <button onClick={SaveResult}>Save</button>*/}
+
       
       {Object.values(result).map((item)=><div><Detail
       alt={item.Title}
