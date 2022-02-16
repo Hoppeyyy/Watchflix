@@ -10,24 +10,40 @@ const Cont = styled.div`
   width: ${props => props.conWidth};
   display: flex;
   flex-direction: row;
-  justify-contents: flex-start;
-  align-items: center;
+  justify-contents: center;
+  align-items: center;  
+
+  @media only screen and (min-width: 1px) and (max-width: 950px) {
+    flex-direction: column;
+  }
 `
 
 const PostCont = styled.div`
   width: ${props => props.picConWidth};
   height: ${props => props.picConHeight};
+  min-width: 424px; min-height: 594px;
   display: flex;
   flex-direction: column;
   justify-contents: center;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 20px;  
+  box-sizing: border-box;
+
+  @media only screen and (min-width: 1px) and (max-width: 950px) {
+    margin-bottom: 50px;
+  }
 `
 
 const Post = styled.img`
   width: 100%; height: 100%;
+  
+  display: block;
   src: ${props => props.src};
-  object-fit: ${props => props.fit}
+  object-fit: ${props => props.fit};
+
+  @media only screen and (min-width: 1px) and (max-width: 950px) {
+    min-width: 360px; min-height: 594px;
+  }
 `
 
 const DetailCont = styled.div`
@@ -41,16 +57,26 @@ const DetailCont = styled.div`
   background-color: ${props => props.bkColor};
   border-radius: 20px;
   box-sizing: border-box;
+
+  @media only screen and (min-width: 1px) and (max-width: 950px) {
+    width: ${props => props.mdetConWidth};
+  }
 `
 
 const Detail = ({
   conWidth = "100%",
   picConWidth = "auto",
   picConHeight = "596px",
-  src = "./images/img_alive.png",
+  src="http://placekitten.com/297/397",
   fit = "cover",
-  alt = "Alive poster",
+  alt = "Undifined",
   detConWidth = "60%",
+  mdetConWidth = '100%',
+  title="undifined",
+  director="undifined",
+  genre="undifined",
+  cast="undifined",
+  description="undifined"
 }) => {
 
   const {theme, setTheme} = useTheme();
@@ -73,29 +99,32 @@ const Detail = ({
       <DetailCont
         detConWidth = {detConWidth}
         detConHeight = {picConHeight}
+        mdetConWidth = {mdetConWidth}
         bkColor = {bkColor[theme]}
       >
-        <DetailTit />
+        <DetailTit 
+        movieTitle ={title}
+        />
         <DetailTit 
           title = "Director"
           movieTitle = ""
-          text="Cho Il	Yoo "
+          text={director}
         />
         <DetailTit 
           title = "Genre"
           movieTitle = ""
-          text="Horror Movies, International Movies, Thrillers"
+          text={genre}
         />
         <DetailTit
           title = "Cast" 
           movieTitle = ""
-          text="Yoo Ah-in, Park Shin-hye"
+          text={cast}
         />
         <DetailTit 
           title = "Synopsys"
           conAlign = "flex-start"
           movieTitle = ""
-          text="As a grisly virus rampages a city, a lone man stays locked inside his apartment, digitally cut off from seeking help and desperate to find a way out."
+          text={description}
         />
 
       </DetailCont>

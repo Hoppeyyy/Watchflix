@@ -48,43 +48,43 @@ h1, h2, h3, h4, h5, h6, p, a {
 
 h1{
   font-family: 'BebasNeue';
-  font-size: 48px;
+  font-size: 3em;
 }
 
 h2{
   font-family: 'BebasNeue';
-  font-size: 40px;
+  font-size: 2.5em;
 }
 
 
 h3{
   font-family: 'BebasNeueBold';
-  font-size: 36px;
+  font-size: 2em;
 }
 
 
 h4{
-  font-family: 'Roboto';
-  font-size: 24px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5em;
   font-weight: 600;
 }
 
 h5{
-  font-family: 'Roboto';
-  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.25em;
   font-weight: 600;
 }
 
 p, a, button{
-  font-family: 'Roboto';
-  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
 }
 
 .link{
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans-serif;
   font-style: italic;
   text-decoration: underline;
-  font-size: 14px;
+  font-size: 0.875em;
 }
 
 

@@ -12,6 +12,7 @@ const FlexHeader = styled.div`
   justify-content:space-around;
 `
 
+
 const FlexRow = styled.div`
   display:flex;
   align-items:center;
@@ -54,8 +55,10 @@ const sortby = [
   "Most Reviews"
 ]
 
+
 const Header = ({
 
+  onInputChange=()=>{},
 }) => {
   const [genreName, setGenreName] = useState([]);
   const handleGenre = (event) => {
@@ -104,6 +107,8 @@ const Header = ({
   const handleDur = (event, newDur) => {
     setDur(newDur)
   }
+
+
 
   return (
     <FlexCol>
