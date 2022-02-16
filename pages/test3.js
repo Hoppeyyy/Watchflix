@@ -63,7 +63,7 @@ const numMovies = 8806;
 
 export default function Test() {
   const r = useRouter();
-  const [Alldata,setAllData] = useState(movie);
+  const [Alldata,setAllData] = useState([]);
   const [data, setData] = useState([]);
   const [View, setView] = useState(false);
   const [sbr, setSbr] = useState(false);
@@ -178,65 +178,13 @@ export default function Test() {
         Sory By Ratings
       </Button>
       <Button onClick={onChangeView}>Change Layout</Button>
- {/* ====================== Default result show below  ==================================== */}     
-    <Default display={ Def === true ? 'none':'flex'}>
-      {View ?(
-      <PagCont>
-      <Wrap>
-      {
-        Alldata.map((item)=><HMovie 
-        title={item.Title} 
-        alt={item.Title}
-        year={item.release_year}
-        src={item.Poster}
-        place={item.country}
-        text={item.description}
-        onClick={() => {
-          StoreResult(item);
-          r.push(`/result/${uuidv4()}`);
-          
-        }}
-        pages = {item.num_pages}
-        />)
-      }
-      </Wrap>
-          {/* <Pagination /> */}
-          <PageCont>
-            {butt_arr}
-          </PageCont>
-        </PagCont>
-      ):(
-      <PagCont>
-      <Wrap>
-      {
-        Alldata.map((item)=><PosterBox 
-        title={item.Title} 
-        alt={item.Title}
-        year={item.release_year}
-        src={item.Poster}
-        place={item.country}
-        text={item.description}
-        onClick={() => {
-          StoreResult(item);
-          r.push(`/result/${uuidv4()}`);
-          
-        }}
-        pages = {item.num_pages}
-        />)
-      }
-      </Wrap>
-          {/* <Pagination /> */}
-          <PageCont>
-            {butt_arr}
-          </PageCont>
-      </PagCont>
-      )}
-    </Default>
+
 {/* ====================== Filtering result show below  ==================================== */}
       {View ? (
         <PagCont>
           <Wrap>
-            {data.map((item) => (
+            {data && data.length > 0 
+            ? data.map((item) => (
               <HMovie
                 title={item.Title}
                 alt={item.Title}
@@ -253,18 +201,35 @@ export default function Test() {
                   
                 }}
                 pages = {item.num_pages}
-              />
-            ))}
+              />))
+              : movie().slice(0, 10).map((item) => <HMovie 
+                title={item.Title} 
+                alt={item.Title}
+                year={item.release_year}
+                src={item.Poster}
+                place={item.country}
+                text={item.description}
+                onClick={() => {
+                  StoreResult(item);
+                  r.push(`/result/${uuidv4()}`);
+                  
+                }}
+                pages = {item.num_pages}
+              />)
+              }
           </Wrap>
           {/* <Pagination /> */}
           <PageCont>
             {butt_arr}
           </PageCont>
         </PagCont>
-      ) : (
+      ) 
+      : 
+      (
         <PagCont>
           <Wrap>
-            {data.map((item) => (
+            {data && data.length > 0 
+            ? data.map((item) => (
               <PosterBox
                 title={item.Title}
                 alt={item.Title}
@@ -281,14 +246,27 @@ export default function Test() {
                 }}
                 pages = {item.num_pages}
               />
-            ))}
+            ))
+            : movie().slice(0, 10).map((item) => <PosterBox 
+              title={item.Title} 
+              alt={item.Title}
+              year={item.release_year}
+              src={item.Poster}
+              place={item.country}
+              text={item.description}
+              onClick={() => {
+                StoreResult(item);
+                r.push(`/result/${uuidv4()}`);
+                
+              }}
+              pages = {item.num_pages}
+            />)
+          }
           </Wrap>
           {/* <Pagination /> */}
           <PageCont>
             {butt_arr}
-          </PageCont>
-
-         
+          </PageCont>         
         </PagCont>
       )}
     </Cont>

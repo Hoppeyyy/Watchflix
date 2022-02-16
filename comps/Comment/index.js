@@ -7,7 +7,7 @@ const Cont = styled.div`
     display:flex;
 `
 
-const CommentCont = styled.div`
+const CommentCont = styled.li`
     width:500px;
     height:100px;
 `

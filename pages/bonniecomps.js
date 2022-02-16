@@ -24,7 +24,7 @@ export default function Home() {
       <Comment></Comment>
       <ReviewSection></ReviewSection>
 
-      <TestComment></TestComment>
+     
 
     </div>
   )
