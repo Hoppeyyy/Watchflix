@@ -22,6 +22,7 @@ const LabelFor = styled.label`
   font-size: ${props => props.fsize}px; 
   font-family: 'Montserrat', sans-serif;
   color: #E50914;
+  margin-top: 15px;
   margin-bottom: 10px;
   margin-left: 20px;
   font-weight:600;
@@ -31,9 +32,10 @@ const InputBox = styled.input`
   height: ${props => props.iheight}px; 
   border-radius: 10px;
   border: 3px solid #666666;
-  font-size: 24px;
+  font-size: 20px;
   padding: 16px;
   box-sizing: border-box;
+  margin-left: 20px;
   margin-bottom: ${props => props.imarginB}px;
 `
 const TopCont = styled.div`
@@ -51,14 +53,16 @@ const CmBox = styled.textarea`
   font-size: 24px;
   padding: 16px;
   box-sizing: border-box;
+  cols:50 ;
+  rows:25;
   margin-bottom: ${props => props.imarginB}px;
 `
 
 const BCont = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   margin-top: 80px;
+  justify-content:right;
 `
 
 
@@ -69,7 +73,7 @@ const CommentForm =({
           fheight = "100%",
           fsize = 24,
           iwidth = "30%",
-          iheight = 57,
+          iheight = 35,
           placeholder = "Your Name",
         
           title = "Nickname",
@@ -101,21 +105,19 @@ const CommentForm =({
             <CmBox
                 type="text"
                 width="350px"
-                height="180px"
+                height="480px"
                 placeholder='Leave your comment in here'/>
         <BCont>
         <SubButton 
+        type = "submit"
         text = "Post"
         margintop = "0px"
         border = "none"
-        bgcolor = "#5333ED"
-        color="#fff"
+        bgcolor = "#F9E7E7"
+        color="#000"
         hover = "box-shadow: none"
-        cwidth ="48%"
-        width = "95%"
-        minWidth="400"
-        routeTo=""
-        justify="flex-start"
+        justify="right"
+        href="/posts"
       />
     </BCont>
     </FormBox> 

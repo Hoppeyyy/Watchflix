@@ -77,8 +77,7 @@ const SubButton = ({
                 <ButtonText
                     color={color}
                     fontSize={fontSize}
-                >
-                    {text}</ButtonText>
+                >  {text}</ButtonText>
             </ButtonInput>
         </ButtonCont>
 
