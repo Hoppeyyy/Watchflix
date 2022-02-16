@@ -1,18 +1,16 @@
 import styled from "styled-components";
 import Image from 'next/image';
 import logo from '@/public/images/watchflix_logo.png';
-import * as React from 'react';
-import Switch from '@mui/material/Switch';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
-import ListItemText from '@mui/material/ListItemText';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
-import { Search, Radio, Button, Icon, Input } from "semantic-ui-react";
-import { FormControl } from "@mui/material";
+import { useState } from 'react';
+import { TextField, Switch, InputLabel, Select, MenuItem, Checkbox, ListItemText, OutlinedInput, Box, Slider, FormControl, InputAdornment, IconButton } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search';
+import { Search, Radio, Button, Icon } from "semantic-ui-react";
+
+const FlexHeader = styled.div`
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+`
 
 
 const FlexRow = styled.div`
@@ -62,7 +60,7 @@ const Header = ({
 
   onInputChange=()=>{},
 }) => {
-  const [genreName, setGenreName] = React.useState([]);
+  const [genreName, setGenreName] = useState([]);
   const handleGenre = (event) => {
     const {
       target: { value },
@@ -72,7 +70,7 @@ const Header = ({
     );
   };
 
-  const [ratingName, setRatingName] = React.useState([]);
+  const [ratingName, setRatingName] = useState([]);
   const handleRating = (event) => {
     const {
       target: { value }
@@ -82,7 +80,7 @@ const Header = ({
     );
   }
 
-  const [countryName, setCountryName] = React.useState([]);
+  const [countryName, setCountryName] = useState([]);
   const handleCountry = (event) => {
     const {
       target: { value }
@@ -92,7 +90,7 @@ const Header = ({
     );
   }
 
-  const [sortbyName, setSortbyName] = React.useState([]);
+  const [sortbyName, setSortbyName] = useState([]);
   const handleSortby = (event) => {
     const {
       target: { value }
@@ -105,7 +103,7 @@ const Header = ({
   function duration(dur) {
     return `${dur} minutes`;
   }
-  const [dur, setDur] = React.useState([60, 80]);
+  const [dur, setDur] = useState([60, 80]);
   const handleDur = (event, newDur) => {
     setDur(newDur)
   }
@@ -114,21 +112,33 @@ const Header = ({
 
   return (
     <FlexCol>
-      <FlexRow>
-        <Image src={logo} alt="Watchflix logo" width={182} height={45}/>
-        <Search onChange={onInputChange}/>
-        <Input icon='search' type='text' placeholder='Search...'/>
-        <Switch/>
-        <Radio toggle/>
-        <Button.Group
-          buttons={[
-            {key: "a", icon: 'grid layout'},
-            {key: "a", icon: 'list'},
-          ]}/>
-      </FlexRow>
+      <FlexHeader>
+        <Image src={logo} alt='Watchflix logo' width={144} height={36} objectPosition="left center"/>
+        {/* <Search fluid/> */}
+        <TextField 
+          variant='outlined' 
+          size='small' 
+          sx={{width: '30%'}}
+          endAdornment={
+            <InputAdornment position='end'>
+              <IconButton aria-label='search' edge='end'/>
+            </InputAdornment>
+          }
+        />
+        <FlexRow>
+          {/* <Input icon='search' type='text' placeholder='Search...' autoWidth/> */}
+          <Switch/>
+          {/* <Radio toggle/> */}
+          <Button.Group
+            buttons={[
+              {key: "a", icon: 'grid layout'},
+              {key: "a", icon: 'list'},
+            ]}/>
+        </FlexRow>
+      </FlexHeader>
       <FlexRow>  
 
-        <FormControl sx={{ width: 300 }}>     
+        <FormControl size='small' sx={{width: '20%'}}>     
           <InputLabel id='select-genre'>Genre</InputLabel>
           <Select
             labelId='select-genre'
@@ -152,10 +162,9 @@ const Header = ({
         </FormControl>
 
         {/* https://mui.com/components/slider/#minimum-distance */}
-        <FormControl>
+        <FormControl size='small' sx={{width: '20%'}}>
           <InputLabel id='select-duration'>Duration</InputLabel>
           <Select 
-            sx={{width: 100}}
             labelId='select-duration'
             multiple
             value={dur}
@@ -178,7 +187,7 @@ const Header = ({
           </Select>
         </FormControl>
 
-        <FormControl sx={{ width: 200 }}>     
+        <FormControl size='small' sx={{width: '20%'}}>     
           <InputLabel id='select-rating'>Rating</InputLabel>
           <Select
             labelId='select-rating'
@@ -201,7 +210,7 @@ const Header = ({
           </Select>
         </FormControl>
 
-        <FormControl sx={{ width: 200 }}>     
+        <FormControl size='small' sx={{width: '20%'}}>     
           <InputLabel id='select-country'>Country</InputLabel>
           <Select
             labelId='select-country'
@@ -224,7 +233,7 @@ const Header = ({
           </Select>
         </FormControl>
 
-        <FormControl sx={{ width: 200 }}>     
+        <FormControl size='small' sx={{width: '20%'}}>     
           <InputLabel id='select-sortby'>Sort By...</InputLabel>
           <Select
             labelId='select-sortby'
