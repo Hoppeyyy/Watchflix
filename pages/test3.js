@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useEffect, useState} from "react";
 import { useTheme, useResult} from "@/utils/provider";
 import { useRouter } from "next/router";
-import { movie, filtering, sortArr, defaultFilter  } from "@/utils/combine";
+import { movie, filtering, sortArr } from "@/utils/combine";
 import ax from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { setRequestMeta } from "next/dist/server/request-meta";
@@ -37,6 +37,14 @@ const Wrap = styled.div`
   align-items: center;
   margin-bottom: 70px;
 `;
+const Default = styled.div`
+  width: 100%;
+  display:${props=>props.display};
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 70px;
+`;
 
 const Button = styled.button`
   margin-bottom: 50px;
@@ -55,15 +63,15 @@ const numMovies = 8806;
 
 export default function Test() {
   const r = useRouter();
-
+  const [Alldata,setAllData] = useState([]);
   const [data, setData] = useState([]);
   const [View, setView] = useState(false);
   const [sbr, setSbr] = useState(false);
   const [sbr_type, setSbrType] = useState("asc");
   const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
+  const [Def, setDef] = useState(false);
  
-
   const onChangeView = () => {
     if (View === false) {
       setView(true);
@@ -73,10 +81,10 @@ export default function Test() {
       console.log("set to posterbox");
     }
   };
-
+  
   const inputFilter = async (txt) => {
     console.log(txt);
-
+    
     // results the timer if the inputs keeps changing
     if (timer) {
       clearTimeout(timer);
@@ -95,9 +103,13 @@ export default function Test() {
           },
         });
         console.log(res.data);
+        setDef(true);
         setData(res.data);
         timer = null;
       }, 1000);
+    }
+    else{
+      setDef(false);
     }
   };
  
@@ -106,9 +118,8 @@ export default function Test() {
     
     console.log(item);
       console.log("clicked");
-      const b_obj = {
-      };
 
+      const b_obj = {};
       b_obj[item.imdbId] = item;
       setResult(b_obj);
   };
@@ -124,6 +135,7 @@ export default function Test() {
       }
     });
 
+    setAllData(res.Alldata);
     setData(res.data);
     setCurPage(p);
   }
@@ -151,6 +163,7 @@ export default function Test() {
 
   return (
     <Cont>
+{/* ====================== Input and Button area ==================================== */}
       <input
         placeholder="Search"
         onChange={(e) => inputFilter(e.target.value)}
@@ -165,13 +178,13 @@ export default function Test() {
         Sory By Ratings
       </Button>
       <Button onClick={onChangeView}>Change Layout</Button>
-      
-    {/*<Wrap>View ?(<HMovieData/>):(<PosterBoxData/>)</Wrap>*/}
 
+{/* ====================== Filtering result show below  ==================================== */}
       {View ? (
         <PagCont>
           <Wrap>
-            {data.map((item) => (
+            {data && data.length > 0 
+            ? data.map((item) => (
               <HMovie
                 title={item.Title}
                 alt={item.Title}
@@ -188,18 +201,35 @@ export default function Test() {
                   
                 }}
                 pages = {item.num_pages}
-              />
-            ))}
+              />))
+              : movie().slice(0, 10).map((item) => <HMovie 
+                title={item.Title} 
+                alt={item.Title}
+                year={item.release_year}
+                src={item.Poster}
+                place={item.country}
+                text={item.description}
+                onClick={() => {
+                  StoreResult(item);
+                  r.push(`/result/${uuidv4()}`);
+                  
+                }}
+                pages = {item.num_pages}
+              />)
+              }
           </Wrap>
           {/* <Pagination /> */}
           <PageCont>
             {butt_arr}
           </PageCont>
         </PagCont>
-      ) : (
+      ) 
+      : 
+      (
         <PagCont>
           <Wrap>
-            {data.map((item) => (
+            {data && data.length > 0 
+            ? data.map((item) => (
               <PosterBox
                 title={item.Title}
                 alt={item.Title}
@@ -216,14 +246,27 @@ export default function Test() {
                 }}
                 pages = {item.num_pages}
               />
-            ))}
+            ))
+            : movie().slice(0, 10).map((item) => <PosterBox 
+              title={item.Title} 
+              alt={item.Title}
+              year={item.release_year}
+              src={item.Poster}
+              place={item.country}
+              text={item.description}
+              onClick={() => {
+                StoreResult(item);
+                r.push(`/result/${uuidv4()}`);
+                
+              }}
+              pages = {item.num_pages}
+            />)
+          }
           </Wrap>
           {/* <Pagination /> */}
           <PageCont>
             {butt_arr}
-          </PageCont>
-
-         
+          </PageCont>         
         </PagCont>
       )}
     </Cont>

@@ -9,6 +9,10 @@ import { hovColor, themes, bgpopup, popuptext, hovpopbg, hBttnBkColor } from "@/
 const Cont = styled.div`
   width: 3em;
   height: 3em;
+  margin-right: 10px;
+  :last {
+    margin-right: 0px;
+  }
 `
 
 const Btn = styled.button`
@@ -16,8 +20,7 @@ const Btn = styled.button`
   height: 100%;
   padding: 0.4rem;
   border:none;
-  border-radius: 50%;
-  margin-right: 10px;
+  border-radius: 50%;  
   background-color:${(props)=>props.bgcolor};
   filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.20));
   cursor: pointer;

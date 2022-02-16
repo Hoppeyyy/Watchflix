@@ -17,12 +17,17 @@ export default async function handler(req, res) {
   const { txt, sort_rating, sbr_type } = req.query;
   
   var lists =[];
+
+  if(!txt){
+    lists = movie()
+  } 
   
   if(txt){
     lists = filtering(movie(),{
       Title:txt,
     })
-  }
+  }  
+
   if(sort_rating){
     lists = sortArr(lists,{
       key:'IMDB Score',
