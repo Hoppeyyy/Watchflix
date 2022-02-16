@@ -1,57 +1,64 @@
-import styled from 'styled-components';
-import ax from 'axios';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import Comment from '../Comment';
+import styled from "styled-components";
+import ax from "axios";
+import { useTheme } from "@/utils/provider";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Comment from "../Comment";
+
+import { bkColor, hovColor, hovBkColor, divcolor } from "@/utils/variables";
 
 const Cont = styled.div`
-    display:flex;
-    flex-direction:column;
-`
+  display: flex;
+  flex-direction: column;
+  aligh-items: center;
+  justify-content: center;
+`;
 
 const LeftLine = styled.hr`
-    margin:0px; 
-    background-color:red;
-    border-radius:5px;
-    border:none;
-    width:100px;
-    height:20px;
-`
+  margin: 0px;
+  background-color: ${props => props.bkcolor};
+  border-radius: 10px;
+  border: none;
+  flex: 1;
+  height: 20px;
+`;
 
 const RightLine = styled.hr`
-    margin:0px;
-    background-color:red;
-    border-radius:5px;
-    border:none;
-    width:800px;
-    height:20px;
-    flex:1;
-`
+  margin: 0px;
+  background-color: ${props => props.bkcolor};
+  border-radius: 10px;
+  border: none;
+  flex: 6;
+  height: 20px;
+`;
 
 const Title = styled.h3`
-    padding-left:20px;
-    padding-right:20px;
-`
+  padding-left: 20px;
+  padding-right: 20px;
+  flex: 1.5;
+`;
 
 const HeaderCont = styled.div`
-    display:flex;
-    align-items:center;
-`
+  display: flex;
+  align-items: center;
+`;
 
-const Divider = ({
-    text="Review"
+const Divider = ({ 
+    text = "Review",
+
 }) => {
 
-    return <Cont>
+  const { theme, setTheme } = useTheme();
 
-        <HeaderCont>
-        <LeftLine></LeftLine>
+  return (
+    <Cont>
+      <HeaderCont>
+        <LeftLine bkcolor = {divcolor[theme]}></LeftLine>
         <Title>{text}</Title>
-        <RightLine></RightLine>
-        </HeaderCont>
-
+        <RightLine bkcolor = {divcolor[theme]}></RightLine>
+      </HeaderCont>
     </Cont>
-}
+  );
+};
 
-export default Divider
-
+export default Divider;

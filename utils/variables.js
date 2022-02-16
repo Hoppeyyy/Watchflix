@@ -66,5 +66,9 @@ export const hovpopbg = {
   dark:'#333333',
 }
 
+export const divcolor = {
+  light: '#E50914',
+  dark: '#940404'
+}
 
 

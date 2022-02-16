@@ -6,14 +6,16 @@ import Comment from '../Comment';
 import Image from 'next/image';
 import down_arrow from '../../public/images/down-arrow.png';
 import up_arrow from '../../public/images/up-arrow.png';
-const arrows = {down_arrow, up_arrow}
 import CommentForm from '../CommentForm';
 import { v4 as uuidv4 } from "uuid";
 
+const arrows = {down_arrow, up_arrow}
 
 const Cont = styled.div`
     display:flex;
-    flex-direction:column;
+    flex-direction: column;
+    aligh-items: center;
+    justify-content: center;
 `
 
 const LeftLine = styled.hr`
