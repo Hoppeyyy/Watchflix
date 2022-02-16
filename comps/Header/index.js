@@ -4,7 +4,8 @@ import logo from '@/public/images/watchflix_logo.png';
 import ax from 'axios'
 import { useState } from 'react';
 import { TextField, Switch, InputLabel, Select, MenuItem, Checkbox, ListItemText, OutlinedInput, Box, Slider, FormControl, InputAdornment, IconButton } from '@mui/material';
-import { useSwitch } from '@mui/base/SwitchUnstyled';
+import { bgpopup, popuptext } from '@/utils/variables';
+import { useTheme } from '@/utils/provider';
 import SearchIcon from '@mui/icons-material/Search';
 import { Search, Radio, Button, Icon } from 'semantic-ui-react';
 
@@ -14,16 +15,17 @@ const FlexHeader = styled.div`
   justify-content:space-around;
 `
 
-
 const FlexRow = styled.div`
   display:flex;
   align-items:center;
   justify-content:center;
+  background-color:${props=>props.rowbg};
 `
 
 const FlexCol = styled.div`
   display:flex;
   flex-direction:column;
+  background-color:${props=>props.colbg};
 `
 
 const DurationCont = styled.div`
@@ -59,7 +61,8 @@ const sortby = [
 
 
 const Header = ({
-
+  rowbg = bgpopup,
+  colbg = bgpopup,
   onInput = (event) => {},
   changeView = () => {},
   changeColor = () => {},
@@ -67,6 +70,8 @@ const Header = ({
   // onHorizontal = () => {}
 
 }) => {
+  const { theme } = useTheme();
+
   const [genreName, setGenreName] = useState([]);
   const handleGenre = (event) => {
     const {
@@ -116,7 +121,7 @@ const Header = ({
   }
 
   return (
-    <FlexCol>
+    <FlexCol colbg={colbg[theme]}>
       <FlexHeader>
         <Image src={logo} alt='Watchflix logo' width={144} height={36} objectPosition="left center"/>
         {/* <Search fluid/> */}
@@ -131,7 +136,7 @@ const Header = ({
           }
           onChange={(event) => onInput(event.target.value)}
         />
-        <FlexRow>
+        <FlexRow rowbg={rowbg[theme]}>
           {/* <Input icon='search' type='text' placeholder='Search...' autoWidth/> */}
           <Switch onChange={changeColor}/>
           <Switch onChange={changeView}/>

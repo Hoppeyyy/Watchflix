@@ -57,7 +57,7 @@ const numMovies = 8806;
 export default function Test() {
   const r = useRouter();
   const [data, setData] = useState([]);
-  const {setTheme} = useTheme();
+  const {theme, setTheme} = useTheme();
   
   const [View, setView] = useState(false);
   const [sbr, setSbr] = useState(false);
@@ -187,6 +187,9 @@ export default function Test() {
         // onPosterBox={()=>{PosterBox}}
         // onHorizontal={()=>{Horizontal}}
         changeView={()=>{onChangeView()}}
+        changeColor={()=>{setTheme(
+          (theme === ('light') ? 'dark' : 'light')
+        )}}
       />
 {/* ====================== Input and Button area ==================================== */}
       {/* <input
