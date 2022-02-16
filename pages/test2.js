@@ -118,11 +118,8 @@ export default function Test() {
     
     console.log(item);
       console.log("clicked");
-      const b_obj = {
-        
-        ...result,
-      };
 
+      const b_obj = {};
       b_obj[item.imdbId] = item;
       setResult(b_obj);
   };

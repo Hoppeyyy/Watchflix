@@ -1,8 +1,6 @@
 import ax from "axios";
 import * as React from 'react';
 import styled from 'styled-components';
-
-=======
 import { useEffect, useState } from "react";
 import { useTheme, useResult } from "@/utils/provider";
 
