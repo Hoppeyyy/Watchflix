@@ -11,6 +11,8 @@ import Detail from '@/comps/Detail';
 import ClickButton from '@/comps/ClickButton';
 
 
+
+
 const Cont = styled.div`
     display:flex;
     flex-direction:column;

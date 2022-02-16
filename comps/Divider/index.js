@@ -25,6 +25,7 @@ const RightLine = styled.hr`
     border:none;
     width:800px;
     height:20px;
+    flex:1;
 `
 
 const Title = styled.h3`
