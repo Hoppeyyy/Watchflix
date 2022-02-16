@@ -5,13 +5,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Comment from "../Comment";
 
-import { bkColor, hovColor, hovBkColor, divcolor } from "@/utils/variables";
+import { bkColor, hovColor, popuptext, divcolor } from "@/utils/variables";
 
 const Cont = styled.div`
   display: flex;
   flex-direction: column;
   aligh-items: center;
   justify-content: center;
+  margin-bottom: 50px;
 `;
 
 const LeftLine = styled.hr`
@@ -41,6 +42,7 @@ const Title = styled.h3`
 const HeaderCont = styled.div`
   display: flex;
   align-items: center;
+  color: ${props => props.color}
 `;
 
 const Divider = ({ 
@@ -54,7 +56,7 @@ const Divider = ({
     <Cont>
       <HeaderCont>
         <LeftLine bkcolor = {divcolor[theme]}></LeftLine>
-        <Title>{text}</Title>
+        <Title color = {popuptext[theme]}>{text}</Title>
         <RightLine bkcolor = {divcolor[theme]}></RightLine>
       </HeaderCont>
     </Cont>

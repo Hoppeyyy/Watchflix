@@ -71,4 +71,9 @@ export const divcolor = {
   dark: '#940404'
 }
 
+export const paragrph = {
+  light: '#000000',
+  dark: '#c4c4c4'
+}
+
 

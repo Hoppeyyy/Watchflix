@@ -16,6 +16,7 @@ const Cont = styled.div`
     flex-direction:column;
     width:100vw;
     height:100vh;
+    padding: 0 55px;
 `
 
 const NavCont = styled.div`
@@ -26,7 +27,6 @@ const DetailCont = styled.div`
     display:flex;
     flex-direction:column;
 `;
-
 
 const ShareCont = styled.div`
     display:flex;

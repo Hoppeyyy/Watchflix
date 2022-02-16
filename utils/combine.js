@@ -28,12 +28,19 @@ console.log(movie);
 
 function movie(){
 
+// var stringSimilarity = require("string-similarity");
+
+// stringSimilarity.compareTwoStrings(
+//   movie(o).Title, movie(o).Title
+// );
+
 const result = movie2.reduce(function(res,obj){
 const found = movie1.find(function(o){
     return o.title == obj.Title;
   });
 
   if(found){
+    
     const newObj = Object.assign({},obj);
     newObj.description = found.description;
     newObj.release_year = found.release_year;
