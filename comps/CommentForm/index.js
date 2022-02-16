@@ -40,8 +40,10 @@ const TopCont = styled.div`
   width:70%;
   display:flex;
   flex-direction: row;
-  align-items: left;
+  align-items: center;
   justify-content: left;
+  margin-top:10px;
+  margin-bottom:10px;
 `
 const CmBox = styled.textarea`
   width:${props => props.mwidth};
@@ -52,6 +54,8 @@ const CmBox = styled.textarea`
   padding: 16px;
   box-sizing: border-box;
   margin-bottom: ${props => props.imarginB}px;
+  flex:1;
+  font-size:20px;
 `
 
 const BCont = styled.div`
@@ -61,6 +65,12 @@ const BCont = styled.div`
   margin-top: 80px;
 `
 
+const CommentCont = styled.div`
+  display:flex;
+  width:70%;
+  height:200px;
+
+`
 
 const CommentForm =({
   
@@ -98,11 +108,15 @@ const CommentForm =({
               placeholder={placeholder}
             />
             </TopCont>
+
+            <CommentCont>
             <CmBox
                 type="text"
                 width="350px"
                 height="180px"
-                placeholder='Leave your comment in here'/>
+                placeholder='Share your opinion about this movie!'/>
+            </CommentCont>
+
         <BCont>
         <SubButton 
         text = "Post"
