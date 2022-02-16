@@ -10,6 +10,7 @@ import up_arrow from "@/public/images/up-arrow.png";
 import CommentForm from "../CommentForm";
 import { v4 as uuidv4 } from "uuid";
 import { bkColor, hovColor, popuptext, divcolor } from "@/utils/variables";
+import Divider from "../Divider";
 
 const arrows = { down_arrow, up_arrow };
 
@@ -58,6 +59,11 @@ const Dropdown = styled.div`
   cursor: pointer;
 `;
 
+const CmtCont = styled.div`
+  width: 100%;
+
+`;
+
 const UserComments = styled.ul``;
 
 const PostBtn = styled.button`
@@ -74,10 +80,7 @@ const ReviewSection = ({
   text = "Reviews",
   down = down_arrow,
   up = up_arrow,
-  pk = "https://placekitten.com/200/300",
-  mypk = "https://placekitten.com/100/100",
 }) => {
-
   const [open, setOpen] = useState(true);
   const { theme, setTheme } = useTheme();
   const onClick = () => setOpen(!open);
@@ -114,45 +117,51 @@ const ReviewSection = ({
         <LeftLine bkcolor={divcolor[theme]}></LeftLine>
         <Title color={popuptext[theme]}>{text}</Title>
         {/* <Dropdown onClick={onClick}>&#x25BC;</Dropdown> */}
-        
+
         <Dropdown>
-        {open ? <Image
-            src={down_arrow}
-            width={44}
-            height={22}
-            onClick={onClick}
-          ></Image> 
-          :
-          <Image
-            src={up_arrow}
-            width={44}
-            height={22}
-            onClick={onClick}
-          ></Image>}          
+          {open ? (
+            <Image
+              src={down_arrow}
+              width={44}
+              height={22}
+              onClick={onClick}
+            ></Image>
+          ) : (
+            <Image
+              src={up_arrow}
+              width={44}
+              height={22}
+              onClick={onClick}
+            ></Image>
+          )}
         </Dropdown>
         <RightLine bkcolor={divcolor[theme]}></RightLine>
       </HeaderCont>
 
-      <form onSubmit={onSubmit}>
-        <UserComments>
-          {items.map((item) => (
-            <Comment comment={value} key={item.id}>
-              {"subtitle"}
-            </Comment>
-          ))}
+      <CmtCont>
+        <form onSubmit={onSubmit}>
+          <UserComments>
+            {items.map((item) => (
+              <Comment comment={value} key={item.id}>
+                {"subtitle"}
+              </Comment>
+            ))}
 
-          {open ? <Comment /> : null}
-        </UserComments>
+            {open ? <Comment /> : null}
+          </UserComments>
 
-        {/* <CommentBox value={value} 
+          {/* <CommentBox value={value} 
         onChange={e=>{setValue(e.currentTarget.value)}} 
         > */}
 
-        <CommentBox value={value} onChange={saveValue}></CommentBox>
-        <PostBtn type="submit" onClick={createItems}>
-          Post
-        </PostBtn>
-      </form>
+          <Divider text="Add review" />
+
+          <CommentBox value={value} onChange={saveValue}></CommentBox>
+          <PostBtn type="submit" onClick={createItems}>
+            Post
+          </PostBtn>
+        </form>
+      </CmtCont>
 
       {/* <CommentForm></CommentForm> */}
     </Cont>
