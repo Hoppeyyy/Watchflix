@@ -78,8 +78,6 @@ export default function Test() {
         console.log("set to posterbox");
       }
       console.log('clicked');
-      // g ? setView(true) : setView(false);
-      // h ? setView(false) : setView(true);
     };
     
     
@@ -109,24 +107,6 @@ export default function Test() {
       }, 1000);
     }
   };
-
-  // const PosterBox = () => {
-    // if (View === false) {
-      // setView(true);
-      // console.log("set to horizontal");
-    // } else if (View === true) {
-    //     return null
-    // }
-  // }
-  // const Horizontal = () => {
-    // if (View === true) {
-    //   setView(false);
-      // console.log("set to posterbox");
-    // } else if (View === false) {
-    //   return null
-    // }
-  // }
-
  
   const StoreResult = (item) => {
     console.log(item);

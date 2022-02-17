@@ -8,11 +8,16 @@ import { bgpopup, popuptext } from '@/utils/variables';
 import { useTheme } from '@/utils/provider';
 import SearchIcon from '@mui/icons-material/Search';
 import { Search, Radio, Button, Icon } from 'semantic-ui-react';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import Brightness2Icon from '@mui/icons-material/Brightness2';
+import GridOnIcon from '@mui/icons-material/GridOn';
+import WindowIcon from '@mui/icons-material/Window';
 
 const FlexHeader = styled.div`
   display:flex;
   align-items:center;
-  justify-content:space-around;
+  justify-content:space-between;
+  margin:10px;
 `
 
 const FlexRow = styled.div`
@@ -20,6 +25,7 @@ const FlexRow = styled.div`
   align-items:center;
   justify-content:center;
   background-color:${props=>props.rowbg};
+  flex:1;
 `
 
 const FlexCol = styled.div`
@@ -66,9 +72,6 @@ const Header = ({
   onInput = (event) => {},
   changeView = () => {},
   changeColor = () => {},
-  // onPosterBox = () => {},
-  // onHorizontal = () => {}
-
 }) => {
   const { theme } = useTheme();
 
@@ -122,35 +125,33 @@ const Header = ({
 
   return (
     <FlexCol colbg={colbg[theme]}>
+
       <FlexHeader>
-        <Image src={logo} alt='Watchflix logo' width={144} height={36} objectPosition="left center"/>
-        {/* <Search fluid/> */}
-        <TextField 
-          variant='outlined' 
-          size='small' 
-          sx={{width: '30%'}}
-          endAdornment={
-            <InputAdornment position='end'>
-              <IconButton aria-label='search' edge='end'/>
-            </InputAdornment>
-          }
-          onChange={(event) => onInput(event.target.value)}
-        />
+        <Image src={logo} alt='Watchflix logo' width={144} height={36} objectPosition="center"/>
+          <TextField 
+            label='Start your search here'
+            variant='outlined' 
+            size='small' 
+            sx={{ml:3, width: '50%'}}
+            endAdornment={
+              <InputAdornment position='end'>
+                <IconButton aria-label='search' edge='end'/>
+              </InputAdornment>
+            }
+            onChange={(event) => onInput(event.target.value)}
+          />
+          <SearchIcon/>
         <FlexRow rowbg={rowbg[theme]}>
-          {/* <Input icon='search' type='text' placeholder='Search...' autoWidth/> */}
-          <Switch onChange={changeColor}/>
-          <Switch onChange={changeView}/>
-          {/* <Radio toggle/> */}
-          {/* <Button.Group>
-            <Button icon onClick={() => {onPosterBox()}}>
-              <Icon name='grid layout'/>
-            </Button>
-            <Button icon >
-              <Icon name='list'/>
-            </Button>
-          </Button.Group> */}
+          <WbSunnyIcon/>
+            <Switch onChange={changeColor}/>
+          <Brightness2Icon/>
+            <Box sx={{width:20}}/>
+          <GridOnIcon/>
+            <Switch onChange={changeView}/>
+          <WindowIcon/>
         </FlexRow>
       </FlexHeader>
+
       <FlexRow>  
 
         <FormControl size='small' sx={{width: '20%'}}>     
