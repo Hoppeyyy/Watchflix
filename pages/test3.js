@@ -15,6 +15,7 @@ import PopUp from "comps/PopUp";
 import Pagination from "@/comps/Pagination";
 import PageBttn from '@/comps/PageBttn';
 import Detail from "@/comps/Detail";
+import newmovie from '@/utils/newmovie.json'
 
 
 const Cont = styled.div`
@@ -102,14 +103,14 @@ export default function Test() {
           },
         });
         console.log(res.data);
-        setDef(true);
+        // setDef(true);
         setData(res.data.lists);
         //nummovies numpages = Math.ceil(nummovies/5) numpages is a state
         timer = null;
       }, 1000);
     }
     else{
-      setDef(false);
+      // setDef(false);
     }
   };
  
@@ -203,7 +204,7 @@ export default function Test() {
                 }}
                 pages = {item.num_pages}
               />))
-              : data.slice(0, 10).map((item) => <HMovie 
+              : newmovie.slice(0, 10).map((item) => <HMovie 
                 title={item.Title} 
                 alt={item.Title}
                 year={item.release_year}
@@ -248,7 +249,7 @@ export default function Test() {
                 pages = {item.num_pages}
               />
             ))
-            : data.slice(0, 10).map((item) => <PosterBox 
+            : newmovie.slice(0, 10).map((item) => <PosterBox 
               title={item.Title} 
               alt={item.Title}
               year={item.release_year}

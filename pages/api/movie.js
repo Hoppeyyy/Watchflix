@@ -64,10 +64,10 @@ export default async function handler(req, res) {
   
   if(req.query.page){
     const numresults = req.query.num || 10;
-    lists = GoToPage(req.query.page, movie(), numresults);
+    lists = GoToPage(req.query.page, numresults);
   }
 
-  const numovies = lists.length;
+  const nummovies = lists.length;
   lists = lists.slice(0,10);
 
   res.status(200).json({lists, nummovies});
