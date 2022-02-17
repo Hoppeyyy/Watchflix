@@ -9,7 +9,7 @@ import up_arrow from '../../public/images/up-arrow.png';
 const arrows = {down_arrow, up_arrow}
 import CommentForm from '../CommentForm';
 import { v4 as uuidv4 } from "uuid";
-
+import NewCommentForm from '../NewCommentForm';
 
 const Cont = styled.div`
     display:flex;
@@ -82,30 +82,26 @@ const ReviewSection = ({
     // const [selected, setSelected] = useState(arrows.down_arrow)
     // const onArrowClick = () => setSelected(!selected)
 
-    const [items, setItems] = useState([])
+    // const [items, setItems] = useState([])
 
-    const createItems = () => {
-        setItems(oldItems => [...oldItems, {
-            id:1,
-            title:"new item",
-            itemId: uuidv4()
-        }])
-    }
+    // const createItems = () => {
+    //     setItems(oldItems => [...oldItems, {
+    //         id:1,
+    //         title:"new item",
+    //         itemId: uuidv4()
+    //     }])
+    // }
 
-    
+    // const [value, setValue] = useState('');
 
-    const [value, setValue] = useState('');
+    // const saveValue = e =>{
+    //     setValue(e.target.value)
+    // }
 
-    const saveValue = e =>{
-        setValue(e.target.value)
-    }
-
-    const onSubmit = (e) => {
-        e.preventDefault();
+    // const onSubmit = (e) => {
+    //     e.preventDefault();
         
-    };
-
-
+    // };
 
     return <Cont>
 
@@ -121,37 +117,14 @@ const ReviewSection = ({
         <RightLine></RightLine>
         </HeaderCont>
 
-        <form onSubmit={onSubmit}>
-
-    
         <UserComments>
-
-        
-
-        {items.map(item => (
-            <Comment comment={value} key={item.id}>{"subtitle"}</Comment>
-        ))}
         
         {open ? <Comment/>: null}
 
         </UserComments>
 
-        {/* <CommentBox value={value} 
-        onChange={e=>{setValue(e.currentTarget.value)}} 
-        > */}
-        
-        <CommentBox value={value} 
-        onChange={saveValue}
-        >
-        
-        </CommentBox>
-        <PostBtn type="submit" onClick={createItems}>Post</PostBtn>
-        
-
-        </form>
-
-        {/* <CommentForm></CommentForm> */}
-
+    <NewCommentForm></NewCommentForm>
+    
     </Cont>
 }
 
