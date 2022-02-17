@@ -65,10 +65,6 @@ export default function Test() {
   const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
  
-
-  const test = () => {
-    console.log('ok')
-  }
   const onChangeView = () => {
     if (View === false) {
       setView(true);
@@ -164,8 +160,6 @@ export default function Test() {
         onInput={(event) => {
           inputFilter(event)
         }}
-        // onPosterBox={()=>{PosterBox}}
-        // onHorizontal={()=>{Horizontal}}
         changeView={()=>{onChangeView()}}
         changeColor={()=>{setTheme(
           (theme === ('light') ? 'dark' : 'light')
@@ -176,7 +170,7 @@ export default function Test() {
         placeholder="Search"
         onChange={(e) => inputFilter(e.target.value)}
       /> */}
-      <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>
+      {/* <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>
         {sbr_type === "asc" ? "Sort By Ascending" : "Sort By Decending"}
       </Button>
       <Button
@@ -184,7 +178,7 @@ export default function Test() {
         onClick={() => setSbr(!sbr)}
       >
         Sory By Ratings
-      </Button>
+      </Button> */}
       {/* <Button onClick={onChangeView}>Change Layout</Button> */}
  {/* ====================== Default result show below  ==================================== */}     
     {/*<Wrap>View ?(<HMovieData/>):(<PosterBoxData/>)</Wrap>*/}
