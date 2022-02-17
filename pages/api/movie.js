@@ -64,7 +64,7 @@ export default async function handler(req, res) {
   
   if(req.query.page){
     const numresults = req.query.num || 10;
-    lists = GoToPage(req.query.page, numresults);
+    lists = GoToPage(req.query.page, newmovie, numresults);
   }
 
   const nummovies = lists.length;
