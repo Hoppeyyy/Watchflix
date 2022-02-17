@@ -19,15 +19,17 @@ export default async function handler(req, res) {
   
   var lists =[];
 
-  if(!txt){
-    lists = newmovie
-  } 
+  // if(!txt){
+  //   lists = newmovie
+  // } 
   
   if(txt){
     lists = filtering(newmovie,{
       Title:txt,
     })
-  }  
+  } else {
+    lists = newmovie
+  } 
 
   if(sort_rating){
     lists = sortArr(lists,{
@@ -41,7 +43,7 @@ export default async function handler(req, res) {
     lists = GoToPage(req.query.page, newmovie, numresults);
   }
 
-  //lists = lists.slice(0,10);
+  // lists = lists.slice(0,10);
 
   res.status(200).json(lists);
 }

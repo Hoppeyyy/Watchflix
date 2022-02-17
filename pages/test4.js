@@ -59,14 +59,12 @@ const numMovies = 8806;
 
 export default function Test() {
   const r = useRouter();
-  //const [Alldata,setAllData] = useState([]);
   const [data, setData] = useState([]);
   const [View, setView] = useState(false);
   const [sbr, setSbr] = useState(false);
   const [sbr_type, setSbrType] = useState("asc");
   const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
-  //const [Def, setDef] = useState(false);
  
   const onChangeView = () => {
     if (View === false) {
@@ -100,15 +98,12 @@ export default function Test() {
         });
         console.log(res.data);
         setData(res.data);
-        setCurPage(res.data);
         timer = null;
-
-        if(res.data <= 0){
-          alert("no movie found")
-        }
       }, 1000);
     }
+    else{
 
+    }
   };
  
   const StoreResult = (item) => {
@@ -123,7 +118,7 @@ export default function Test() {
   };
   
  
-// ============== Pagination 
+// ============== PaginatioWn 
 
   const PageClick = async(p) => {
     const res = await ax.get("/api/movie2", {
@@ -133,14 +128,13 @@ export default function Test() {
       }
     });
 
-    //setAllData(res.Alldata);
     setData(res.data);
-    //setCurPage(p);
+    setCurPage(p);
   }
 
   var butt_arr = [];
   var ind = 1;
-  for(var i = 0; i < numMovies.length; i += 10){
+  for(var i = 0; i < numMovies; i += 10){
     butt_arr.push(
       <PageBttn 
         onClick={PageClick.bind(this, ind)}
@@ -182,7 +176,7 @@ export default function Test() {
         <PagCont>
           <Wrap>
             {data && data.length > 0 
-            ? data.map((item) => (
+            ? data.slice(0, 10).map((item) => (
               <HMovie
                 title={item.Title}
                 alt={item.Title}
@@ -227,7 +221,7 @@ export default function Test() {
         <PagCont>
           <Wrap>
             {data && data.length > 0 
-            ? data.map((item) => (
+            ? data.slice(0, 10).map((item) => (
               <PosterBox
                 title={item.Title}
                 alt={item.Title}
@@ -270,5 +264,3 @@ export default function Test() {
     </Cont>
   );
 }
-
-
