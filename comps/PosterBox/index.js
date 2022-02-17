@@ -6,6 +6,7 @@ import { useTheme } from "@/utils/provider";
 import {
   bkColor,
   themes,
+  imgBKColor,
   bttnBkColor,
   hovBkColor,
   hovColor,
@@ -174,7 +175,7 @@ const PosterBox = ({
             src={src}
             fit={fit}
             alt={alt}
-            imgBkColor={hovBkColor[theme]}
+            imgBkColor={imgBKColor[theme]}
           />
         </FrtCont>
 

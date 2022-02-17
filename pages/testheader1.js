@@ -10,19 +10,31 @@ import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
 import Pagination from "@/comps/Pagination/index2";
 import PageBttn from '@/comps/PageBttn';
+import Header from '@/comps/Header';
 import newmovie from '@/utils/newmovie';
 
 const Cont = styled.div`
   width: 100%;
   height: 100%;
+  padding: 2rem 1rem;
 `;
+
+const HeadCont = styled.div`
+  width: 100%;
+  dislplay: flex; 
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  margin-bottom: 80px;
+`
 
 const PagCont = styled.div`
   width: 100%;
   dislplay: flex; 
   justify-content: center;
   align-items: center;
-  padding-bottom: 50px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
 `
 
 const Wrap = styled.div`
@@ -33,6 +45,7 @@ const Wrap = styled.div`
   align-items: center;
   margin-bottom: 70px;
 `;
+
 const Default = styled.div`
   width: 100%;
   display:${props=>props.display};
@@ -54,11 +67,13 @@ const PageCont = styled.div`
   align-items: center;
 `
 
+
 var timer = null;
-const numMovies = 8806;
+const numMovies = 1971;
 
 export default function Test() {
   const r = useRouter();
+  const { theme, setTheme } = useTheme();
   const [data, setData] = useState([]);
   const [View, setView] = useState(false);
   const [sbr, setSbr] = useState(false);
@@ -92,8 +107,8 @@ export default function Test() {
         const res = await ax.get("/api/movie2", {
           params: {
             txt: txt,
-            sort_rating: sbr,
-            sort_type: sbr_type,
+            // sort_rating: sbr,
+            // sort_type: sbr_type,
           },
         });
         console.log(res.data);
@@ -118,7 +133,7 @@ export default function Test() {
   };
   
  
-// ============== PaginatioWn 
+// ============== Pagination 
 
   const PageClick = async(p) => {
     const res = await ax.get("/api/movie2", {
@@ -138,7 +153,7 @@ export default function Test() {
     butt_arr.push(
       <PageBttn 
         onClick={PageClick.bind(this, ind)}
-        bgcolor = {cur_page === ind ? '#F9E7E7' : "#fff"}
+        bgcolor = {cur_page === ind ? '#B08584' : "none"}
         number = {ind}
       />
     );
@@ -155,12 +170,19 @@ export default function Test() {
 
   return (
     <Cont>
+      <HeadCont>
 {/* ====================== Input and Button area ==================================== */}
-      <input
-        placeholder="Search"
-        onChange={(e) => inputFilter(e.target.value)}
+      <Header 
+        onInput={(event) => {
+          inputFilter(event)
+        }}
+        changeView={()=>{onChangeView()}}
+        changeColor={()=>{setTheme(
+          (theme === ('light') ? 'dark' : 'light')
+        )}}
       />
-      <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>
+      
+      {/* <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>
         {sbr_type === "asc" ? "Sort By Ascending" : "Sort By Decending"}
       </Button>
       <Button
@@ -169,7 +191,9 @@ export default function Test() {
       >
         Sory By Ratings
       </Button>
-      <Button onClick={onChangeView}>Change Layout</Button>
+      <Button onClick={onChangeView}>Change Layout</Button> */}
+
+      </HeadCont>
 
 {/* ====================== Filtering result show below  ==================================== */}
       {View ? (
