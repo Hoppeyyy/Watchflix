@@ -3,113 +3,83 @@ import ax from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-const Cont = styled.div`
-  display:flex;
-  width: 100%;
-  dislplay: flex; 
-  justify-content: center;
-  align-items: center;
-`
 
-const ContCont = styled.div`
-  display:flex;
-  width: 60%;
-  justify-content:space-between;
-`
 
-const FirstBttn = styled.a`
-  font-size: 1.5em;
-  color:${props=>props.firstColor};
-  padding:10px;
-`
-
-const PrevBttn = styled.a`
-  font-size: 1.5em;
-  color:${props=>props.prevColor};
-  padding:10px;
-`
-
-const NextBttn = styled.a`
-  font-size: 1.5em;
-  color:${props=>props.nextColor};
-  padding:10px;
-`
-
-const LastBttn = styled.a`
-  font-size: 1.5em;
-  color:${props=>props.lastColor};
-  padding:10px;
-`
-
-const BackCont = styled.div`
-    
-`
-const NextCont = styled.div`
-    
-`
-
-const PageNum = styled.button`
-    border:none;
-    background-color:transparent;
-    cursor:pointer;
-`
-
-const Pagination = ({
-    nextColor="black",
-    prevColor="black",
-    lastColor="pink",
-    firstColor="yellow",
-    
-}) => {
-
-    const numMovies = 45000;
-    const [cur_page, setCurPage] = useState(0);
-    const [bs, setBS] = useState([]);
-
-    const PageClick = async(p)=>{
-        const res = await ax.get("/api/movie2", {
-          params:{
-            page:p,
-            num:15
-          }
-        });
-        console.log(res.data);
-        setBS(res.data);
-        setCurPage(p);
-      }
-
-    var pageArr = [];
-    var ind = 1;
-    for(var i = 0; i<numMovies; i+= 15){
-      pageArr.push(
-        <PageNum 
-        onClick={PageClick.bind(this, ind)}
-        style={{color:cur_page===ind?"red":"black"}}
-        >{ind}</PageNum>
-      );
-      ind++;
+const  Pagination = ({ 
+  data,  
+  RenderComponent,
+  pageLimit, 
+  dataLimit }) =>{
+    const [pages] = useState(Math.round(data.length / dataLimit));
+    const [currentPage, setCurrentPage] = useState(1);
+  
+    function goToNextPage() {
+      setCurrentPage((page) => page + 1);
     }
+  
+    function goToPreviousPage() {
+      setCurrentPage((page) => page - 1);
+    }
+  
+    function changePage(event) {
+      const pageNumber = Number(event.target.textContent);
+      setCurrentPage(pageNumber);
+    }
+  
+    const getPaginatedData = () => {
+      const startIndex = currentPage * dataLimit - dataLimit;
+      const endIndex = startIndex + dataLimit;
+      return data.slice(startIndex, endIndex);
+    };
+  
+    const getPaginationGroup = () => {
+      let start = Math.floor((currentPage - 1) / pageLimit) * pageLimit;
+      return new Array(pageLimit).fill().map((_, idx) => start + idx + 1);
+    };
+  
+    return <div>
+    {/* show the posts, 10 posts at a time */}
+    <div className="dataContainer">
+      {getPaginatedData().map((d, idx) => (
+        <RenderComponent key={idx} data={d} />
+      ))}
+    </div>
+
+    {/* show the pagiantion
+        it consists of next and previous buttons
+        along with page numbers, in our case, 5 page
+        numbers at a time
+    */}
+    <div className="pagination">
+      {/* previous button */}
+      <button
+        onClick={goToPreviousPage}
+        className={`prev ${currentPage === 1 ? 'disabled' : ''}`}
+      >
+        prev
+      </button>
+
+      {/* show page numbers */}
+      {getPaginationGroup().map((item, index) => (
+        <button
+          key={index}
+          onClick={changePage}
+          className={`paginationItem ${currentPage === item ? 'active' : null}`}
+        >
+          <span>{item}</span>
+        </button>
+      ))}
+
+      {/* next button */}
+      <button
+        onClick={goToNextPage}
+        className={`next ${currentPage === pages ? 'disabled' : ''}`}
+      >
+        next
+      </button>
+    </div>
+  </div>
+      
     
-    pageArr = pageArr.slice(cur_page-5 < 0 ? 0 : cur_page-2, cur_page+3);
-
-    return <Cont>
-      <ContCont>
-        <BackCont>
-          <FirstBttn href="#" nextColor={firstColor}>&laquo;</FirstBttn>
-          <PrevBttn href="#" prevColor={prevColor}>&lt;</PrevBttn>
-        </BackCont>
-
-        {/* <PageNum>1</PageNum> */}
-        <div>
-        {pageArr}
-        </div>
-
-        <NextCont>
-          <NextBttn href="#" nextColor={nextColor}>&gt;</NextBttn>
-          <LastBttn href="#" nextColor={lastColor}>&raquo;</LastBttn>
-        </NextCont>
-      </ContCont>
-    </Cont>
-}
-
+  }
 export default Pagination
