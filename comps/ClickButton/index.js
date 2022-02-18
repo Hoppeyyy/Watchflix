@@ -1,13 +1,7 @@
 import styled from 'styled-components';
 import React,{useEffect, useState } from 'react';
 import { useTheme } from "@/utils/provider";
-import {
-  bkColor,
-  themes,
-  bttnBkColor,
-  hovBkColor,
-  hovColor,
-} from "@/utils/variables";
+import { bkColor, hovColor, hovBkColor, hBttnBkColor } from "@/utils/variables";
 import PopUp from 'comps/PopUp';
 import { useRouter } from 'next/router';
 import Link from "next/link";
@@ -35,14 +29,13 @@ const ButtonInput = styled.button`
     justify-content:center;
     box-shadow: ${props=>props.bshadow}; 
     cursor: pointer;
-    :hover{
-        transform: scale(0.85);
-        transition-duration: 0.5s;
+    :hover {
+        background-color: ${props => props.hovBkColor};
+        color: ${props => props.hovColor};
     }
 `;
 
 const ButtonText = styled.p`
-    color:${props=>props.color} ;
     font-size: ${props=>props.fontSize};
     text-align:center;
     font-weight: ${props=>props.fontWeight};
@@ -59,7 +52,6 @@ const ClickButton = ({
     width = 360,
     height = 72,
     bshadow = "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
-    color="#000",
     fontSize="24px",
     justify="center",
 
@@ -98,11 +90,11 @@ const ClickButton = ({
             mright={marginright}
             justify={justify}
             cwidth={cwidth}
-            onClick={togglePopup}
+            onClick={togglePopup}            
         >
         {isOpen && <PopUp src={uuid} 
         myurl={uuid}
-     handleClose={togglePopup}
+        handleClose={togglePopup}
      
    />}
             <ButtonInput
@@ -112,9 +104,10 @@ const ClickButton = ({
                 width={width}
                 height={height}
                 bshadow={bshadow}
+                hovBkColor={hovBkColor[theme]}
+                hovColor={hovColor[theme]}
             >
                 <ButtonText
-                    color={color}
                     fontSize={fontSize}
                 >
                     {text}</ButtonText>
