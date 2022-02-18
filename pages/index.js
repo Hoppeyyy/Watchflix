@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <Cont>
      <Header
-      onInputChange={(e)=>inputFilter(e.target.value)}
+      // onInputChange={(e)=>inputFilter(e.target.value)}
      />
     </Cont>
   )

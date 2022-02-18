@@ -15,6 +15,8 @@ import PopUp from "comps/PopUp";
 import Pagination from "@/comps/Pagination";
 import PageBttn from '@/comps/PageBttn';
 import Detail from "@/comps/Detail";
+import newmovie from '@/utils/newmovie.json'
+
 
 const Cont = styled.div`
   width: 100%;
@@ -63,14 +65,12 @@ const numMovies = 8806;
 
 export default function Test() {
   const r = useRouter();
-  const [Alldata,setAllData] = useState([]);
   const [data, setData] = useState([]);
   const [View, setView] = useState(false);
   const [sbr, setSbr] = useState(false);
   const [sbr_type, setSbrType] = useState("asc");
   const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
-  const [Def, setDef] = useState(false);
  
   const onChangeView = () => {
     if (View === false) {
@@ -103,13 +103,14 @@ export default function Test() {
           },
         });
         console.log(res.data);
-        setDef(true);
-        setData(res.data);
+        // setDef(true);
+        setData(res.data.lists);
+        //nummovies numpages = Math.ceil(nummovies/5) numpages is a state
         timer = null;
       }, 1000);
     }
     else{
-      setDef(false);
+      // setDef(false);
     }
   };
  
@@ -135,7 +136,6 @@ export default function Test() {
       }
     });
 
-    setAllData(res.Alldata);
     setData(res.data);
     setCurPage(p);
   }
@@ -157,6 +157,8 @@ export default function Test() {
   if(cur_page < 5){
     lastpage = 10;
   }
+
+  //if lastpage > numpages{ lastpage = numpages}
   butt_arr = butt_arr.slice(cur_page-5 < 0 ? 0 : cur_page-5, lastpage);
 
 // ============== Pagination ends
@@ -202,7 +204,7 @@ export default function Test() {
                 }}
                 pages = {item.num_pages}
               />))
-              : movie().slice(0, 10).map((item) => <HMovie 
+              : newmovie.slice(0, 10).map((item) => <HMovie 
                 title={item.Title} 
                 alt={item.Title}
                 year={item.release_year}
@@ -247,7 +249,7 @@ export default function Test() {
                 pages = {item.num_pages}
               />
             ))
-            : movie().slice(0, 10).map((item) => <PosterBox 
+            : newmovie.slice(0, 10).map((item) => <PosterBox 
               title={item.Title} 
               alt={item.Title}
               year={item.release_year}

@@ -26,31 +26,32 @@ for (var i = 0; i < movie2.length; i++){
 console.log(movie);
 */
 
-function movie(){
+// function movie(){
 
-const result = movie2.reduce(function(res,obj){
-const found = movie1.find(function(o){
-    return o.title == obj.Title;
-  });
+// const result = movie2.reduce(function(res,obj){
+// const found = movie1.find(function(o){
+//     return o.title == obj.Title;
+//   });
 
-  if(found){
-    const newObj = Object.assign({},obj);
-    newObj.description = found.description;
-    newObj.release_year = found.release_year;
-    //newObj.duration = found.duration;
-    newObj.duration = parseInt(found.duration);
-    newObj.country = found.country;
-    newObj.cast = found.cast;
-    newObj.director = found.director;
+//   if(found){
+    
+//     const newObj = Object.assign({},obj);
+//     newObj.description = found.description;
+//     newObj.release_year = found.release_year;
+//     //newObj.duration = found.duration;
+//     newObj.duration = parseInt(found.duration);
+//     newObj.country = found.country;
+//     newObj.cast = found.cast;
+//     newObj.director = found.director;
 
-    res.push(newObj);
-  }
-  return res;
+//     res.push(newObj);
+//   }
+//   return res;
   
-},[]);
-//console.log(result);
-return result
-}
+// },[]);
+// //console.log(result);
+// return result
+// }
 
 // movie();
 // --------------------------- filtering ---------------------------------- //
@@ -156,6 +157,7 @@ console.log(sortArr(movie(),{
   //key:'duration', type:"asc"
 }))
 */
-export {movie, filtering, sortArr }
+// export {movie, filtering, sortArr }
+export { filtering, sortArr }
 
 
