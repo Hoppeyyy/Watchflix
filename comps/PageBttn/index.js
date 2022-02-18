@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { useEffect, useState } from "react";
 import { useTheme, useResult } from "@/utils/provider";
-import { hovColor, themes, bgpopup, popuptext, hovpopbg, hBttnBkColor } from "@/utils/variables";
+import { hovBttnColor, themes, bgpopup, popuptext, hovpopbg, hBttnBkColor } from "@/utils/variables";
 
 
 const Cont = styled.div`
@@ -22,15 +22,16 @@ const Btn = styled.button`
   border:none;
   border-radius: 50%;  
   background-color:${(props)=>props.bgcolor};
-  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.20));
+  color: ${props => props.color};
   cursor: pointer;
   
   :hover{
     background:${(props)=>props.hovpopbg};
+    color: ${props => props.hovcolor};
   }
 
   :active{
-    background-color: "pink";
+    background-color: ${(props)=>props.actpopbg};
   }
 `
 const PageBttn = ({
@@ -38,11 +39,17 @@ const PageBttn = ({
   bgcolor = null,
   onClick=()=>{},
 })=>{
+
   const { theme, setTheme } = useTheme();
+  
   return<Cont>
     <Btn 
       onClick={onClick}
-      bgcolor={bgcolor} hovpopbg={hBttnBkColor[theme]}
+      bgcolor={bgcolor}
+      color = {popuptext[theme]}
+      hovpopbg={hBttnBkColor[theme]}
+      actpopbg={hBttnBkColor[theme]}
+      hovcolor = {hovBttnColor[theme]}
     >{btnnumber}</Btn>
   </Cont>
 }

@@ -1,48 +1,45 @@
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import styled from 'styled-components';
-import React from 'react';
+import Head from "next/head";
+import { useRouter } from "next/router";
+import styled from "styled-components";
+import React from "react";
 import { useTheme } from "@/utils/provider";
 
-import ReviewSection from '@/comps/ReviewSection';
-import Divider from '@/comps/Divider';
-import Header from '@/comps/Header';
-import Detail from '@/comps/Detail';
-import ClickButton from '@/comps/ClickButton';
-
-
-
+import ReviewSection from "@/comps/ReviewSection";
+import Divider from "@/comps/Divider";
+import Header from "@/comps/Header";
+import Detail from "@/comps/Detail";
+import ClickButton from "@/comps/ClickButton";
 
 const Cont = styled.div`
-    display:flex;
-    flex-direction:column;
-    width:100vw;
-    height:100vh;
-`
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+`;
 
 const NavCont = styled.div`
-    margin:50px;    
+  margin: 50px;
 `;
 
 const DetailCont = styled.div`
-    display:flex;
-    flex-direction:column;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 `;
-
 
 const ShareCont = styled.div`
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    height:500px;
-    width:100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 500px;
+  width: 100%;
 `;
 
-
 export default function DetailPage() {
+  const { theme, setTheme } = useTheme();
 
-  const {theme, setTheme} = useTheme();
-  
   return (
     <Cont>
       <Head>
@@ -56,19 +53,17 @@ export default function DetailPage() {
       </NavCont>
 
       <DetailCont>
-          <Divider text="Detail"></Divider>
-          <Detail></Detail>
-          </DetailCont>
+        <Divider text="Detail"></Divider>
+        <Detail></Detail>
+      </DetailCont>
 
-        <ShareCont>
+      <ShareCont>
         <ClickButton></ClickButton>
-        </ShareCont>
+      </ShareCont>
 
       <ReviewSection></ReviewSection>
 
-      <Divider text="Add Review"></Divider>
-
-
+      {/* <Divider text="Add Review"></Divider> */}
     </Cont>
-  )
+  );
 }

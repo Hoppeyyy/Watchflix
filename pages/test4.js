@@ -63,7 +63,6 @@ var timer = null;
 
 export default function Test() {
   const r = useRouter();
-  //const [Alldata,setAllData] = useState([]);
   const [data, setData] = useState([]);
   const [View, setView] = useState(false);
   const [sbr, setSbr] = useState(false);
@@ -110,13 +109,11 @@ export default function Test() {
       
         //setCurPage(res.data);
         timer = null;
-
-        if(res.data <= 0){
-          alert("no movie found")
-        }
       }, 1000);
     }
+    else{
 
+    }
   };
  console.log(movie_num);
  */
@@ -132,7 +129,7 @@ export default function Test() {
   };
   
  
-// ============== Pagination 
+// ============== PaginatioWn 
 
 const PageClick = async(p,txt) => {
 console.log(txt);
@@ -347,5 +344,3 @@ console.log(data)
     </Cont>
   );
 }
-
-

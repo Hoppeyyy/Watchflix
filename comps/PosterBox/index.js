@@ -6,6 +6,7 @@ import { useTheme } from "@/utils/provider";
 import {
   bkColor,
   themes,
+  imgBKColor,
   bttnBkColor,
   hovBkColor,
   hovColor,
@@ -75,8 +76,13 @@ const TitCont = styled.div`
 const Title = styled.h3`
   width: 100%;
   text-align: left;
-  word-break: break-all;
+  // word-break: break-all;
   margin-bottom: 1em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const SubWrap = styled.div`
@@ -169,7 +175,7 @@ const PosterBox = ({
             src={src}
             fit={fit}
             alt={alt}
-            imgBkColor={hovBkColor[theme]}
+            imgBkColor={imgBKColor[theme]}
           />
         </FrtCont>
 

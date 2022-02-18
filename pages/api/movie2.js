@@ -19,15 +19,17 @@ export default async function handler(req, res) {
   
   var lists =[];
 
-  if(!txt){
-    lists = newmovie
-  } 
+  // if(!txt){
+  //   lists = newmovie
+  // } 
   
   if(txt){
     lists = filtering(newmovie,{
       Title:txt,
     })
-  }  
+  } else {
+    lists = newmovie
+  } 
 
   if(sort_rating){
     lists = sortArr(lists,{
