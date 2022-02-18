@@ -149,9 +149,8 @@ const ReviewSection = ({
        //---------------------User Input COMMENT--------------------------
        const [userInput, setUserInput] = useState('');
        const [todoList, setTodoList] = useState([])
-   
+  
        const [userNickname, setUserNickname] = useState('');
-       const [nameList, setNameList] = useState([])
    
        //Nickname input
        // const handleChangeName = (e) => {
@@ -162,35 +161,62 @@ const ReviewSection = ({
        // }
    
        //Comment box input
+
+       //-------------Function for comment---------------------
        const handleChange = (e) => {
            e.preventDefault()
    
            setUserInput(e.target.value)
            console.log(userInput)
    
-           setUserNickname(e.target.value)
-           console.log(userNickname)
+          //  setUserNickname(e.target.value)
+          //  console.log(userNickname)
        }
+          //2 functions and pass in 1 object
+
+       //----------Function for name--------------------
+        const handleChangeName = (e) => {
+            e.preventDefault()
+            
+            setUserNickname(e.target.value)
+            console.log(userNickname)
+        }
+
    
-       const handleSubmit = (e) => {
-           e.preventDefault()
-   
-           setTodoList([
-               userInput,
-               // userNickname,
-               ...todoList
-           ])
-   
-           setNameList([
-               userNickname,
-               ...todoList
-           ])
-       }
+        const handleSubmit = (e) => {
+            e.preventDefault()
+
+            setTodoList([
+                // userInput,
+                // userNickname,
+                {comment:userInput, nickname:userNickname, date:todayDate},
+                ...todoList
+            ])
+
+            // setNameList([
+            //     userNickname,
+            //     ...todoList
+            // ])
+        }
        //-------------------------End Comment-------------------------------------
    
+       //-------------------------Test Date-----------------------------------
+      //  const [dateTime, setDateTime] = useState(new Date());
+
+      //  useEffect(() => {
+      //      const id = setInterval(() => setDateTime(new Date()), 1000);
+      //      return () => {
+      //          clearInterval(id);
+      //      }
+      //  }, []);
+
+      const [todayDate, setTodayDate] = useState();
+      const today = new Date().toDateString();
+      
+       //----------------------------------------------------------------------
 
     return <Cont>
-
+        {/* <h4>{`${dateTime.toLocaleDateString()}`}</h4> */}
         <HeaderCont>
         <LeftLine></LeftLine>
         <Title>{text}</Title>
@@ -217,7 +243,6 @@ const ReviewSection = ({
         <RightLine bkcolor={divcolor[theme]}></RightLine>
       </HeaderCont>
 
-
         <UserComments>
         
         {open ? 
@@ -227,8 +252,9 @@ const ReviewSection = ({
             todoList.length >=1 ? todoList.map((o, i) => {
                 return <CommentCont key={i}>
                 <Comment 
-                comment={o} 
-                username={o.userNickname}
+                comment={o.comment} 
+                username={o.nickname}
+                date={o.date}
                 >
                 </Comment>
                 </CommentCont>
@@ -238,7 +264,6 @@ const ReviewSection = ({
 
     </div>
         
-        
         : null}
 
         </UserComments>
@@ -247,7 +272,7 @@ const ReviewSection = ({
         <form>
             <NameCont>
             <NameText>Nickname</NameText>
-            <NameInput type="textarea" onChange={handleChange}></NameInput>
+            <NameInput type="textarea" onChange={handleChangeName}></NameInput>
             </NameCont>
 
             <CommentBox type="textarea" onChange={handleChange} 
@@ -259,22 +284,6 @@ const ReviewSection = ({
             </ButtonCont>
             
         </form>
-        {/* <ul>
-            {
-                todoList.length >=1 ? todoList.map((o, i) => {
-                    return <CommentCont key={i}>
-                    <Comment 
-                    comment={o} 
-                    username={o.userNickname}
-                    >
-                    </Comment>
-                    </CommentCont>
-                })
-                : 'Enter a comment item'
-            }
-
-        </ul> */}
-    
 
     </Cont>
 

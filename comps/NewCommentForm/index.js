@@ -64,17 +64,24 @@ const NewCommentForm = ({
 
         setUserInput(e.target.value)
         console.log(userInput)
+    }
 
+    const handleChangeName = (e) => {
+        e.preventDefault()
+        
         setUserNickname(e.target.value)
         console.log(userNickname)
     }
+
+  //2 functions and pass in 1 object  
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
         setTodoList([
-            userInput,
+            // userInput,
             // userNickname,
+            {comment:userInput, nickname:userNickname},
             ...todoList
         ])
 
@@ -96,9 +103,7 @@ const NewCommentForm = ({
     //     console.log(userNickname)
     // }
 
-
     //-------------------------End Name---------------------------------------
-
 
     return <Cont>
         
@@ -106,7 +111,7 @@ const NewCommentForm = ({
         <form>
             <NameCont>
             <label>Nickname</label>
-            <input type="textarea" onChange={handleChange}></input>
+            <input type="textarea" onChange={handleChangeName}></input>
             </NameCont>
 
             <CommentBox type="textarea" onChange={handleChange} 
@@ -123,8 +128,8 @@ const NewCommentForm = ({
                 todoList.length >=1 ? todoList.map((o, i) => {
                     return <CommentCont key={i}>
                     <Comment 
-                    comment={o} 
-                    username={o.userNickname}
+                    comment={o.comment} 
+                    username={o.nickname}
                     >
                     </Comment>
                     </CommentCont>
