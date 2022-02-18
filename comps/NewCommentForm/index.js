@@ -21,6 +21,10 @@ const CommentBox = styled.input`
     height:50px;
 `
 
+const CommentCont = styled.div`
+
+`
+
 const SubmitBtn = styled.button`
     width:100px;
     height:40px;
@@ -70,6 +74,7 @@ const NewCommentForm = ({
 
         setTodoList([
             userInput,
+            // userNickname,
             ...todoList
         ])
 
@@ -95,12 +100,8 @@ const NewCommentForm = ({
     //-------------------------End Name---------------------------------------
 
 
-
-
     return <Cont>
         
-        <Comment></Comment>
-
         <h1>comment form</h1>
         <form>
             <NameCont>
@@ -120,7 +121,13 @@ const NewCommentForm = ({
         <ul>
             {
                 todoList.length >=1 ? todoList.map((o, i) => {
-                    return <Comment key={i} comment={o} username={o.username}></Comment>
+                    return <CommentCont key={i}>
+                    <Comment 
+                    comment={o} 
+                    username={o.userNickname}
+                    >
+                    </Comment>
+                    </CommentCont>
                 })
                 : 'Enter a comment item'
             }
