@@ -12,7 +12,23 @@ const Cont = styled.div`
     flex-direction:column;
 `
 
+const NameCont = styled.div`
+    
+`
 
+const CommentBox = styled.input`
+    width:400px;
+    height:50px;
+`
+
+const SubmitBtn = styled.button`
+    width:100px;
+    height:40px;
+`
+
+const ButtonCont = styled.div`
+
+`
 
 
 const NewCommentForm = ({
@@ -23,18 +39,30 @@ const NewCommentForm = ({
     
 }) => {
 
-    //---------------------User Input-------------------------
-
+    //---------------------User Input COMMENT--------------------------
     const [userInput, setUserInput] = useState('');
     const [todoList, setTodoList] = useState([])
 
+    const [userNickname, setUserNickname] = useState('');
+    const [nameList, setNameList] = useState([])
+
+    //Nickname input
+    // const handleChangeName = (e) => {
+    //     e.preventDefault()
+
+    //     setUserNickname(e.target.value)
+    //     console.log(userNickname)
+    // }
+
+    //Comment box input
     const handleChange = (e) => {
         e.preventDefault()
 
         setUserInput(e.target.value)
         console.log(userInput)
 
-
+        setUserNickname(e.target.value)
+        console.log(userNickname)
     }
 
     const handleSubmit = (e) => {
@@ -44,9 +72,30 @@ const NewCommentForm = ({
             userInput,
             ...todoList
         ])
-    }
 
-    //-------------------------------------------------------------
+        setNameList([
+            userNickname,
+            ...todoList
+        ])
+    }
+    //-------------------------End Comment-------------------------------------
+
+    //-------------------------User Input NAME--------------------------------
+
+    // const [userNickname, setUserNickname] = useState('');
+    // const [nameList, setNameList] = useState([])
+
+    // const handleChangeName = (e) => {
+    //     e.preventDefault()
+    //     setUserNickname(e.target.value)
+    //     console.log(userNickname)
+    // }
+
+
+    //-------------------------End Name---------------------------------------
+
+
+
 
     return <Cont>
         
@@ -54,21 +103,28 @@ const NewCommentForm = ({
 
         <h1>comment form</h1>
         <form>
-            
+            <NameCont>
             <label>Nickname</label>
             <input type="textarea" onChange={handleChange}></input>
+            </NameCont>
 
-            <input type="textarea"></input>
+            <CommentBox type="textarea" onChange={handleChange} 
+            placeholder="Share your opinion about this movie!">
+            </CommentBox>
 
-            <button onClick={handleSubmit}>Submit</button>
+            <ButtonCont>
+                <SubmitBtn onClick={handleSubmit}>Submit</SubmitBtn> 
+            </ButtonCont>
+            
         </form>
         <ul>
             {
-                todoList.length >=1 ? todoList.map((todo, idx) => {
-                    return <Comment key={idx} comment={todo}></Comment>
+                todoList.length >=1 ? todoList.map((o, i) => {
+                    return <Comment key={i} comment={o} username={o.username}></Comment>
                 })
                 : 'Enter a comment item'
             }
+
         </ul>
         
     </Cont>
