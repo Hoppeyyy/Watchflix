@@ -6,11 +6,12 @@ import { useTheme } from "@/utils/provider";
 import {
   bkColor,
   themes,
-  popuptext,
+  basicColor,
   imgBKColor,
-  bttnBkColor,
+  bttnBkColorH,
   hovBkColor,
-  hovColor, hBttnBkColor,
+  hovPColor,btnColor,
+  hBttnBkColor,
 } from "@/utils/variables";
 import { movie } from "@/utils/combine";
 
@@ -22,7 +23,7 @@ const Cont = styled.div`
   margin-right: 50px;
   margin-bottom: 30px;
 
-  :nth-child(2n){
+  :nth-child(2n) {
     margin-right: 0px;
   }
 
@@ -46,12 +47,13 @@ const Img = styled.img`
   src: ${(props) => props.src};
   object-fit: ${(props) => props.fit};
   flex: 1;
-  background-color: ${props => props.imgBkColor};
+  background-color: ${(props) => props.imgBkColor};
   overflow: hidden;
 
-  @media only screen and (min-width: 1px) and (max-width: 600px){
+  @media only screen and (min-width: 1px) and (max-width: 600px) {
     width: 100%;
-    max-height: 240px; min-height: 220px;
+    max-height: 240px;
+    min-height: 220px;
     background-position: top 0%;
     object-fit: cover;
   }
@@ -68,17 +70,16 @@ const DescCont = styled.div`
 
   :hover {
     background-color: ${(props) => props.bkColor};
-    :h3, p {
-      color: ${props => props.hText}
-    }
-    :p {
-      color: ${props => props.hText}
-    }
   }
 
-  // :hover button {
-  //   background-color: ${(props) => props.bttnbkColor};
-  // }
+  :hover .hoverTxt {
+    color: ${(props) => props.hText};
+  }
+
+  :hover .hovBttn {
+    background-color: ${(props) => props.hovBnColor};
+    color: ${(props) => props.hovBTxtColor};
+  }
 
   @media only screen and (max-width: 600px) {
     width: 100%;
@@ -107,7 +108,7 @@ const SubWrap = styled.div`
 
 const Title = styled.h3`
   margin-bottom: 1em;
-  color: ${props => props.color};
+  color: ${(props) => props.color};
 
   @media only screen and (max-width: 600px) {
     width: 95%;
@@ -118,13 +119,13 @@ const Title = styled.h3`
 const SubText = styled.p`
   width: 95%;
   font-size: 16px;
-  font-weight: 600;  
+  font-weight: 600;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: ${props => props.color};
+  color: ${(props) => props.color};
 
   @media only screen and (max-width: 600px) {
     font-size: 14px;
@@ -132,14 +133,15 @@ const SubText = styled.p`
 `;
 
 const Desc = styled.p`
-  color: ${props => props.color};
+  color: ${(props) => props.color};
   @media only screen and (min-width: 600px) {
     padding: 0.8rem;
     -webkit-line-clamp: 8;
   }
 
   @media only screen and (max-width: 600px) {
-    width: 95%; height: 120px;
+    width: 95%;
+    height: 120px;
     font-size: 12px;
     padding: 0.3rem;
     overflow: hidden;
@@ -170,7 +172,8 @@ const Btn = styled.button`
   min-width: 150px;
   height: 50px;
   padding: 5px 10px;
-  background-color: ${props => props.bkColor};
+  color: ${props => props.color};
+  background-color: ${(props) => props.bttnBkColor};
   text-transform: uppercase;
   border-radius: 50px;
   box-sizing: border-box;
@@ -180,15 +183,17 @@ const Btn = styled.button`
   cursor: pointer;
 
   :hover {
-    background-color: ${props => props.hovBkColor};
-    color: ${props => props.hovColor};
+    background-color: ${(props) => props.hovBkColor};
+    color: ${(props) => props.hovColor};
+    transform: scale(0.95);
+    transition-duration: 0.3s;
   }
 
   @media only screen and (max-width: 600px) {
     max-width: 30px;
     max-height: 30px;
     font-size: 12px;
-    background-color: ${(props) => props.bkColor};
+    // background-color: ${(props) => props.bkColor};
     text-transform: uppercase;
     border-radius: 50px;
     border: none;
@@ -208,7 +213,8 @@ const HMovie = ({
   text = "Movie description",
   bttnTxt = "check this movie",
   title = "Undefined",
-  hText='#000',
+  hText = "#000",
+  hovBttnColor = "#333333",
   onClick = () => {},
 }) => {
   const { theme, setTheme } = useTheme();
@@ -224,20 +230,37 @@ const HMovie = ({
         imgBkColor={imgBKColor[theme]}
       />
 
-      <DescCont width={conWidth} bkColor={bkColor[theme]} bttnbkColor={bttnBkColor[theme]}>
+      <DescCont
+        hText={hText}
+        width={conWidth}
+        bkColor={bkColor[theme]}
+        hovBnColor={bttnBkColorH[theme]}
+        hovBTxtColor={btnColor[theme]}
+      >
         <Top>
-          <Title color={popuptext[theme]}>{title}</Title>
+          <Title className="hoverTxt" color={basicColor[theme]}>
+            {title}
+          </Title>
           <SubWrap>
-            <SubText color={popuptext[theme]}>{year}</SubText>
-            <SubText color={popuptext[theme]}>{place}</SubText>
+            <SubText className="hoverTxt" color={basicColor[theme]}>
+              {year}
+            </SubText>
+            <SubText className="hoverTxt" color={basicColor[theme]}>
+              {place}
+            </SubText>
           </SubWrap>
         </Top>
-        <Desc color={popuptext[theme]} hText = {hText}>{text}</Desc>
+        <Desc color={basicColor[theme]} className="hoverTxt">
+          {text}
+        </Desc>
         <BtnCont>
           <Btn
-            bkColor={hBttnBkColor[theme]}
+            className="hovBttn"
+            color={basicColor[theme]}
+            hovBttnColor={hovPColor[theme]}
+            bttnBkColor={hBttnBkColor[theme]}
             hovBkColor={hovBkColor[theme]}
-            hovColor={hovColor[theme]}
+            hovColor={hovPColor[theme]}
             onClick={onClick}
           >
             {bttnTxt}

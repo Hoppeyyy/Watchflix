@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { useEffect, useState } from "react";
 import { useTheme, useResult } from "@/utils/provider";
-import { hovBttnColor, themes, bgpopup, popuptext, hovpopbg, hBttnBkColor } from "@/utils/variables";
+import { hovBttnColor, themes, bgpopup, basicColor, hovpopbg, hBttnBkColor } from "@/utils/variables";
 
 
 const Cont = styled.div`
@@ -46,10 +46,10 @@ const PageBttn = ({
     <Btn 
       onClick={onClick}
       bgcolor={bgcolor}
-      color = {popuptext[theme]}
+      color = {basicColor[theme]}
       hovpopbg={hBttnBkColor[theme]}
       actpopbg={hBttnBkColor[theme]}
-      hovcolor = {hovBttnColor[theme]}
+      hovcolor = {basicColor[theme]}
     >{number}</Btn>
   </Cont>
 }

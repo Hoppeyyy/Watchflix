@@ -35,7 +35,17 @@ export const bkColor = {
 // Button background color
 export const bttnBkColor = { 
   light:'#FFFFFF',
-  dark:'#FFFFFF',
+  dark:'#B08584',
+}
+
+export const bttnBkColorV = { 
+  light:'#FFFFFF',
+  dark:'#F9E7E7',
+}
+
+export const bttnBkColorH = { 
+  light:'#FFFFFF',
+  dark:'#333333',
 }
 
 export const hBttnBkColor = { 
@@ -47,6 +57,11 @@ export const hovBkColor = {
   light: '#B08584',
   dark: '#333333'
 }
+
+// export const hovBkColor = {
+//   light: '#B08584',
+//   dark: '#333333'
+// }
 
 export const imgBKColor = {
   light:'#B08584',
@@ -62,18 +77,34 @@ export const hovColor = {
   light: '#FFFFFF',
   dark: '#ADADAD'
 }
+
+export const btnColor = {
+  light: '#000',
+  dark: '#ADADAD'
+}
+
+export const hovPColor = {
+  light: '#000',
+  dark: '#333333'
+}
+
 export const bgpopup = {
   light: "#FFF",
   dark:"#333333",
   
 }
-export const popuptext = {
+// export const popuptext = {
+//   light: "#000000",
+//   dark:"#FFF",
+// }
+// export const hovBttnColor = {
+//   light: '#000',
+//   dark: '#fff'
+// }
+
+export const basicColor = {
   light: "#000000",
-  dark:"#FFF",
-}
-export const hovBttnColor = {
-  light: '#000',
-  dark: '#fff'
+  dark:"#FFFFFF",
 }
 
 export const divcolor = {

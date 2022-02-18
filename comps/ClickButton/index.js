@@ -29,9 +29,12 @@ const ButtonInput = styled.button`
     justify-content:center;
     box-shadow: ${props=>props.bshadow}; 
     cursor: pointer;
+    
     :hover {
         background-color: ${props => props.hovBkColor};
         color: ${props => props.hovColor};
+        transform: scale(0.95);
+        transition-duration: 0.3s;
     }
 `;
 
