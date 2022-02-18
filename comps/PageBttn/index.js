@@ -35,8 +35,8 @@ const Btn = styled.button`
   }
 `
 const PageBttn = ({
-  number= null,
-  bgcolor=null,
+  btnnumber= null,
+  bgcolor = null,
   onClick=()=>{},
 })=>{
 
@@ -50,7 +50,7 @@ const PageBttn = ({
       hovpopbg={hBttnBkColor[theme]}
       actpopbg={hBttnBkColor[theme]}
       hovcolor = {hovBttnColor[theme]}
-    >{number}</Btn>
+    >{btnnumber}</Btn>
   </Cont>
 }
 
