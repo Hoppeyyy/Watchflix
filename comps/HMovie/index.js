@@ -21,7 +21,8 @@ const Cont = styled.div`
   display: flex;
   flex-direction: row;
   margin-right: 50px;
-  margin-bottom: 30px;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
 
   :nth-child(2n) {
     margin-right: 0px;

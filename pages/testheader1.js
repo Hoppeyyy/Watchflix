@@ -46,16 +46,7 @@ const Wrap = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin-bottom: 70px;
-`;
-
-const Default = styled.div`
-  width: 100%;
-  display: ${(props) => props.display};
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 70px;
+  margin-bottom: 3rem;
 `;
 
 const Button = styled.button`
