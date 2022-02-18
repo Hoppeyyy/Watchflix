@@ -135,6 +135,7 @@ const sortby = [
 const Header = ({
   rowbg = bgpopup,
   colbg = bgpopup,
+  src = "./images/watchflix_logo.png",
   onInput = (event) => {},
   changeView = () => {},
   changeColor = () => {},
@@ -191,7 +192,7 @@ const Header = ({
           href="/testheader1"
         >
           <Image
-            src="./images/watchflix_logo.png"
+            src={src}
             alt="Watchflix logo"          
           />
         </LogoCont>

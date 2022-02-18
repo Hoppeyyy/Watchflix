@@ -9,7 +9,7 @@ import down_arrow from "@/public/images/down-arrow.png";
 import up_arrow from "@/public/images/up-arrow.png";
 import CommentForm from "../CommentForm";
 import { v4 as uuidv4 } from "uuid";
-import { bkColor, hovColor, popuptext, divcolor } from "@/utils/variables";
+import { bkColor, hovColor, basicColor, divcolor } from "@/utils/variables";
 import Divider from "../Divider";
 
 const arrows = { down_arrow, up_arrow };
@@ -115,22 +115,22 @@ const ReviewSection = ({
     <Cont>
       <HeaderCont>
         <LeftLine bkcolor={divcolor[theme]}></LeftLine>
-        <Title color={popuptext[theme]}>{text}</Title>
+        <Title color={basicColor[theme]}>{text}</Title>
         {/* <Dropdown onClick={onClick}>&#x25BC;</Dropdown> */}
 
         <Dropdown>
           {open ? (
             <Image
               src={down_arrow}
-              width={44}
-              height={22}
+              width={33}
+              height={18}
               onClick={onClick}
             ></Image>
           ) : (
             <Image
               src={up_arrow}
-              width={44}
-              height={22}
+              width={33}
+              height={18}
               onClick={onClick}
             ></Image>
           )}

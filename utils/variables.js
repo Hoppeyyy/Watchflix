@@ -58,6 +58,11 @@ export const hovBkColor = {
   dark: '#333333'
 }
 
+export const hovBkDColor = {
+  light: '#B08584',
+  dark: '#000'
+}
+
 // export const hovBkColor = {
 //   light: '#B08584',
 //   dark: '#333333'
