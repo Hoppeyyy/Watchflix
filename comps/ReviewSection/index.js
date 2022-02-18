@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ax from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useTheme } from "@/utils/provider";
+import { useTheme, useResult } from "@/utils/provider";
 import Comment from "../Comment";
 import Image from "next/image";
 import down_arrow from "@/public/images/down-arrow.png";
@@ -63,29 +63,59 @@ const Dropdown = styled.div`
   cursor: pointer;
 `;
 
-const CmtCont = styled.div`
-  width: 100%;
+const UserComments = styled.div``
 
-`;
+//----------------------New Comment Form comps----------------------
+const NameCont = styled.div`
+    padding:10px;
+`
 
-const UserComments = styled.ul``;
+const NameText = styled.label`
+    color:#E50914;
+    font-size:32px;
+    
+`
 
-const PostBtn = styled.button`
-  width: 100px;
-  height: 30px;
-`;
+const NameInput = styled.input`
+    width:345px;
+    height:45px;
+    border-radius:10px;
+    
+`
 
 const CommentBox = styled.input`
-  width: 100px;
-  height: 50px;
-`;
+    width:70%;
+    height:100px;
+`
+
+const CommentCont = styled.div`
+    
+`
+
+const SubmitBtn = styled.button`
+    width:250px;
+    height:70px;
+    background-color:#f9E7E7;
+    border-radius:20px;
+    border:none;
+    font-size:36px;
+`
+
+const ButtonCont = styled.div`
+    display:flex;
+    justify-content:end;
+    padding:10px;
+    padding-right:50px;
+`
+
+
+//--------------------------------------------------------
 
 const ReviewSection = ({
-  text = "Reviews",
-  down = down_arrow,
-  up = up_arrow,
+    text="Reviews",
+    
 }) => {
-
+    const {theme, setTheme} = useTheme();
 
     const [open, setOpen] = useState(true);
     const onClick = () => setOpen(!open);
@@ -113,6 +143,51 @@ const ReviewSection = ({
     //     e.preventDefault();
         
     // };
+
+    //--------------------------New Comment Form Functions-----------------
+
+       //---------------------User Input COMMENT--------------------------
+       const [userInput, setUserInput] = useState('');
+       const [todoList, setTodoList] = useState([])
+   
+       const [userNickname, setUserNickname] = useState('');
+       const [nameList, setNameList] = useState([])
+   
+       //Nickname input
+       // const handleChangeName = (e) => {
+       //     e.preventDefault()
+   
+       //     setUserNickname(e.target.value)
+       //     console.log(userNickname)
+       // }
+   
+       //Comment box input
+       const handleChange = (e) => {
+           e.preventDefault()
+   
+           setUserInput(e.target.value)
+           console.log(userInput)
+   
+           setUserNickname(e.target.value)
+           console.log(userNickname)
+       }
+   
+       const handleSubmit = (e) => {
+           e.preventDefault()
+   
+           setTodoList([
+               userInput,
+               // userNickname,
+               ...todoList
+           ])
+   
+           setNameList([
+               userNickname,
+               ...todoList
+           ])
+       }
+       //-------------------------End Comment-------------------------------------
+   
 
     return <Cont>
 
@@ -145,15 +220,64 @@ const ReviewSection = ({
 
         <UserComments>
         
-        {open ? <Comment/>: null}
+        {open ? 
+        
+        <div>
+        {
+            todoList.length >=1 ? todoList.map((o, i) => {
+                return <CommentCont key={i}>
+                <Comment 
+                comment={o} 
+                username={o.userNickname}
+                >
+                </Comment>
+                </CommentCont>
+            })
+            : 'Enter a comment item'
+        }
+
+    </div>
+        
+        
+        : null}
 
         </UserComments>
 
-    <NewCommentForm></NewCommentForm>
+    <Divider text="Add Review"></Divider>
+        <form>
+            <NameCont>
+            <NameText>Nickname</NameText>
+            <NameInput type="textarea" onChange={handleChange}></NameInput>
+            </NameCont>
+
+            <CommentBox type="textarea" onChange={handleChange} 
+            placeholder="Share your opinion about this movie!">
+            </CommentBox>
+
+            <ButtonCont>
+                <SubmitBtn onClick={handleSubmit}>Post</SubmitBtn> 
+            </ButtonCont>
+            
+        </form>
+        {/* <ul>
+            {
+                todoList.length >=1 ? todoList.map((o, i) => {
+                    return <CommentCont key={i}>
+                    <Comment 
+                    comment={o} 
+                    username={o.userNickname}
+                    >
+                    </Comment>
+                    </CommentCont>
+                })
+                : 'Enter a comment item'
+            }
+
+        </ul> */}
     
 
     </Cont>
-  );
+
 };
 
 export default ReviewSection;
