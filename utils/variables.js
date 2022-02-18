@@ -117,5 +117,15 @@ export const paragrph = {
   dark: '#c4c4c4'
 }
 
+export const whiteblack = {
+  light: '#fff',
+  dark: '#000'
+}
+
+export const shadow = {
+  light: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
+  dark: 'rgba(0, 0, 0, 0.4) 1.95px 1.95px 2.6px'
+}
+
 
 
