@@ -9,10 +9,14 @@ import down_arrow from "@/public/images/down-arrow.png";
 import up_arrow from "@/public/images/up-arrow.png";
 import CommentForm from "../CommentForm";
 import { v4 as uuidv4 } from "uuid";
+
+import NewCommentForm from '../NewCommentForm';
+
 import { bkColor, hovColor, popuptext, divcolor } from "@/utils/variables";
 import Divider from "../Divider";
 
 const arrows = { down_arrow, up_arrow };
+
 
 const Cont = styled.div`
   display: flex;
@@ -81,41 +85,41 @@ const ReviewSection = ({
   down = down_arrow,
   up = up_arrow,
 }) => {
-  const [open, setOpen] = useState(true);
-  const { theme, setTheme } = useTheme();
-  const onClick = () => setOpen(!open);
 
-  // const [selected, setSelected] = useState(arrows.down_arrow)
-  // const onArrowClick = () => setSelected(!selected)
 
-  const [items, setItems] = useState([]);
+    const [open, setOpen] = useState(true);
+    const onClick = () => setOpen(!open);
 
-  const createItems = () => {
-    setItems((oldItems) => [
-      ...oldItems,
-      {
-        id: 1,
-        title: "new item",
-        itemId: uuidv4(),
-      },
-    ]);
-  };
+    // const [selected, setSelected] = useState(arrows.down_arrow)
+    // const onArrowClick = () => setSelected(!selected)
 
-  const [value, setValue] = useState("");
+    // const [items, setItems] = useState([])
 
-  const saveValue = (e) => {
-    setValue(e.target.value);
-  };
+    // const createItems = () => {
+    //     setItems(oldItems => [...oldItems, {
+    //         id:1,
+    //         title:"new item",
+    //         itemId: uuidv4()
+    //     }])
+    // }
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-  };
+    // const [value, setValue] = useState('');
 
-  return (
-    <Cont>
-      <HeaderCont>
-        <LeftLine bkcolor={divcolor[theme]}></LeftLine>
-        <Title color={popuptext[theme]}>{text}</Title>
+    // const saveValue = e =>{
+    //     setValue(e.target.value)
+    // }
+
+    // const onSubmit = (e) => {
+    //     e.preventDefault();
+        
+    // };
+
+    return <Cont>
+
+        <HeaderCont>
+        <LeftLine></LeftLine>
+        <Title>{text}</Title>
+
         {/* <Dropdown onClick={onClick}>&#x25BC;</Dropdown> */}
 
         <Dropdown>
@@ -138,32 +142,16 @@ const ReviewSection = ({
         <RightLine bkcolor={divcolor[theme]}></RightLine>
       </HeaderCont>
 
-      <CmtCont>
-        <form onSubmit={onSubmit}>
-          <UserComments>
-            {items.map((item) => (
-              <Comment comment={value} key={item.id}>
-                {"subtitle"}
-              </Comment>
-            ))}
 
-            {open ? <Comment /> : null}
-          </UserComments>
+        <UserComments>
+        
+        {open ? <Comment/>: null}
 
-          {/* <CommentBox value={value} 
-        onChange={e=>{setValue(e.currentTarget.value)}} 
-        > */}
+        </UserComments>
 
-          <Divider text="Add review" />
+    <NewCommentForm></NewCommentForm>
+    
 
-          <CommentBox value={value} onChange={saveValue}></CommentBox>
-          <PostBtn type="submit" onClick={createItems}>
-            Post
-          </PostBtn>
-        </form>
-      </CmtCont>
-
-      {/* <CommentForm></CommentForm> */}
     </Cont>
   );
 };
