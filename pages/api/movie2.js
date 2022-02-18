@@ -35,13 +35,15 @@ export default async function handler(req, res) {
       type:sbr_type
     })
   }  
+  const nummovies = lists.length;
   
   if(req.query.page){
-    const numresults = req.query.num || 10;
-    lists = GoToPage(req.query.page, newmovie, numresults);
+    const numresults = req.query.num ;
+    
+    lists = GoToPage(req.query.page, lists, numresults);
   }
-
+  
   //lists = lists.slice(0,10);
 
-  res.status(200).json(lists);
+  res.status(200).json({lists, nummovies});
 }

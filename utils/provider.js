@@ -18,7 +18,7 @@ export default function AppProvider({children}){
     const [theme, setTheme] = useState(initialStates.theme);
 
     const [result,setResult] = useState({});
-    console.log("Result",result);
+    //console.log("Result",result);
   
  
     return <MyContext.Provider value={{theme, setTheme,result,setResult}}>
