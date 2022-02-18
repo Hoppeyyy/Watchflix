@@ -6,6 +6,8 @@ import { useTheme } from "@/utils/provider";
 import {
   bkColor,
   themes,
+  popuptext,
+  imgBKColor,
   bttnBkColor,
   hovBkColor,
   hovColor, hBttnBkColor,
@@ -66,6 +68,12 @@ const DescCont = styled.div`
 
   :hover {
     background-color: ${(props) => props.bkColor};
+    :h3, p {
+      color: ${props => props.hText}
+    }
+    :p {
+      color: ${props => props.hText}
+    }
   }
 
   // :hover button {
@@ -99,6 +107,7 @@ const SubWrap = styled.div`
 
 const Title = styled.h3`
   margin-bottom: 1em;
+  color: ${props => props.color};
 
   @media only screen and (max-width: 600px) {
     width: 95%;
@@ -115,6 +124,7 @@ const SubText = styled.p`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: ${props => props.color};
 
   @media only screen and (max-width: 600px) {
     font-size: 14px;
@@ -122,6 +132,7 @@ const SubText = styled.p`
 `;
 
 const Desc = styled.p`
+  color: ${props => props.color};
   @media only screen and (min-width: 600px) {
     padding: 0.8rem;
     -webkit-line-clamp: 8;
@@ -197,6 +208,7 @@ const HMovie = ({
   text = "Movie description",
   bttnTxt = "check this movie",
   title = "Undefined",
+  hText='#000',
   onClick = () => {},
 }) => {
   const { theme, setTheme } = useTheme();
@@ -209,18 +221,18 @@ const HMovie = ({
         src={src}
         fit={fit}
         alt={alt}
-        imgBkColor={hovBkColor[theme]}
+        imgBkColor={imgBKColor[theme]}
       />
 
       <DescCont width={conWidth} bkColor={bkColor[theme]} bttnbkColor={bttnBkColor[theme]}>
         <Top>
-          <Title>{title}</Title>
+          <Title color={popuptext[theme]}>{title}</Title>
           <SubWrap>
-            <SubText>{year}</SubText>
-            <SubText>{place}</SubText>
+            <SubText color={popuptext[theme]}>{year}</SubText>
+            <SubText color={popuptext[theme]}>{place}</SubText>
           </SubWrap>
         </Top>
-        <Desc>{text}</Desc>
+        <Desc color={popuptext[theme]} hText = {hText}>{text}</Desc>
         <BtnCont>
           <Btn
             bkColor={hBttnBkColor[theme]}

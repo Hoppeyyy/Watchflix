@@ -16,6 +16,7 @@ import Pagination from "@/comps/Pagination";
 import PageBttn from '@/comps/PageBttn';
 import Detail from "@/comps/Detail";
 import Header from '@/comps/Header';
+import newmovie from '@/utils/newmovie';
 
 const Cont = styled.div`
   width: 100%;
@@ -52,13 +53,12 @@ const PageCont = styled.div`
 `
 
 var timer = null;
-const numMovies = 8806;
+const numMovies = 1971;
 
 export default function Test() {
   const r = useRouter();
   const [data, setData] = useState([]);
-  const {theme, setTheme} = useTheme();
-  
+  const {theme, setTheme} = useTheme();l  
   const [View, setView] = useState(false);
   const [sbr, setSbr] = useState(false);
   const [sbr_type, setSbrType] = useState("asc");

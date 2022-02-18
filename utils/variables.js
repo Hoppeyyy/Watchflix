@@ -35,16 +35,26 @@ export const bkColor = {
 // Button background color
 export const bttnBkColor = { 
   light:'#FFFFFF',
-  dark:'#F9E7E7',
+  dark:'#FFFFFF',
 }
 
 export const hBttnBkColor = { 
   light:'#F9E7E7',
-  dark:'#F9E7E7',
+  dark:'#B08584',
 }
 
 export const hovBkColor = {
   light: '#B08584',
+  dark: '#333333'
+}
+
+export const imgBKColor = {
+  light:'#B08584',
+  dark:'#F9E7E7',
+}
+
+export const conhovBkColor = {
+  light: '#fff',
   dark: '#333333'
 }
 
@@ -61,9 +71,19 @@ export const popuptext = {
   light: "#000000",
   dark:"#FFF",
 }
-export const hovpopbg = {
-  light:'#B08584',
-  dark:'#333333',
+export const hovBttnColor = {
+  light: '#000',
+  dark: '#fff'
+}
+
+export const divcolor = {
+  light: '#E50914',
+  dark: '#940404'
+}
+
+export const paragrph = {
+  light: '#000000',
+  dark: '#c4c4c4'
 }
 
 

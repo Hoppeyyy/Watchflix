@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { useTheme, useResult } from "@/utils/provider";
 
 import {
@@ -11,7 +11,6 @@ import {
   themes,
   bgpopup,
   popuptext,
-  hovpopbg,
   hovBkColor,
 } from "@/utils/variables";
 import { v4 as uuidv4 } from 'uuid';
@@ -99,8 +98,8 @@ myurl="myurl"
         value={myurl}
       />
       <BtnCont>
-        <Btn onClick={handleClose} bgcolor={bkColor[theme]} hovpopbg={hovpopbg[theme]}>Cancel</Btn>
-        <Btn bgcolor={bkColor[theme]} hovpopbg={hovpopbg[theme]} onClick={copyToClipboard}>Copy link</Btn>
+        <Btn onClick={handleClose} bgcolor={bkColor[theme]} hovpopbg={hovBkColor[theme]}>Cancel</Btn>
+        <Btn bgcolor={bkColor[theme]} hovpopbg={hovBkColor[theme]} onClick={copyToClipboard}>Copy link</Btn>
       </BtnCont>
 
 
