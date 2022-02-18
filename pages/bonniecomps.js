@@ -2,11 +2,11 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import React from 'react';
-import { useTheme } from "@/utils/provider";
 import Pagination from '@/comps/Pagination';
 import Comment from '@/comps/Comment';
 import ReviewSection from '@/comps/ReviewSection';
 import TestComment from '@/comps/TestComment';
+import { useTheme, useResult } from "@/utils/provider";
 
 export default function Home() {
 
