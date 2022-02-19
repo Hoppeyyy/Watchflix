@@ -21,7 +21,11 @@ const Title = styled.h4`
   // background: url(${props => props.barUrl === 'light' ? `url('./images/icon_verBar.svg)` : `url('./images/icon_verBar.svg)`});
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: left center;  
+  background-position: left center; 
+  
+  @media only screen and (min-width: 1001px) and (max-width: 1100px) {
+    padding-left: 0;
+  } 
 `
 
 const Movie = styled.h3``
@@ -31,8 +35,9 @@ const Text  = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: ${props => props.clamp};
   -webkit-box-orient: vertical;
+  margin-bottom: ${props => props.marginB}rem;
 `
 
 const DetailTit = ({
@@ -45,6 +50,8 @@ const DetailTit = ({
   movieTitle = "Alive",
   // barUrl = "bar ? 'url(./images/icon_verBarLight.svg)' : 'url(./images/icon_verBarDark.svg)'",
   text = "",
+  clamp = '5',
+  txtMarginB = '3'
 
 }) => {
 
@@ -71,7 +78,7 @@ const DetailTit = ({
       <Movie>
         {movieTitle}
       </Movie>
-      <Text>
+      <Text clamp ={clamp} marginB = {txtMarginB}>
         {text}
       </Text>
     </Cont>
