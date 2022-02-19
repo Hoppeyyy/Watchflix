@@ -142,5 +142,15 @@ export const borderColor = {
   dark: '#B08584'
 }
 
+export const inputborder = {
+  light: '#E50914',
+  dark: '#B08584'
+}
+
+export const cmtColor = {
+  light: '#333',
+  dark: '#c4c4c4'
+}
+
 
 

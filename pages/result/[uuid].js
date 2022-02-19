@@ -43,7 +43,7 @@ const PageCont = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 1rem;
 `;
 const ButCont = styled.div`
   width: 100%;
@@ -51,6 +51,7 @@ const ButCont = styled.div`
   justify-content: flex-end;
   margin-top: 50px;
 `;
+
 export default function Result() {
   const r = useRouter();
   const { uuid } = r.query;
@@ -129,8 +130,8 @@ const SaveResult = async ()=>{
   
   return (
     <Cont>
+{/* ====================== Header area ==================================== */}
       <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
-        {/* ====================== Input and Button area ==================================== */}
         <Header
           onInput={(event) => {
             inputFilter(event);
@@ -145,11 +146,11 @@ const SaveResult = async ()=>{
         />
       </HeadCont>
 
+{/* ====================== Body area ==================================== */}
       <BodyCont>
         <Divider text="Result"></Divider>
-        <PageCont>
-          {/* <button onClick={SaveResult}>Save</button>*/}
 
+        <PageCont>
           {Object.values(result).map((item) => (
             <div>
               <Detail

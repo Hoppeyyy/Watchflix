@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useTheme, useResult } from "@/utils/provider";
 import Comment from "../Comment";
-import Image from "next/image";
+// import Image from "next/image";
 import down_arrow from "@/public/images/down-arrow.png";
 import up_arrow from "@/public/images/up-arrow.png";
 import CommentForm from "../CommentForm";
@@ -12,7 +12,14 @@ import { v4 as uuidv4 } from "uuid";
 
 import NewCommentForm from "../NewCommentForm";
 
-import { bkColor, nameColor, hovBkDColor, divcolor, basicColor, borderColor } from "@/utils/variables";
+import {
+  bkColor,
+  nameColor,
+  hovBkDColor,
+  divcolor,
+  basicColor,
+  borderColor,
+} from "@/utils/variables";
 import Divider from "../Divider";
 
 const arrows = { down_arrow, up_arrow };
@@ -22,100 +29,192 @@ const Cont = styled.div`
   flex-direction: column;
   aligh-items: center;
   justify-content: center;
-  margin-bottom: 50px;
-`;
-
-const LeftLine = styled.hr`
-  margin: 0px;
-  background-color: ${(props) => props.bkcolor};
-  max-width: 130px;
-  border-radius: 10px;
-  border: none;
-  flex: 1;
-  height: 20px;
-`;
-
-const RightLine = styled.hr`
-  margin: 0px;
-  max-width: 950px;
-  background-color: ${(props) => props.bkcolor};
-  border-radius: 10px;
-  border: none;
-  flex: 6;
-  height: 20px;
+  margin-bottom: 7rem;
 `;
 
 const HeaderCont = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 50px;
+  justify-content: center;
+  padding: 2rem 0;
+  width: 100%;
+  margin-bottom: 2rem;
 `;
 
-const Title = styled.h3`
+const LeftLine = styled.div`
+  background-color: ${props => props.bkcolor};
+  border-radius: 10px;
+  border: none;
+  width: 15%;
+  height: 20px;
+
+  @media only screen and (min-width: 566px) and (max-width: 700px) {
+    width: 20%;
+  }
+
+  @media only screen and (max-width: 565px) {
+    width: 25%;
+  }
+`;
+
+const RightLine = styled.div`
+  background-color: ${props => props.bkcolor};
+  border-radius: 10px;
+  border: none;
+  width: 60%;
+  height: 20px;
+
+  @media only screen and (min-width: 566px) and (max-width: 700px) {
+    width: 50%;
+  }
+
+  @media only screen and (max-width: 565px) {
+    width: 25%;
+  }
+`;
+
+const TitleCont = styled.div`
   padding-left: 20px;
   padding-right: 20px;
-  flex: 1.5;
-  color: ${(props) => props.color};
+  width: 25%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  @media only screen and (min-width: 566px) and (max-width: 700px) {
+    width: 30%;
+  }
+
+  @media only screen and (max-width: 565px) {
+    width: 50%;
+    justify-content: space-between;
+  }
+`
+
+const Title = styled.h3`  
+  color: ${props => props.color};
+
+  @media only screen and (min-width: 566px) and (max-width: 700px) {
+    font-size: 1.75em;   
+  }
+
+  @media only screen and (min-width: 396px)and (max-width: 565px) {
+    font-size: 1.75em;
+    text-align: center;
+  }
+
+  @media only screen and (max-width: 395px) {
+    font-size: 1.25em;
+    margin-right: 15px;
+  }
 `;
 
 const Dropdown = styled.div`
-  font-size: 30px;
-  padding-right: 20px;
   cursor: pointer;
 `;
 
-const UserComments = styled.div``;
+const Image = styled.img`
+  width: 33px;
+  height:18px;
+  display: block;
 
-const CmmtCont = styled.div`
-  width: 100%; 
-  padding: 2rem;
-  margin-bottom: 
+  @media only screen and (max-width: 395px) {
+    width: 30px;
+    height: 15px;
+  }
+`
+const UserComments = styled.div`
+  margin-bottom: 2rem;
+`;
+
+const CmmtCont = styled.ul`
+  width: 100%;
+  padding: 0 2rem;
 `;
 
 //----------------------New Comment Form comps----------------------
 const NameCont = styled.div`
-  padding: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-bottom: 20px;
+
+  @media only screen and (max-width:680px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
 `;
 
 const NameText = styled.label`
-  color: ${props => props.color};
+  color: ${(props) => props.color};
   font-size: 2em;
   margin-right: 2rem;
+
+  @media only screen and (max-width:680px) {
+    margin-right:0;
+    margin-bottom: 1rem;
+    font-size: 1.5em;
+  }
 `;
 
 const NameInput = styled.input`
   min-width: 345px;
-  height: 45px;
+  height: 3rem;
   border-radius: 10px;
   border-style: solid;
   border-width: thin;
-  border-color: ${props => props.borderColor};
+  border-color: ${(props) => props.borderColor};
   padding: 1rem;
+
+  @media only screen and (max-width:680px) {
+    width: 100%; min-width: 0;
+    height: 2rem;
+  }
 `;
 
 const FormCont = styled.form`
   width: 100%;
   padding: 1rem;
-`
-const CommentCont = styled.div``;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  @media only screen and (max-width:680px) {
+    
+  }
+`;
+const CommentCont = styled.li`
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+`;
 
 const CommentBox = styled.textarea`
-  width: 70%;
+  width: 100%;
   height: 100px;
   display: flex;
   padding: 1rem;
   justify-content: flex-start;
+  margin-bottom: 2rem;
 `;
 
 const RevTxt = styled.p`
   width: 100%;
   line-height: 1.5em;
-  color: ${props => props.revTxt}
-`
+  color: ${(props) => props.revTxt};
+`;
+
+const ButtonCont = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+`;
 
 const SubmitBtn = styled.button`
   min-width: 250px;
@@ -129,21 +228,32 @@ const SubmitBtn = styled.button`
   background: ${(props) => props.bgcolor};
   filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.2));
   cursor: pointer;
-  
+  transition: all 0.3s;
+
   :hover {
     background: ${(props) => props.hovpopbg};
     color: #ffffff;
     transform: scale(0.95);
     transition-duration: 0.3s;
   }
+
+  @media only screen and (min-width: 421px) and (max-width:680px) {
+    min-width: 150px;
+    width: 50%; 
+    padding: 1rem;
+    height: 60px;
+    font-size: 1.25rem;  
+  }
+
+  @media only screen and (max-width:420px) {
+    font-size: 0.875rem; 
+    min-width: 150px;
+    width: 50%; 
+    padding: 1rem;
+    height: 60px;   
+  }
 `;
 
-const ButtonCont = styled.div`
-  display: flex;
-  justify-content: end;
-  padding: 10px;
-  padding-right: 50px;
-`;
 
 //--------------------------------------------------------
 
@@ -251,72 +361,77 @@ const ReviewSection = ({ text = "Reviews" }) => {
     <Cont>
       {/* <h4>{`${dateTime.toLocaleDateString()}`}</h4> */}
       <HeaderCont>
-        <LeftLine bkcolor = {divcolor[theme]}></LeftLine>
-        <Title color = {basicColor[theme]}>{text}</Title>
-
-        {/* <Dropdown onClick={onClick}>&#x25BC;</Dropdown> */}
-
-        <Dropdown>
+        <LeftLine bkcolor={divcolor[theme]}></LeftLine>
+        <TitleCont>
+          <Title color={basicColor[theme]}>{text}</Title>
+          <Dropdown>
           {open ? (
             <Image
-              src={down_arrow}
-              width={33}
-              height={18}
+              src= "../../images/down-arrow.png"              
               onClick={onClick}
             ></Image>
           ) : (
             <Image
-              src={up_arrow}
-              width={33}
-              height={18}
+              src ="../../images/up-arrow.png" 
               onClick={onClick}
             ></Image>
           )}
         </Dropdown>
+        </TitleCont>
+        {/* <Dropdown onClick={onClick}>&#x25BC;</Dropdown> */}
         <RightLine bkcolor={divcolor[theme]}></RightLine>
       </HeaderCont>
-
+{/* ============================== Review section ============================== */}
       <UserComments>
         {open ? (
           <CmmtCont>
-            {todoList.length >= 1
-              ? todoList.map((o, i) => {
-                  return (
-                    <CommentCont key={i}>
-                      <Comment
-                        comment={o.comment}
-                        username={o.nickname}
-                        date={o.date}
-                      ></Comment>
-                    </CommentCont>
-                  );
-                })
-              : <RevTxt revTxt = {basicColor[theme]}>Enter a comment below</RevTxt>}
+            {todoList.length >= 1 ? (
+              todoList.map((o, i) => {
+                return (
+                  <CommentCont key={i}>
+                    <Comment
+                      comment={o.comment}
+                      username={o.nickname}
+                      date={o.date}
+                    ></Comment>
+                  </CommentCont>
+                );
+              })
+            ) : (
+              <RevTxt revTxt={basicColor[theme]}>Enter a comment below</RevTxt>
+            )}
           </CmmtCont>
         ) : null}
       </UserComments>
 
+{/* ============================== Add Review section ============================== */}
       <Divider text="Add Review"></Divider>
 
       <FormCont>
         <NameCont>
-          <NameText color ={nameColor[theme]}>Nickname</NameText>
-          <NameInput borderColor = {borderColor[theme]} type="textarea" onChange={handleChangeName}></NameInput>
+          <NameText color={nameColor[theme]}>Nickname</NameText>
+          <NameInput
+            borderColor={borderColor[theme]}
+            type="textarea"
+            onChange={handleChangeName}
+          ></NameInput>
         </NameCont>
 
         <CommentBox
           type="textarea"
-          rows = '10'
+          rows="10"
           onChange={handleChange}
           placeholder="Share your opinion about this movie!"
         ></CommentBox>
 
         <ButtonCont>
-          <SubmitBtn 
+          <SubmitBtn
             bgcolor={bkColor[theme]}
             hovpopbg={hovBkDColor[theme]}
             onClick={handleSubmit}
-          >Post</SubmitBtn>
+          >
+            Post
+          </SubmitBtn>
         </ButtonCont>
       </FormCont>
     </Cont>
