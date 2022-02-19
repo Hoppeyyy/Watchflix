@@ -15,9 +15,10 @@ export default async function handler(req, res) {
   //const lists = [];
   //res.status(200).json([]);
 
-  const { txt, sort_rating, sbr_type } = req.query;
+  // const { txt, sort_rating, sbr_type } = req.query;
+  const {txt, sortbyDate, sortbyDateType, sortbyAlphaA, sortbyAlphaZ} = req.query;
   
-  var lists =[];
+  var lists = [];
 
   // if(!txt){
   //   lists = newmovie
@@ -31,12 +32,28 @@ export default async function handler(req, res) {
     lists = newmovie
   } 
 
-  if(sort_rating){
+  // if(sort_rating){
+  //   lists = sortArr(lists,{
+  //     key:'IMDB Score',
+  //     type:sbr_type
+  //   })
+  // }  
+  if(sortbyDate) {
     lists = sortArr(lists,{
-      key:'IMDB Score',
-      type:sbr_type
+      key:"date_added",
+      type:sortbyDateType
     })
-  }  
+  }
+  if(sortbyAlphaA) {
+    lists = sortArr(lists,{
+      key:"title"
+    })
+  }
+  if(sortbyAlphaZ) {
+    lists = sortArr(lists,{
+      key:"title"
+    })
+  }
   const nummovies = lists.length;
   
   if(req.query.page){

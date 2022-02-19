@@ -11,6 +11,7 @@ import PosterBox from "@/comps/PosterBox";
 import Pagination from "@/comps/Pagination/index2";
 import PageBttn from '@/comps/PageBttn';
 import newmovie from '@/utils/newmovie';
+import { filtering, sortArr } from "@/utils/combine";
 import React from 'react';
 import Header from '@/comps/Header/index';
 import { basicColor, whiteblack, shadow } from "@/utils/variables";
@@ -80,6 +81,11 @@ export default function Test() {
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
+  const [sortbyDate, setSortbyDate] = useState(false)
+  const [sortbyDateType, setSortbyDateType] = useState("desc")
+  const [sortbyAlphaA, setSortbyAlphaA] = useState(false)
+  const [sortbyAlphaZ, setSortbyAlphaZ] = useState(false)
+  const [genreName, setGenreName] = useState("")
   //const [Def, setDef] = useState(false);
 
 
@@ -140,8 +146,8 @@ export default function Test() {
  
 // ============== PaginatioWn 
 
-const PageClick = async(p,txt) => {
-console.log(txt);
+const PageClick = async(p, txt) => {
+    console.log(txt);
     var obj = {};
     if(txt)
     {
@@ -170,6 +176,10 @@ console.log(txt);
         page: p,
         num: 10,
         ...obj,
+        sortby_date:sortbyDate,
+        sortby_datetype:sortbyDateType,
+        sortby_alpha_a:sortbyAlphaA,
+        sortby_alpha_z:sortbyAlphaZ,
       }
     });
     console.log(res.data.lists); // lists of 10 movies
@@ -237,6 +247,71 @@ console.log(data)
 //console.log(butt_arr)
 // ============== Pagination ends
 
+const movielist = require('@/utils/newmovie.json')
+
+const DateNew = () => {
+  console.log('new', data);
+  setSortbyDate(true);
+  setSortbyDateType('asc');
+  // sortArr(movielist);
+//   data.sort((cur,next) =>{
+
+//     var num1 = Number(cur[key]);
+//     var num2 = Number(next[key]);
+
+//     if(isNaN(cur[key])){
+//       num1 = cur[key];
+//       num2 = next[key];
+//     }
+
+//     if(num1 > num2){    
+     
+//       if(type && type == "asc"){
+//       return 1;
+//     }
+//     else { 
+//       return -1;
+//     }
+
+//     }
+
+//       if(num1 < num2){
+
+//         if(type && type === "asc"){
+//           return -1;
+//         }
+//         else{ 
+//           return 1;
+//         }
+//     }
+
+//     return 0;
+//   })
+//   return arr;
+}
+const DateOld = () => {
+  console.log('old') 
+  setSortbyDate(true);
+  setSortbyDateType('desc');
+  setSortbyAlphaA(false);
+  setSortbyAlphaZ(false);
+}
+const AlphaA = () => {
+  console.log('A');
+  setSortbyDate(false);
+  setSortbyAlphaA(true);
+  setSortbyAlphaZ(false);
+  
+}
+const AlphaZ = () => {
+  console.log('Z');
+  setSortbyDate(false);
+  setSortbyAlphaA(false);
+  setSortbyAlphaZ(true);
+}
+const GenreName = () => {
+  console.log(genreName)
+}
   return (
     <Cont>
 <HeadCont colbg={whiteblack[theme]} shadow = {shadow[theme]}>
@@ -249,6 +324,14 @@ console.log(data)
         changeColor={()=>{setTheme(
           (theme === ('light') ? 'dark' : 'light')
         )}}
+        // handleSortby={()=>{Sortby()}}
+        SortbyDateNew={()=>{DateNew()}}
+        SortbyDateOld={()=>{DateOld()}}
+        SortbyAlphaA={()=>{AlphaA()}}
+        SortbyAlphaZ={()=>{AlphaZ()}}
+        SortbyGenreName={()=>{GenreName()}}
+        SortbyRatingName={()=>{RatingName()}}
+        SortbyCountryName={()=>{CountryName()}}
       />
       
       {/* <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>

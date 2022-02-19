@@ -1,7 +1,7 @@
 // ---------------------- movie 1 and movie2 combine ------------------------ //
-const movie1 = require("./movie.json");
-const movie2 = require("./movie2.json");
-const { duration } = require("@mui/material");
+// const movie1 = require("./movie.json");
+// const movie2 = require("./movie2.json");
+// const { duration } = require("@mui/material");
 
 /*
 const movie = [];
@@ -59,15 +59,15 @@ const rating = 'IMDB Score';
 
 function filtering(
   arr = [],
-  
-  config={Title: null, Genre:null, duration:null, rating:null, country:null}
+
+  config={Title: null, Genre:null, durationmin:null, durationmax:null, rating:null, country:null}
   
 ){
 
-  const {Title, Genre,duration,rating,country} = config;
+  const {Title, Genre, durationmin, durationmax, rating, country} = config;
   const keyword = arr.value;
   
-  if(Title || Genre || duration || rating || country ){
+  // if(Title || Genre || duration || rating || country ){
     
     const filtered_arr = arr.filter((o)=>{
       var cond = true;
@@ -80,9 +80,14 @@ function filtering(
         cond = cond && o.Genre.includes(Genre);
       }
 
-      if(duration){
+      if(durationmin){
        // cond = cond && o.duration.includes(duration); 
-       cond = cond && Number(o.duration) >= Number(duration);
+       cond = cond && Number(o.duration) >= Number(durationmin);
+      }
+
+      if(durationmax){
+       // cond = cond && o.duration.includes(duration); 
+       cond = cond && Number(o.duration) >= Number(durationmax);
       }
 
       if(rating){
@@ -97,7 +102,7 @@ function filtering(
     return filtered_arr;
     // console.log(filtered_arr);
   } 
-}
+// }
 /*
 console.log(filtering(movie(),{
   duration:120
@@ -150,6 +155,23 @@ function sortArr(
 }
 }
 
+const movielist = require('@/utils/newmovie.json')
+
+var filter_movies = filtering(movielist, {
+  title:"",
+
+})
+
+filter_movies = sortArr(filter_movies, {
+  // key:"date_added",
+  key:"title",
+  // type:"desc"
+})
+
+console.log(filter_movies)
+
+// filtering(movielist);
+// sortArr(movielist);
 
 /*
 console.log(sortArr(movie(),{

@@ -21,6 +21,7 @@ import { useTheme } from "@/utils/provider";
 import { Search, Radio, Button, Icon } from "semantic-ui-react";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { basicColor, whiteblack } from "@/utils/variables";
+import { SortByAlphaSharp } from "@mui/icons-material";
 
 const FlexCol = styled.div`
   display: flex;
@@ -129,7 +130,7 @@ const sortby = [
   "Date (oldest)",
   "Alphabet A-Z",
   "Alphabet Z-A",
-  "Most Reviews",
+  // "Most Reviews",
 ];
 
 const Header = ({
@@ -140,6 +141,14 @@ const Header = ({
   onInput=()=>{},
   changeView = () => {},
   changeColor = () => {},
+  // handleSortby = () => {},
+  SortbyDateNew = () => {},
+  SortbyDateOld = () => {},
+  SortbyAlphaA = () => {},
+  SortbyAlphaZ = () => {},
+  SortbyGenreName = () => {},
+  SortbyRatingName = () => {},
+  SortbyCountryName = () => {},
 }) => {
   const { theme } = useTheme();
 
@@ -149,6 +158,7 @@ const Header = ({
       target: { value },
     } = event;
     setGenreName(typeof value === "string" ? value.split(",") : value);
+    SortbyGenreName();
   };
 
   const [ratingName, setRatingName] = useState([]);
@@ -157,6 +167,7 @@ const Header = ({
       target: { value },
     } = event;
     setRatingName(typeof value === "string" ? value.split(",") : value);
+    SortbyRatingName();
   };
 
   const [countryName, setCountryName] = useState([]);
@@ -165,6 +176,7 @@ const Header = ({
       target: { value },
     } = event;
     setCountryName(typeof value === "string" ? value.split(",") : value);
+    SortbyCountryName();
   };
 
   const [sortbyName, setSortbyName] = useState([]);
@@ -172,7 +184,26 @@ const Header = ({
     const {
       target: { value },
     } = event;
-    setSortbyName(typeof value === "string" ? value.split(",") : value);
+    // setSortbyName(typeof value === "string" ? value.split(",") : value);
+    setSortbyName( value )
+    // const arrangeSortby = ( value ) => {filterSortby()}
+    // console.log(value)
+    switch (value) {
+      case 'Date (newest)':
+        SortbyDateNew();
+        break;
+      case 'Date (oldest)':
+        SortbyDateOld();
+        break;
+      case 'Alphabet A-Z':
+        SortbyAlphaA();
+        break;
+      case 'Alphabet Z-A':
+        SortbyAlphaZ();
+        break;
+      default:
+        console.log('No "sort by" selected')
+    }
   };
 
   function duration(dur) {
@@ -195,10 +226,8 @@ const Header = ({
             alt="Watchflix logo"          
           />
         </LogoCont>
-        {/* <Search fluid/> */}
         <SearchBar
           placeholder="Search for a Movie Title..."
-          //onChange={(event) => onInput(event.target.value)}
           onChange={onInput}
         /> 
         <FlexRow rowbg={rowbg[theme]}>
@@ -220,16 +249,6 @@ const Header = ({
               sx={{ backgroundColor: "rgba(0,0,0,0)" }}
             />
           </SwitchCont>
-
-          {/* <Radio toggle/> */}
-          {/* <Button.Group>
-            <Button icon onClick={() => {onPosterBox()}}>
-              <Icon name='grid layout'/>
-            </Button>
-            <Button icon >
-              <Icon name='list'/>
-            </Button>
-          </Button.Group> */}
         </FlexRow>
       </FlexHeader>
 {/* =================== HEADER ENDS =================== */}
@@ -267,7 +286,7 @@ const Header = ({
             value={dur}
             onChange={handleDur}
             input={<OutlinedInput label="Duration" />}
-            renderValue={(selected) => selected.join(" - ")}
+            // renderValue={(selected) => selected.join(" - ")}
           >
             <DurationCont>
               <Slider
@@ -334,8 +353,8 @@ const Header = ({
           <InputLabel id="select-sortby">Sort By...</InputLabel>
           <Select
             labelId="select-sortby"
-            // multiple
             value={sortbyName}
+            // value=""
             // label='Sort By'
             onChange={handleSortby}
             input={<OutlinedInput label="Sortby" />}
@@ -346,10 +365,10 @@ const Header = ({
                 <ListItemText primary={sortby} />
               </MenuItem>
             ))}
-            <FlexRow>
+            {/* <FlexRow>
               <Button>Clear</Button>
-              <Button>Apply</Button>
-            </FlexRow>
+              <Button onClick={SortbyFunc()}>Apply</Button>
+            </FlexRow> */}
           </Select>
         </FormControl>
       </FlexRow>
