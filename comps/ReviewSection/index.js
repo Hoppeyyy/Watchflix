@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import NewCommentForm from "../NewCommentForm";
 
-import { bkColor, nameColor, hovBkDColor, divcolor, basicColor } from "@/utils/variables";
+import { bkColor, nameColor, hovBkDColor, divcolor, basicColor, borderColor } from "@/utils/variables";
 import Divider from "../Divider";
 
 const arrows = { down_arrow, up_arrow };
@@ -78,13 +78,13 @@ const NameCont = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 20px;
 `;
 
 const NameText = styled.label`
   color: ${props => props.color};
   font-size: 2em;
   margin-right: 2rem;
-
 `;
 
 const NameInput = styled.input`
@@ -92,21 +92,24 @@ const NameInput = styled.input`
   height: 45px;
   border-radius: 10px;
   border-style: solid;
-  border-weight: 1px;
+  border-width: thin;
   border-color: ${props => props.borderColor};
+  padding: 1rem;
 `;
 
 const FormCont = styled.form`
   width: 100%;
   padding: 1rem;
 `
+const CommentCont = styled.div``;
 
-const CommentBox = styled.input`
+const CommentBox = styled.textarea`
   width: 70%;
   height: 100px;
+  display: flex;
+  padding: 1rem;
+  justify-content: flex-start;
 `;
-
-const CommentCont = styled.div``;
 
 const RevTxt = styled.p`
   width: 100%;
@@ -298,11 +301,12 @@ const ReviewSection = ({ text = "Reviews" }) => {
       <FormCont>
         <NameCont>
           <NameText color ={nameColor[theme]}>Nickname</NameText>
-          <NameInput borderColor = {}type="textarea" onChange={handleChangeName}></NameInput>
+          <NameInput borderColor = {borderColor[theme]} type="textarea" onChange={handleChangeName}></NameInput>
         </NameCont>
 
         <CommentBox
           type="textarea"
+          rows = '10'
           onChange={handleChange}
           placeholder="Share your opinion about this movie!"
         ></CommentBox>
