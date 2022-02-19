@@ -108,4 +108,12 @@ button {
   background-color: #B08584;
 }
 
+ul {
+  margin: 0; padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
 

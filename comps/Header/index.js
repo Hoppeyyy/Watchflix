@@ -190,7 +190,7 @@ const Header = ({
 {/* =================== HEADER STARTS =================== */}
       <FlexHeader>
         <LogoCont
-          href="/testheader1"
+          href="/"
         >
           <Image
             src={src}
