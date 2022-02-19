@@ -11,22 +11,36 @@ import PosterBox from "@/comps/PosterBox";
 import Pagination from "@/comps/Pagination/index2";
 import PageBttn from '@/comps/PageBttn';
 import newmovie from '@/utils/newmovie';
- import React from 'react';
- import Header from '@/comps/Header';
- import { bkColor} from "@/utils/variables";
+import React from 'react';
+import Header from '@/comps/Header/index';
+import { basicColor, whiteblack, shadow } from "@/utils/variables";
+
 
 const Cont = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100%;  
+`;
+
+const HeadCont = styled.div`
+  width: 100%;
+  dislplay: flex;
+  justify-content: center;
+  align-items: center;
+  // margin-bottom: 80px;
+  padding: 0 2rem;
+  background-color: ${(props) => props.colbg};  
+  box-shadow: ${props => props.shadow}; 
 `;
 
 const PagCont = styled.div`
   width: 100%;
-  dislplay: flex; 
+  dislplay: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 50px;
-`
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+  padding: 2rem 1rem;
+`;
 
 const Wrap = styled.div`
   width: 100%;
@@ -34,15 +48,7 @@ const Wrap = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin-bottom: 70px;
-`;
-const Default = styled.div`
-  width: 100%;
-  display:${props=>props.display};
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 70px;
+  margin-bottom: 3rem;
 `;
 
 const Button = styled.button`
@@ -50,20 +56,13 @@ const Button = styled.button`
 `;
 
 const PageCont = styled.div`
-  width: 100%; 
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-`
-const HeadCont = styled.div`
-  width: 100%;
-  dislplay: flex; 
-  justify-content: center;
-  align-items: center;
-  padding: 0 1rem;
-  margin-bottom: 80px;
-`
+`;
+
 var timer = null;
 //var nummovies = 1971;
 //var myObj ={};
@@ -240,11 +239,11 @@ console.log(data)
 
   return (
     <Cont>
-<HeadCont>
+<HeadCont colbg={whiteblack[theme]} shadow = {shadow[theme]}>
 {/* ====================== Input and Button area ==================================== */}
       <Header 
-        onInput={(event) => {
-          PageClick(event)
+        onInput={(e) => {
+          PageClick(1, e.target.value)
         }}
         changeView={()=>{onChangeView()}}
         changeColor={()=>{setTheme(

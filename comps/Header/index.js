@@ -136,7 +136,8 @@ const Header = ({
   rowbg = bgpopup,
   colbg = bgpopup,
   src = "./images/watchflix_logo.png",
-  onInput = (event) => {},
+  //onInput = (event) => {},
+  onInput=()=>{},
   changeView = () => {},
   changeColor = () => {},
   // onPosterBox = () => {},
@@ -199,7 +200,8 @@ const Header = ({
         {/* <Search fluid/> */}
         <SearchBar
           placeholder="Search for a Movie Title..."
-          onChange={(event) => onInput(event.target.value)}
+          //onChange={(event) => onInput(event.target.value)}
+          onChange={onInput}
         /> 
         <FlexRow rowbg={rowbg[theme]}>
           {/* <Input icon='search' type='text' placeholder='Search...' autoWidth/> */}
