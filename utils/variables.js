@@ -137,5 +137,10 @@ export const nameColor = {
   dark: '#fff'
 }
 
+export const borderColor = {
+  light: '#666',
+  dark: '#B08584'
+}
+
 
 
