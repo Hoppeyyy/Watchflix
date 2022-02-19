@@ -144,6 +144,10 @@ const Header = ({
   // onHorizontal = () => {}
 }) => {
   const { theme } = useTheme();
+  const [label, setLabel] = useState();
+  //const [label2, setLabel2] = useState(false);
+ 
+
 
   const [genreName, setGenreName] = useState([]);
   const handleGenre = (event) => {
@@ -210,8 +214,9 @@ const Header = ({
 
           <SwitchCont>
             <FormControlLabel
-              control={<Switch onChange={changeColor} name="Dark Mode" />}
-              label="Dark Mode"
+              control={<Switch onChange={changeColor||setLabel(!label)} name="Dark Mode" />}
+              //label="Dark Mode"
+              label = {label || theme === 'light'? "Dark Mode":"Light Mode"}
               className="labelColor"
               sx={{ backgroundColor: "rgba(0,0,0,0)"  }}
               />
