@@ -211,11 +211,13 @@ const Header = ({
               control={<Switch onChange={changeColor} name="Dark Mode" />}
               label="Dark Mode"
               className="labelColor"
+              sx={{ backgroundColor: "rgba(0,0,0,0)"  }}
               />
             <FormControlLabel
               control={<Switch onChange={changeView} name="List View" />}
               label="List View"
               className="labelColor"
+              sx={{ backgroundColor: "rgba(0,0,0,0)" }}
             />
           </SwitchCont>
 

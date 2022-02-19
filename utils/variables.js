@@ -132,5 +132,10 @@ export const shadow = {
   dark: 'rgba(0, 0, 0, 0.4) 1.95px 1.95px 2.6px'
 }
 
+export const nameColor = {
+  light: '#E50914',
+  dark: '#fff'
+}
+
 
 

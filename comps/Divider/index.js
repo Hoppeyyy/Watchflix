@@ -17,6 +17,7 @@ const Cont = styled.div`
 
 const LeftLine = styled.hr`
   margin: 0px;
+  max-width: 130px;
   background-color: ${props => props.bkcolor};
   border-radius: 10px;
   border: none;
@@ -26,6 +27,7 @@ const LeftLine = styled.hr`
 
 const RightLine = styled.hr`
   margin: 0px;
+  max-width: 950px;
   background-color: ${props => props.bkcolor};
   border-radius: 10px;
   border: none;

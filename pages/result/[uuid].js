@@ -48,6 +48,8 @@ const PageCont = styled.div`
 const ButCont = styled.div`
   width: 100%;
   display: flex;
+  justify-content: flex-end;
+  margin-top: 50px;
 `;
 export default function Result() {
   const r = useRouter();
@@ -162,12 +164,11 @@ const SaveResult = async ()=>{
             </div>
           ))}
           <ButCont>
-            <ClickButton src={uuid} />
+            <ClickButton src={uuid} cwidth='' />
           </ButCont>
         </PageCont>
 
         <ReviewSection text="Reviews" />
-        <Divider text="Add Review"></Divider>
       </BodyCont>
     </Cont>
   );

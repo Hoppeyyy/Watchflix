@@ -11,9 +11,9 @@ const ButtonCont = styled.div`
     width: ${props=>props.cwidth};
     display:flex;
     justify-content: flex-end;
-    padding:1.5rem;
-    padding-right:0;
-    padding-top:4rem;
+    // padding:1.5rem;
+    // padding-right:0;
+    // padding-top:4rem;
 `;
 
 const ButtonInput = styled.button`
