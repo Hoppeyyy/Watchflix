@@ -7,8 +7,8 @@ import {
   bkColor,
   themes,
   imgBKColor,
-  bttnBkColor,
-  hovBkColor,
+  bttnBkColorV,
+  hovBkColor,btnColor,
   hovColor,
 } from "@/utils/variables";
 import {movie} from '@/utils/combine';
@@ -43,6 +43,7 @@ const FrtCont = styled.div`
 
 const Image = styled.img`
   min-width: ${(props) => props.imgWidth};
+  max-width: 100%;
   height: ${(props) => props.imgHeight};
   src: ${(props) => props.src};
   object-fit: ${(props) => props.fit};
@@ -53,7 +54,7 @@ const Image = styled.img`
 
 const BkCont = styled.div`
   position: absolute;
-  width: ${(props) => props.bkConWidth};
+  width: ${(props) => props.bkConWidth};  
   height: ${(props) => props.bkConHeight};
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -131,15 +132,18 @@ const Bttn = styled.button`
   bottom: 50px; right: 40px;
   transition: all 0.3s;
   cursor: pointer;
+  color: ${props => props.color};
 
   :hover {
     background-color: ${(props) => props.hovBkColor};
     color: ${(props) => props.hovColor};
+    transform: scale(0.95);
+    transition-duration: 0.3s;
   }
 `;
 
 const PosterBox = ({
-  conWidth = "297px",
+  conWidth = "296px",
   conHeight = "440px",
   cardConWidth = conWidth,
   cardConHeight = conHeight,
@@ -157,6 +161,7 @@ const PosterBox = ({
   place = "Undefined",
   text = "Undefined",
   bttnTxt = "check this movie",
+  color='#000',
   onClick = ()=>{},
 }) => {
   const { theme, setTheme } = useTheme();
@@ -195,7 +200,8 @@ const PosterBox = ({
           <Synop>{text}</Synop>
 
           <Bttn
-            bkColor={bttnBkColor[theme]}
+            color={color}
+            bkColor={bttnBkColorV[theme]}
             hovBkColor={hovBkColor[theme]}
             hovColor={hovColor[theme]}
             onClick = {onClick}

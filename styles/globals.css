@@ -91,3 +91,21 @@ button {
   background-color: rgba(255,255,255,0);
 }
 
+.labelColor {
+  color: #999;
+}
+
+.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked {
+  color: #fff;
+}
+
+.sc-jWUzzU.boGTDw, .sc-jJoQJp.dwiMME, .drZnpV, .eKdbza, .sc-lbhJGD.iilvov, .sc-fyrocj.jlrWjf {
+  background-color: transparent;
+  background-color: rgba(0,0,0,0);
+}
+
+.MuiSwitch-track.css-1yjjitx-MuiSwitch-track{
+  background-color: #B08584;
+}
+
+

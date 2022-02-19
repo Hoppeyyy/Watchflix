@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React,{useEffect, useState } from 'react';
 import { useTheme } from "@/utils/provider";
-import { bkColor, hovColor, hovBkColor, hBttnBkColor } from "@/utils/variables";
+import { bkColor, hovColor, hovBkDColor, hBttnBkColor } from "@/utils/variables";
 import PopUp from 'comps/PopUp';
 import { useRouter } from 'next/router';
 import Link from "next/link";
@@ -11,9 +11,9 @@ const ButtonCont = styled.div`
     width: ${props=>props.cwidth};
     display:flex;
     justify-content: flex-end;
-    padding:1.5rem;
-    padding-right:0;
-    padding-top:4rem;
+    // padding:1.5rem;
+    // padding-right:0;
+    // padding-top:4rem;
 `;
 
 const ButtonInput = styled.button`
@@ -29,9 +29,12 @@ const ButtonInput = styled.button`
     justify-content:center;
     box-shadow: ${props=>props.bshadow}; 
     cursor: pointer;
+    
     :hover {
         background-color: ${props => props.hovBkColor};
         color: ${props => props.hovColor};
+        transform: scale(0.95);
+        transition-duration: 0.3s;
     }
 `;
 
@@ -47,12 +50,12 @@ const ClickButton = ({
     text="Share With Your Friend",
     margintop = 100,
     marginright="",
-    radius = 20,
+    radius = 35,
     cwidth = "100%",
     width = 360,
     height = 72,
     bshadow = "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
-    fontSize="24px",
+    fontSize="1.5em",
     justify="center",
 
 }) => {
@@ -104,7 +107,7 @@ const ClickButton = ({
                 width={width}
                 height={height}
                 bshadow={bshadow}
-                hovBkColor={hovBkColor[theme]}
+                hovBkColor={hovBkDColor[theme]}
                 hovColor={hovColor[theme]}
             >
                 <ButtonText
