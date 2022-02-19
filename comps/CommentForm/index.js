@@ -76,7 +76,7 @@ export default function SendForm({addContact}) {
   const handleChange = (event) => {
     setContactInfo({ ...contactInfo, [event.target.name]: event.target.value });
   };
-
+中
   const handleSubmit = (event) => {
     event.preventDefault();
     addContact(contactInfo);
@@ -84,7 +84,6 @@ export default function SendForm({addContact}) {
   };
   
         
-           
             return( 
           cwidth = "100%",  
           fwidth = "100%",

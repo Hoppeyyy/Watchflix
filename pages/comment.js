@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import React from 'react';
+import { useState } from "react";
 import { useTheme } from "@/utils/provider";
 import CommentForm from '@/comps/CommentForm';
 

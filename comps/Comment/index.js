@@ -39,9 +39,32 @@ const Dot = styled.div`
     height:10px;
     width:10px;
     border-radius:50%;
-    border:${props=>props.border}
+    border:1px solid red;
 `
 
+
+export default function Comment({contacts}) {
+    {contacts.map((contact) => {
+        return (
+            
+    <Cont>
+        <CommentCont>
+            <TopCont>
+                <Dot></Dot>
+                <Username {... contact.name}/>
+            
+                {/* <Date>{date}</Date> */}
+            </TopCont>
+
+            <BotCont>
+                <UserComment {... contact.comment}/> 
+                  
+            </BotCont>
+        </CommentCont>
+
+    </Cont>
+    );}
+    }
 // const Comment = ({
 //     // username="HooWoo",
 //     // date="01/12/2022",
@@ -49,31 +72,3 @@ const Dot = styled.div`
 //     border="1px solid red"
     
 // }) => {
-export default function Comment({contacts}) {
-
-        return (
-
-    <Cont>
-        <CommentCont>
-            <TopCont>
-                <Dot border={border}></Dot>
-                <Username>
-                {contacts.map((contact) => (
-            contact.name
-        ))}
-                </Username>
-                {/* <Date>{date}</Date> */}
-            </TopCont>
-
-            <BotCont>
-                <UserComment> 
-                    {contacts.map((contact) => (
-            contact.comment
-            ))}
-            </UserComment>
-            </BotCont>
-        </CommentCont>
-
-    </Cont>
- );
-}
