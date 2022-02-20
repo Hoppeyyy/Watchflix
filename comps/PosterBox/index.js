@@ -47,9 +47,13 @@ const Image = styled.img`
   height: ${(props) => props.imgHeight};
   src: ${(props) => props.src};
   object-fit: ${(props) => props.fit};
-  background-color: ${props => props.imgBkColor};
+  // background-color: ${props => props.imgBkColor};
   display: block;
   min-height: 440px;
+  background-image: url('./images/img_NoImage.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 `;
 
 const BkCont = styled.div`
