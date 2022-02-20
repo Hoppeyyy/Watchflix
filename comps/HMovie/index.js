@@ -48,8 +48,12 @@ const Img = styled.img`
   src: ${(props) => props.src};
   object-fit: ${(props) => props.fit};
   flex: 1;
-  background-color: ${(props) => props.imgBkColor};
+  // background-color: ${(props) => props.imgBkColor};
   overflow: hidden;
+  background-image: url('./images/img_NoImage.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 
   @media only screen and (min-width: 1px) and (max-width: 600px) {
     width: 100%;
