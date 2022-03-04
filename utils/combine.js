@@ -24,9 +24,9 @@ function filtering(
         cond = cond || o.Genre.toUpperCase().includes(Genre.toUpperCase());
       }
 
-      if(listed_in){
-        cond = cond || o.listed_in.toUpperCase().includes(listed_in.toUpperCase());
-      }
+      // if(listed_in){
+      //   cond = cond || o.listed_in.toUpperCase().includes(listed_in.toUpperCase());
+      // }
 
       if(director){
         cond = cond || o.director.toUpperCase().includes(director.toUpperCase());

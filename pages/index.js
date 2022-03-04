@@ -15,7 +15,6 @@ import React from 'react';
 import Header from '@/comps/Header/index';
 import { basicColor, whiteblack, shadow } from "@/utils/variables";
 
-
 const Cont = styled.div`
   width: 100%;
   height: 100%;  
@@ -72,7 +71,7 @@ var timer = null;
 export default function Test() {
   const r = useRouter();
   const [data, setData] = useState([]);
-  const [View, setView] = useState(false);
+  const [View, setView] = useState(true);
   const [sbr, setSbr] = useState(false);
   const [sbr_type, setSbrType] = useState("asc");
   const [inptxt, setInpTxt] = useState('')
@@ -234,7 +233,7 @@ console.log(data)
 //console.log(butt_arr)
 // ============== Pagination ends
 
-const [searchInput, setSearchInput] = useState("");
+// const [searchInput, setSearchInput] = useState("");
 
   return (
     <Cont>
@@ -244,11 +243,11 @@ const [searchInput, setSearchInput] = useState("");
         onInput={(e) => {
           PageClick(1, e.target.value)
         }}
-        changeView={()=>{onChangeView()}}
+        isOn = {View}
+        handleToggle={() => onChangeView()}
         changeColor={()=>{setTheme(
           (theme === ('light') ? 'dark' : 'light')
         )}}
-
       />
       
       {/* <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>

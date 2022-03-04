@@ -21,9 +21,6 @@ import { useTheme } from "@/utils/provider";
 import { Search, Radio, Button, Icon } from "semantic-ui-react";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { basicColor, whiteblack } from "@/utils/variables";
-import ToggleBttn from '@/comps/ToggleBttn';
-import ToggleSlide from '@/comps/ToggleSlide';
-
 
 const FlexCol = styled.div`
   display: flex;
@@ -141,14 +138,12 @@ const Header = ({
   src = "./images/watchflix_logo.png",
   //onInput = (event) => {},
   onInput=()=>{},
-  handleToggle = () => {},
-  isOn,
+  changeView = () => {},
   changeColor = () => {},
   // onPosterBox = () => {},
   // onHorizontal = () => {}
 }) => {
-  // const { theme } = useTheme();
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const [label, setLabel] = useState();
   //const [label2, setLabel2] = useState(false);
 
@@ -201,7 +196,6 @@ const Header = ({
   //   setSearchInput(e.target.value);
   // };
 
-
   return (
     <FlexCol>
 {/* =================== HEADER STARTS =================== */}
@@ -224,13 +218,13 @@ const Header = ({
         >         
         </SearchBar>
         {/* <button onChange={onInput}>go</button> */}
-        <FlexRow>
+        <FlexRow rowbg={rowbg[theme]}>
           {/* <Input icon='search' type='text' placeholder='Search...' autoWidth/> */}
           {/* <Switch onChange={changeColor} name="Dark Mode" />
           <Switch onChange={changeView} /> */}
 
           <SwitchCont>
-            {/* <FormControlLabel
+            <FormControlLabel
               control={<Switch onChange={changeColor||setLabel(!label)} name="Dark Mode" />}
               //label="Dark Mode"
               label = {label || theme === 'light'? "Dark Mode":"Light Mode"}
@@ -242,32 +236,18 @@ const Header = ({
               label="List View"
               className="labelColor"
               sx={{ backgroundColor: "rgba(0,0,0,0)" }}
-            /> */}
-
-            <ToggleSlide 
-              isOn={isOn}
-              // onColor="#777"
-              handleToggle={handleToggle}
-              // handleToggle={() => onChangeView(View)}
             />
-
-            <ToggleBttn 
-              leftClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              rightClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            />
-
-
           </SwitchCont>
 
           {/* <Radio toggle/> */}
-          {/* <Button.Group>
+          <Button.Group>
             <Button icon onClick={() => {onPosterBox()}}>
               <Icon name='grid layout'/>
             </Button>
             <Button icon >
               <Icon name='list'/>
             </Button>
-          </Button.Group> */}
+          </Button.Group>
         </FlexRow>
       </FlexHeader>
 {/* =================== HEADER ENDS =================== */}
