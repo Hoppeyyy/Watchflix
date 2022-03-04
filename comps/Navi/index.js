@@ -1,20 +1,8 @@
 import styled from "styled-components";
 import ax from "axios";
 import { useState } from "react";
-import {
-  Switch,
-  InputLabel,
-  Select,
-  MenuItem,
-  Checkbox,
-  ListItemText,
-  OutlinedInput,
-  Box,
-  Slider,
-  FormControl,
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
+// import {  Switch,  InputLabel,  Select,  MenuItem,  Checkbox,  ListItemText,  OutlinedInput,
+//   Box,  Slider,  FormControl,  InputAdornment,  IconButton,} from "@mui/material";
 import { bgpopup, popuptext } from "@/utils/variables";
 import { useTheme } from "@/utils/provider";
 // import SearchIcon from '@mui/icons-material/Search';
@@ -132,7 +120,7 @@ const sortby = [
   "Most Reviews",
 ];
 
-const Header = ({
+const Navi = ({
   rowbg = bgpopup,
   colbg = bgpopup,
   src = "./images/watchflix_logo.png",
@@ -146,6 +134,7 @@ const Header = ({
   const { theme } = useTheme();
   const [label, setLabel] = useState();
   //const [label2, setLabel2] = useState(false);
+ 
 
 
   const [genreName, setGenreName] = useState([]);
@@ -188,13 +177,6 @@ const Header = ({
     setDur(newDur);
   };
 
-  // const [searchInput, setSearchInput] = useState("");
-
-  // const handleChange = (e) => {
-  //   e.preventDefault();
-  //   setSearchInput(e.target.value);
-  // };
-
   return (
     <FlexCol>
 {/* =================== HEADER STARTS =================== */}
@@ -209,14 +191,10 @@ const Header = ({
         </LogoCont>
         {/* <Search fluid/> */}
         <SearchBar
-          placeholder="Search for a Movie..."
+          placeholder="Search for a Movie Title..."
           //onChange={(event) => onInput(event.target.value)}
           onChange={onInput}
-          // onChange={handleChange}
-          // value={searchInput}
-        >         
-        </SearchBar>
-        {/* <button onChange={onInput}>go</button> */}
+        /> 
         <FlexRow rowbg={rowbg[theme]}>
           {/* <Input icon='search' type='text' placeholder='Search...' autoWidth/> */}
           {/* <Switch onChange={changeColor} name="Dark Mode" />
@@ -374,4 +352,4 @@ const Header = ({
   );
 };
 
-export default Header;
+export default Navi;

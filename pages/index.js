@@ -164,7 +164,7 @@ console.log(txt);
     timer = setTimeout(async () => 
     {
     console.log("async call");
-    const res = await ax.get("/api/movie2",
+    const res = await ax.get("/api/movie",
     {
       params: {
         page: p,
@@ -222,20 +222,19 @@ console.log(data)
   }
  //console.log(movie_num)
   var lastpage = cur_page+2;
-  //var numpges = Math.ceil(nummovies/10)
+
   var numpages = Math.ceil(movie_num/10);
   console.log(numpages) // number of pages need to have to show the movies
   
   if(lastpage > numpages){
     lastpage = numpages
   }
-  /*
-  if(cur_page < 5){
-    lastpage = 10;
-  }*/
+
   butt_arr = butt_arr.slice(cur_page-2 < 0 ? 0 : cur_page-2, lastpage);
 //console.log(butt_arr)
 // ============== Pagination ends
+
+const [searchInput, setSearchInput] = useState("");
 
   return (
     <Cont>
@@ -249,6 +248,7 @@ console.log(data)
         changeColor={()=>{setTheme(
           (theme === ('light') ? 'dark' : 'light')
         )}}
+
       />
       
       {/* <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>
