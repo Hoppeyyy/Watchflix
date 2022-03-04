@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Head from "next/head";
-import { useEffect, useState} from "react";
-import { useTheme, useResult} from "@/utils/provider";
+import { useEffect, useState } from "react";
+import { useTheme, useResult } from "@/utils/provider";
 import { useRouter } from "next/router";
 import ax from "axios";
 import { v4 as uuidv4 } from "uuid";
@@ -9,15 +9,15 @@ import { setRequestMeta } from "next/dist/server/request-meta";
 import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
 import Pagination from "@/comps/Pagination/index2";
-import PageBttn from '@/comps/PageBttn';
-import newmovie from '@/utils/newmovie';
-import React from 'react';
-import Header from '@/comps/Header/index';
+import PageBttn from "@/comps/PageBttn";
+import newmovie from "@/utils/newmovie";
+import React from "react";
+import Header from "@/comps/Header/index";
 import { basicColor, whiteblack, shadow } from "@/utils/variables";
 
 const Cont = styled.div`
   width: 100%;
-  height: 100%;  
+  height: 100%;
 `;
 
 const HeadCont = styled.div`
@@ -27,8 +27,8 @@ const HeadCont = styled.div`
   align-items: center;
   // margin-bottom: 80px;
   padding: 0 2rem;
-  background-color: ${(props) => props.colbg};  
-  box-shadow: ${props => props.shadow}; 
+  background-color: ${(props) => props.colbg};
+  box-shadow: ${(props) => props.shadow};
 `;
 
 const PagCont = styled.div`
@@ -72,15 +72,15 @@ export default function Test() {
   const r = useRouter();
   const [data, setData] = useState([]);
   const [View, setView] = useState(true);
+  const [color, setColor] = useState(true);
   const [sbr, setSbr] = useState(false);
   const [sbr_type, setSbrType] = useState("asc");
-  const [inptxt, setInpTxt] = useState('')
+  const [inptxt, setInpTxt] = useState("");
   const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
   //const [Def, setDef] = useState(false);
-
 
   const onChangeView = () => {
     if (View === false) {
@@ -89,6 +89,16 @@ export default function Test() {
     } else if (View === true) {
       setView(false);
       console.log("set to posterbox");
+    }
+  };
+
+  const onChangeColor = () => {
+    if (color === false) {
+      setColor(true);
+      console.log("light mode");
+    } else if (color === true) {
+      setColor(false);
+      console.log("dark mode");
     }
   };
   /*
@@ -127,29 +137,26 @@ export default function Test() {
  */
   const StoreResult = (item) => {
     console.log(item);
-   
+
     console.log(item);
-      console.log("clicked");
+    console.log("clicked");
 
-      const b_obj = {};
-      b_obj[item.imdbId] = item;
-      setResult(b_obj);
+    const b_obj = {};
+    b_obj[item.imdbId] = item;
+    setResult(b_obj);
   };
-  
- 
-// ============== PaginatioWn 
 
-const PageClick = async(p,txt) => {
-console.log(txt);
+  // ============== PaginatioWn
+
+  const PageClick = async (p, txt) => {
+    console.log(txt);
     var obj = {};
-    if(txt)
-    {
-      obj.txt=txt;
-     // obj.sort_rating=sbr;
-     // obj.sort_type = sbr_type;
+    if (txt) {
+      obj.txt = txt;
+      // obj.sort_rating=sbr;
+      // obj.sort_type = sbr_type;
     }
-    if (timer) 
-    {
+    if (timer) {
       clearTimeout(timer);
       timer = null;
     }
@@ -158,36 +165,32 @@ console.log(txt);
         sort_rating: sbr,
         sort_type: sbr_type
     */
-   if (timer === null) 
-   {
-    timer = setTimeout(async () => 
-    {
-    console.log("async call");
-    const res = await ax.get("/api/movie",
-    {
-      params: {
-        page: p,
-        num: 10,
-        ...obj,
-      }
-    });
-    console.log(res.data.lists); // lists of 10 movies
-    console.log(res.data); // {}: both lists and nummovies
-    setData(res.data.lists);
-    setCurPage(p);
-    setInpTxt(txt);
-    //console.log(txt); // triggering the text
-    //console.log(p); // page number 
-    setMovie_num(res.data.nummovies); 
-    console.log(res.data.nummovies); // total movie numbers including after sorting
-    timer = null;
+    if (timer === null) {
+      timer = setTimeout(async () => {
+        console.log("async call");
+        const res = await ax.get("/api/movie", {
+          params: {
+            page: p,
+            num: 10,
+            ...obj,
+          },
+        });
+        console.log(res.data.lists); // lists of 10 movies
+        console.log(res.data); // {}: both lists and nummovies
+        setData(res.data.lists);
+        setCurPage(p);
+        setInpTxt(txt);
+        //console.log(txt); // triggering the text
+        //console.log(p); // page number
+        setMovie_num(res.data.nummovies);
+        console.log(res.data.nummovies); // total movie numbers including after sorting
+        timer = null;
 
-    if(res.data.nummovies <= 0)
-    {
-      alert("no movie found")
+        if (res.data.nummovies <= 0) {
+          alert("no movie found");
+        }
+      }, 1000);
     }
-  }, 1000);
-};
     //setAllData(res.Alldata);
     //setData(res.data.lists);
 
@@ -195,62 +198,69 @@ console.log(txt);
     //setCurPage(p);
     //setInpTxt(txt);
     //myObj = res.data.length;
-   // setMovie_num(res.data.length);
-   //console.log(res.data);
-   
-  }
-  useEffect(()=>{
-    PageClick(1, '');
-  },[])
-console.log(data)
+    // setMovie_num(res.data.length);
+    //console.log(res.data);
+  };
+  useEffect(() => {
+    PageClick(1, "");
+  }, []);
+  console.log(data);
   //console.log(myObj);
   //console.log(movie_num);
-  
+
   var butt_arr = [];
   var ind = 1;
-  for( var i = 0; i < movie_num; i += 10){
+  for (var i = 0; i < movie_num; i += 10) {
     butt_arr.push(
-      <PageBttn 
+      <PageBttn
         onClick={PageClick.bind(this, ind, inptxt)}
-       // bgcolor = {cur_page === ind ? '#F9E7E7' : ""}
-        bgcolor= {cur_page === ind && theme === 'light' ? "#F9E7E7": (cur_page === ind &&theme === 'dark' ? "#B08584":"transparent")}
-        btnnumber = {ind}
+        // bgcolor = {cur_page === ind ? '#F9E7E7' : ""}
+        bgcolor={
+          cur_page === ind && theme === "light"
+            ? "#F9E7E7"
+            : cur_page === ind && theme === "dark"
+            ? "#B08584"
+            : "transparent"
+        }
+        btnnumber={ind}
       />
     );
-    ind++
+    ind++;
   }
- //console.log(movie_num)
-  var lastpage = cur_page+2;
+  //console.log(movie_num)
+  var lastpage = cur_page + 2;
 
-  var numpages = Math.ceil(movie_num/10);
-  console.log(numpages) // number of pages need to have to show the movies
-  
-  if(lastpage > numpages){
-    lastpage = numpages
+  var numpages = Math.ceil(movie_num / 10);
+  console.log(numpages); // number of pages need to have to show the movies
+
+  if (lastpage > numpages) {
+    lastpage = numpages;
   }
 
-  butt_arr = butt_arr.slice(cur_page-2 < 0 ? 0 : cur_page-2, lastpage);
-//console.log(butt_arr)
-// ============== Pagination ends
+  butt_arr = butt_arr.slice(cur_page - 2 < 0 ? 0 : cur_page - 2, lastpage);
+  //console.log(butt_arr)
+  // ============== Pagination ends
 
-// const [searchInput, setSearchInput] = useState("");
+  // const [searchInput, setSearchInput] = useState("");
 
   return (
     <Cont>
-<HeadCont colbg={whiteblack[theme]} shadow = {shadow[theme]}>
+      <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
 {/* ====================== Input and Button area ==================================== */}
-      <Header 
-        onInput={(e) => {
-          PageClick(1, e.target.value)
-        }}
-        isOn = {View}
-        handleToggle={() => onChangeView()}
-        changeColor={()=>{setTheme(
-          (theme === ('light') ? 'dark' : 'light')
-        )}}
-      />
-      
-      {/* <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>
+        <Header
+          onInput={(e) => {
+            PageClick(1, e.target.value);
+          }}
+          isView={View}
+          handleView={() => onChangeView()}
+          // isColor = {color}
+          // handleColor={() => onChangeColor()}
+          // handleColor={()=>{setTheme(
+          //   (theme === ('light') ? 'dark' : 'light')
+          // )}}
+        />
+
+        {/* <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>
         {sbr_type === "asc" ? "Sort By Ascending" : "Sort By Decending"}
       </Button>
       <Button
@@ -260,104 +270,93 @@ console.log(data)
         Sory By Ratings
       </Button>
       <Button onClick={onChangeView}>Change Layout</Button> */}
-
       </HeadCont>
-
 
 {/* ====================== Filtering result show below  ==================================== */}
       {View ? (
         <PagCont>
           <Wrap>
-            { data && data.length > 0 
-                ? data.map((item) => (
-              <HMovie
-                title={item.Title}
-                alt={item.Title}
-                year={item.release_year}
-                src={item.Poster}
-                place={item.country}
-                text={item.description}
-                clicked={
-                  result[item.imdbId] != undefined && result[item.imdbId] !== null
-                }
-                onClick={() => {
-                  StoreResult(item);
-                  r.push(`/result/${uuidv4()}`);
-                  
-                }}
-               //pages = {item.num_pages}
-              /> 
-              ))
-              : newmovie.slice(0, 10).map((item) => 
-              <HMovie 
-                title={item.Title} 
-                alt={item.Title}
-                year={item.release_year}
-                src={item.Poster}
-                place={item.country}
-                text={item.description}
-                onClick={() => {
-                  StoreResult(item);
-                  r.push(`/result/${uuidv4()}`);
-                  
-                }}
-                //pages = {item.num_pages}
-              />
-              )
-            }
+            {data && data.length > 0
+              ? data.map((item) => (
+                  <HMovie
+                    title={item.Title}
+                    alt={item.Title}
+                    year={item.release_year}
+                    src={item.Poster}
+                    place={item.country}
+                    text={item.description}
+                    clicked={
+                      result[item.imdbId] != undefined &&
+                      result[item.imdbId] !== null
+                    }
+                    onClick={() => {
+                      StoreResult(item);
+                      r.push(`/result/${uuidv4()}`);
+                    }}
+                    //pages = {item.num_pages}
+                  />
+                ))
+              : newmovie.slice(0, 10).map((item) => (
+                  <HMovie
+                    title={item.Title}
+                    alt={item.Title}
+                    year={item.release_year}
+                    src={item.Poster}
+                    place={item.country}
+                    text={item.description}
+                    onClick={() => {
+                      StoreResult(item);
+                      r.push(`/result/${uuidv4()}`);
+                    }}
+                    //pages = {item.num_pages}
+                  />
+                ))}
           </Wrap>
-           {/* <Pagination /> */}
-           <PageCont>
-            {butt_arr}
-          </PageCont>
+          {/* <Pagination /> */}
+          <PageCont>{butt_arr}</PageCont>
         </PagCont>
-      ) 
-      : 
-      (
+      ) : (
         <PagCont>
           <Wrap>
-          { data && data.length > 0 
-            ? data.map((item) => (
-              <PosterBox
-                title={item.Title}
-                alt={item.Title}
-                year={item.release_year}
-                src={item.Poster}
-                place={item.country}
-                text={item.description}
-                clicked={
-                  result[item.imdbId] != undefined && result[item.imdbId] !== null
-                }
-                onClick={() => {
-                  StoreResult(item);
-                  r.push(`/result/${uuidv4()}`);
-                }}
+            {data && data.length > 0
+              ? data.map((item) => (
+                  <PosterBox
+                    title={item.Title}
+                    alt={item.Title}
+                    year={item.release_year}
+                    src={item.Poster}
+                    place={item.country}
+                    text={item.description}
+                    clicked={
+                      result[item.imdbId] != undefined &&
+                      result[item.imdbId] !== null
+                    }
+                    onClick={() => {
+                      StoreResult(item);
+                      r.push(`/result/${uuidv4()}`);
+                    }}
 
-                //pages = {item.num_pages}
-              />
-            ))
-            : newmovie.slice(0, 10).map((item)=> 
-            <PosterBox 
-              title={item.Title} 
-              alt={item.Title}
-              year={item.release_year}
-              src={item.Poster}
-              place={item.country}
-              text={item.description}
-              onClick={() => {
-                StoreResult(item);
-                r.push(`/result/${uuidv4()}`);
-                
-              }}
-              //pages = {item.num_pages}
-            />
-            )
-          }
+                    //pages = {item.num_pages}
+                  />
+                ))
+              : newmovie.slice(0, 10).map((item) => (
+                  <PosterBox
+                    title={item.Title}
+                    alt={item.Title}
+                    year={item.release_year}
+                    src={item.Poster}
+                    place={item.country}
+                    text={item.description}
+                    onClick={() => {
+                      StoreResult(item);
+                      r.push(`/result/${uuidv4()}`);
+                    }}
+                    //pages = {item.num_pages}
+                  />
+                ))}
           </Wrap>
-           {/* <Pagination /> */}
-           <PageCont>
-            {butt_arr}
-          </PageCont>
+          {/* <Pagination /> */}
+          <PageCont>{butt_arr}</PageCont>
         </PagCont>
       )}
     </Cont>

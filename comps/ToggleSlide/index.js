@@ -4,7 +4,6 @@ import styled from "styled-components";
 const ToggleSlide = ({  
   isOn, 
   handleToggle =() =>{}, 
-  onColor 
 }) => {
   return (
     <>
@@ -27,23 +26,3 @@ const ToggleSlide = ({
 };
 
 export default ToggleSlide;
-
-
-
-// const ToggleSlide = () => {
-//   const [toggle, setToggle] = useState(false)
-
-//   return(
-//     <>
-//       <button onClick={() => setToggle(!toggle)}>List View</button>
-//       {toggle && (
-//         <button>
-//           Column View
-//         </button>
-//       )}
-//     </>
-//   )
-// }
-
-// export default ToggleSlide;
-

@@ -30,7 +30,7 @@ const FlexCol = styled.div`
   flex-direction: column;
   background-color: ${(props) => props.colbg};  
   width: 100%;
-  padding: 2.5rem 1rem 2rem;   
+  padding: 2rem 1rem;   
 `;
 
 const FlexHeader = styled.div`
@@ -40,7 +40,7 @@ const FlexHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
+  // margin-bottom: 2rem;
 
   @media only screen and (min-width: 681px) and (max-width: 870px) {
     flex-direction: column;
@@ -141,9 +141,11 @@ const Header = ({
   src = "./images/watchflix_logo.png",
   //onInput = (event) => {},
   onInput=()=>{},
-  handleToggle = () => {},
-  isOn,
-  changeColor = () => {},
+  handleView = () => {},
+  handleColor = () => {},
+  isView,
+  isColor,
+  // changeColor = () => {},
   // onPosterBox = () => {},
   // onHorizontal = () => {}
 }) => {
@@ -230,44 +232,26 @@ const Header = ({
           <Switch onChange={changeView} /> */}
 
           <SwitchCont>
-            {/* <FormControlLabel
-              control={<Switch onChange={changeColor||setLabel(!label)} name="Dark Mode" />}
-              //label="Dark Mode"
-              label = {label || theme === 'light'? "Dark Mode":"Light Mode"}
-              className="labelColor"
-              sx={{ backgroundColor: "rgba(0,0,0,0)"  }}
-              />
-            <FormControlLabel
-              control={<Switch onChange={changeView} name="List View" />}
-              label="List View"
-              className="labelColor"
-              sx={{ backgroundColor: "rgba(0,0,0,0)" }}
-            /> */}
 
             <ToggleSlide 
-              isOn={isOn}
-              // onColor="#777"
-              handleToggle={handleToggle}
-              // handleToggle={() => onChangeView(View)}
+              isOn={isView}
+              handleToggle={handleView}
+              style ={{marginRight: "20px"}}
             />
+
+            {/* <ToggleSlide 
+              isOn={isColor}
+              // handleToggle={handleColor}
+              // onColor="#777"
+              handleToggle={() => setTheme(theme === "dark" ? "light" : "dark")}
+            /> */}
 
             <ToggleBttn 
               leftClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               rightClick={() => setTheme(theme === "light" ? "dark" : "light")}
             />
 
-
           </SwitchCont>
-
-          {/* <Radio toggle/> */}
-          {/* <Button.Group>
-            <Button icon onClick={() => {onPosterBox()}}>
-              <Icon name='grid layout'/>
-            </Button>
-            <Button icon >
-              <Icon name='list'/>
-            </Button>
-          </Button.Group> */}
         </FlexRow>
       </FlexHeader>
 {/* =================== HEADER ENDS =================== */}
