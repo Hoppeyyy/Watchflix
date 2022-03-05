@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
 import styled from "styled-components";
 
+const LableBox = styled.label`
+  background-image: url("${props => props.url}");
+`
+
 const ToggleSlide = ({  
   isOn, 
   handleToggle =() =>{}, 
+  id,
+  url= './images/icon_view.svg',
 }) => {
   return (
     <>
@@ -11,16 +17,17 @@ const ToggleSlide = ({
         checked={isOn}
         onChange={handleToggle}
         className="react-switch-checkbox"
-        id={`react-switch-new`}
+        id={id}
         type="checkbox"
       />
-      <label
+      <LableBox
         style={{ background: isOn }}
         className="react-switch-label"
-        htmlFor={`react-switch-new`}
+        htmlFor={id}
+        url={url}
       >
         <span className={`react-switch-button`} />
-      </label>
+      </LableBox>
     </>
   );
 };
