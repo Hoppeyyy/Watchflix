@@ -23,6 +23,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { basicColor, whiteblack } from "@/utils/variables";
 import ToggleBttn from '@/comps/ToggleBttn';
 import ToggleSlide from '@/comps/ToggleSlide';
+import FilterBttn from '@/comps/FilterBttn'
 
 
 const FlexCol = styled.div`
@@ -145,6 +146,12 @@ const Header = ({
   handleColor = () => {},
   isView,
   isColor,
+  onAscClick = () => {},
+  onDirClick = () => {},
+  ascBkColor = null,
+  dirBkColor = null,
+  ascChildren = null,
+  dirChildren = null,
   // changeColor = () => {},
   // onPosterBox = () => {},
   // onHorizontal = () => {}
@@ -233,23 +240,28 @@ const Header = ({
 
           <SwitchCont>
 
+            {/* <ToggleBttn 
+              leftClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              rightClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            /> */}
+
             <ToggleSlide 
               isOn={isView}
               handleToggle={handleView}
               style ={{marginRight: "20px"}}
+              id="toggleOne"
             />
 
-            {/* <ToggleSlide 
+            <ToggleSlide 
               isOn={isColor}
-              // handleToggle={handleColor}
+              handleToggle={handleColor}
+              id="toggleTwo"
+              url='./images/icon_lightdark.svg'
+              marginR = '0'
               // onColor="#777"
-              handleToggle={() => setTheme(theme === "dark" ? "light" : "dark")}
-            /> */}
-
-            <ToggleBttn 
-              leftClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              rightClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              // handleToggle={() => setTheme(theme === "dark" ? "light" : "dark")}
             />
+            
 
           </SwitchCont>
         </FlexRow>
@@ -329,7 +341,7 @@ const Header = ({
           </Select>
         </FormControl>
 
-        <FormControl size="small" sx={{ width: "19%" }}>
+        {/* <FormControl size="small" sx={{ width: "19%" }}>
           <InputLabel id="select-country">Country</InputLabel>
           <Select
             labelId="select-country"
@@ -350,10 +362,10 @@ const Header = ({
               <Button>Apply</Button>
             </FlexRow>
           </Select>
-        </FormControl>
+        </FormControl> */}
 
         <FormControl size="small" sx={{ width: "19%" }}>
-          <InputLabel id="select-sortby">Sort By...</InputLabel>
+          {/* <InputLabel id="select-sortby">Sort By...</InputLabel>
           <Select
             labelId="select-sortby"
             // multiple
@@ -372,7 +384,17 @@ const Header = ({
               <Button>Clear</Button>
               <Button>Apply</Button>
             </FlexRow>
-          </Select>
+          </Select> */}
+
+          <FilterBttn 
+            onAscClick = {onAscClick}
+            onDirClick = {onDirClick}
+            ascBkColor = {ascBkColor}
+            dirBkColor = {dirBkColor}
+            ascChildren = {ascChildren}
+            dirChildren = {dirChildren}
+          />
+          
         </FormControl>
       </FlexRow>
     </FlexCol>
