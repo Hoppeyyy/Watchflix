@@ -1,42 +1,84 @@
 import styled from "styled-components";
 import Head from "next/head";
-import { useEffect, useState } from "react";
-import { useTheme } from "@/utils/provider";
-
+import { useEffect, useState} from "react";
+import { useTheme, useResult} from "@/utils/provider";
 import { useRouter } from "next/router";
-import { movie, filtering, sortArr } from "@/utils/combine";
 import ax from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { useResult } from "@/utils/provider";
-
-import HMovieData from "@/comps/HMovie/index2";
-import PosterBoxData from "@/comps/PosterBox/index2";
+import { setRequestMeta } from "next/dist/server/request-meta";
 import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
-import PopUp from "comps/PopUp";
+import Pagination from "@/comps/Pagination/index2";
+import PageBttn from '@/comps/PageBttn';
+import newmovie from '@/utils/newmovie';
+import React from 'react';
+import Header from '@/comps/Header/index';
+import { basicColor, whiteblack, shadow } from "@/utils/variables";
+
 
 const Cont = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100%;  
 `;
+
+const HeadCont = styled.div`
+  width: 100%;
+  dislplay: flex;
+  justify-content: center;
+  align-items: center;
+  // margin-bottom: 80px;
+  padding: 0 2rem;
+  background-color: ${(props) => props.colbg};  
+  box-shadow: ${props => props.shadow}; 
+`;
+
+const PagCont = styled.div`
+  width: 100%;
+  dislplay: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+  padding: 2rem 1rem;
+`;
+
 const Wrap = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
 `;
-const Button = styled.button``;
+
+const Button = styled.button`
+  margin-bottom: 50px;
+`;
+
+const PageCont = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
 
 var timer = null;
 
+
 export default function Test() {
   const r = useRouter();
-
   const [data, setData] = useState([]);
   const [View, setView] = useState(false);
   const [sbr, setSbr] = useState(false);
   const [sbr_type, setSbrType] = useState("asc");
-  const [clicked, setClicked] = useState(false);
+  const [inptxt, setInpTxt] = useState('')
   const { result, setResult } = useResult();
+  const [cur_page, setCurPage] = useState([]);
+  const [movie_num, setMovie_num] = useState();
+  const { theme, setTheme } = useTheme();
+  //const [Def, setDef] = useState(false);
+
 
   const onChangeView = () => {
     if (View === false) {
@@ -48,63 +90,132 @@ export default function Test() {
     }
   };
 
-  const inputFilter = async (txt) => {
-    console.log(txt);
+  const StoreResult = (item) => {
+    console.log(item);
+   
+    console.log(item);
+      console.log("clicked");
 
-    // results the timer if the inputs keeps changing
-    if (timer) {
+      const b_obj = {};
+      b_obj[item.imdbId] = item;
+      setResult(b_obj);
+  };
+  
+ 
+// ============== PaginatioWn 
+
+const PageClick = async(p,txt) => {
+console.log(txt);
+    var obj = {};
+    if(txt)
+    {
+      obj.txt=txt;
+     // obj.sort_rating=sbr;
+     // obj.sort_type = sbr_type;
+    }
+    if (timer) 
+    {
       clearTimeout(timer);
       timer = null;
     }
+    /*
+        txt: txt,
+        sort_rating: sbr,
+        sort_type: sbr_type
+    */
+   if (timer === null) 
+   {
+    timer = setTimeout(async () => 
+    {
+    console.log("async call");
+    const res = await ax.get("/api/movie3",
+    {
+      params: {
+        page: p,
+        num: 10,
+        ...obj,
+      }
+    });
+    console.log(res.data.lists); // lists of 10 movies
+    console.log(res.data); // {}: both lists and nummovies
+    setData(res.data.lists);
+    setCurPage(p);
+    setInpTxt(txt);
+    //console.log(txt); // triggering the text
+    //console.log(p); // page number 
+    setMovie_num(res.data.nummovies); 
+    console.log(res.data.nummovies); // total movie numbers including after sorting
+    timer = null;
 
-    // start a timer to wait 2 seconds before making an asynchronous call
-    if (timer === null) {
-      timer = setTimeout(async () => {
-        console.log("async call");
-        const res = await ax.get("/api/movie", {
-          params: {
-            txt: txt,
-            sort_rating: sbr,
-            sort_type: sbr_type,
-          },
-        });
-        console.log(res.data);
-        setData(res.data);
-        timer = null;
-      }, 1000);
+    if(res.data.nummovies <= 0)
+    {
+      alert("no movie found")
     }
-  };
+  }, 1000);
+};
+    //setAllData(res.Alldata);
+    //setData(res.data.lists);
 
-  const StoreResult = (clicked, item) => {
-    console.log(clicked, item);
-
-    if (clicked) {
-      setClicked(true);
-      console.log("clicked");
-      const b_obj = {
-        ...result,
-      };
-
-      b_obj[item.imdbId] = item;
-      setResult(b_obj);
-    } else {
-      setClicked(false);
-      const b_obj = {
-        ...result,
-      };
-
-      delete b_obj[item.imdbId];
-      setResult(b_obj);
-    }
-  };
+    //setNumMovies(res.data.nummovies);
+    //setCurPage(p);
+    //setInpTxt(txt);
+    //myObj = res.data.length;
+   // setMovie_num(res.data.length);
+   //console.log(res.data);
+   
+  }
+  useEffect(()=>{
+    PageClick(1, '');
+  },[])
+console.log(data)
+  //console.log(myObj);
+  //console.log(movie_num);
+  
+  var butt_arr = [];
+  var ind = 1;
+  for( var i = 0; i < movie_num; i += 10){
+    butt_arr.push(
+      <PageBttn 
+        onClick={PageClick.bind(this, ind, inptxt)}
+       // bgcolor = {cur_page === ind ? '#F9E7E7' : ""}
+        bgcolor= {cur_page === ind && theme === 'light' ? "#F9E7E7": (cur_page === ind &&theme === 'dark' ? "#B08584":"transparent")}
+        btnnumber = {ind}
+      />
+    );
+    ind++
+  }
+ //console.log(movie_num)
+  var lastpage = cur_page+2;
+  //var numpges = Math.ceil(nummovies/10)
+  var numpages = Math.ceil(movie_num/10);
+  console.log(numpages) // number of pages need to have to show the movies
+  
+  if(lastpage > numpages){
+    lastpage = numpages
+  }
+  /*
+  if(cur_page < 5){
+    lastpage = 10;
+  }*/
+  butt_arr = butt_arr.slice(cur_page-2 < 0 ? 0 : cur_page-2, lastpage);
+//console.log(butt_arr)
+// ============== Pagination ends
 
   return (
     <Cont>
-      <input
-        placeholder="Search"
-        onChange={(e) => inputFilter(e.target.value)}
+<HeadCont colbg={whiteblack[theme]} shadow = {shadow[theme]}>
+{/* ====================== Input and Button area ==================================== */}
+      <Header 
+        onInput={(e) => {
+          PageClick(1, e.target.value)
+        }}
+        changeView={()=>{onChangeView()}}
+        changeColor={()=>{setTheme(
+          (theme === ('light') ? 'dark' : 'light')
+        )}}
       />
-      <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>
+      
+      {/* <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>
         {sbr_type === "asc" ? "Sort By Ascending" : "Sort By Decending"}
       </Button>
       <Button
@@ -113,54 +224,107 @@ export default function Test() {
       >
         Sory By Ratings
       </Button>
-      <Button onClick={onChangeView}>Change Layout</Button>
-      
-    {/*<Wrap>View ?(<HMovieData/>):(<PosterBoxData/>)</Wrap>*/}
+      <Button onClick={onChangeView}>Change Layout</Button> */}
 
+      </HeadCont>
+
+
+{/* ====================== Filtering result show below  ==================================== */}
       {View ? (
-        <Wrap>
-          {data.map((item) => (
-            <HMovie
-              title={item.Title}
+        <PagCont>
+          <Wrap>
+            { data && data.length > 0 
+                ? data.map((item) => (
+              <HMovie
+                title={item.Title}
+                alt={item.Title}
+                year={item.release_year}
+                src={item.Poster}
+                place={item.country}
+                text={item.description}
+                clicked={
+                  result[item.imdbId] != undefined && result[item.imdbId] !== null
+                }
+                onClick={() => {
+                  StoreResult(item);
+                  r.push(`/result/${uuidv4()}`);
+                  
+                }}
+               //pages = {item.num_pages}
+              /> 
+              ))
+              : newmovie.slice(0, 10).map((item) => 
+              <HMovie 
+                title={item.Title} 
+                alt={item.Title}
+                year={item.release_year}
+                src={item.Poster}
+                place={item.country}
+                text={item.description}
+                onClick={() => {
+                  StoreResult(item);
+                  r.push(`/result/${uuidv4()}`);
+                  
+                }}
+                //pages = {item.num_pages}
+              />
+              )
+            }
+          </Wrap>
+           {/* <Pagination /> */}
+           <PageCont>
+            {butt_arr}
+          </PageCont>
+        </PagCont>
+      ) 
+      : 
+      (
+        <PagCont>
+          <Wrap>
+          { data && data.length > 0 
+            ? data.map((item) => (
+              <PosterBox
+                title={item.Title}
+                alt={item.Title}
+                year={item.release_year}
+                src={item.Poster}
+                place={item.country}
+                text={item.description}
+                clicked={
+                  result[item.imdbId] != undefined && result[item.imdbId] !== null
+                }
+                onClick={() => {
+                  StoreResult(item);
+                  r.push(`/result/${uuidv4()}`);
+                }}
+
+                //pages = {item.num_pages}
+              />
+            ))
+            : newmovie.slice(0, 10).map((item)=> 
+            <PosterBox 
+              title={item.Title} 
               alt={item.Title}
               year={item.release_year}
               src={item.Poster}
               place={item.country}
               text={item.description}
-              clicked={
-                result[item.imdbId] != undefined && result[item.imdbId] !== null
-              }
               onClick={() => {
+                StoreResult(item);
                 r.push(`/result/${uuidv4()}`);
-                (e) => StoreResult(e.target.clicked, item);
+                
               }}
+              //pages = {item.num_pages}
             />
-          ))}
-        </Wrap>
-      ) : (
-        <Wrap>
-          {data.map((item) => (
-            <PosterBox
-              title={item.Title}
-              alt={item.Title}
-              year={item.release_year}
-              src={item.Poster}
-              place={item.country}
-              text={item.description}
-              clicked={
-                result[item.imdbId] != undefined && result[item.imdbId] !== null
-              }
-              onClick={() => {
-                r.push(`/result/${uuidv4()}`);
-                (e) => {
-                  return StoreResult(e.target.clicked, item);
-                };
-              }}
-            />
-          ))}
-        </Wrap>
+            )
+          }
+          </Wrap>
+           {/* <Pagination /> */}
+           <PageCont>
+            {butt_arr}
+          </PageCont>
+        </PagCont>
       )}
     </Cont>
   );
 }
-
