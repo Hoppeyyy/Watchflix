@@ -1,101 +1,59 @@
-// ---------------------- movie 1 and movie2 combine ------------------------ //
-const movie1 = require("./movie.json");
-const movie2 = require("./movie2.json");
-const { duration } = require("@mui/material");
-
-/*
-const movie = [];
-
-for (var i = 0; i < movie2.length; i++){
-  movie[i] = {};
-  for(var key in movie2[i]){
-    if(movie2[i].hasOwnProperty(key)){
-        movie[i][key] = movie2[i][key];
-    }
-  }
-
-  //movie[i].Title = null;
-  for(var j = 0; j < movie1.length; j++){
-    if(movie1[j].title === movie2[i].Title){
-      movie[i].Title = movie1[j].title;
-      break;
-    }
-  }
-}
-
-console.log(movie);
-*/
-
-// function movie(){
-
-// const result = movie2.reduce(function(res,obj){
-// const found = movie1.find(function(o){
-//     return o.title == obj.Title;
-//   });
-
-//   if(found){
-    
-//     const newObj = Object.assign({},obj);
-//     newObj.description = found.description;
-//     newObj.release_year = found.release_year;
-//     //newObj.duration = found.duration;
-//     newObj.duration = parseInt(found.duration);
-//     newObj.country = found.country;
-//     newObj.cast = found.cast;
-//     newObj.director = found.director;
-
-//     res.push(newObj);
-//   }
-//   return res;
-  
-// },[]);
-// //console.log(result);
-// return result
-// }
-
-// movie();
 // --------------------------- filtering ---------------------------------- //
 const rating = 'IMDB Score';
 
 function filtering(
   arr = [],
   
-  config={Title: null, Genre:null, duration:null, rating:null, country:null}
+  config={Title: null, Genre:null, duration:null, rating:null, country:null, listed_in:null, director:null}
   
 ){
 
-  const {Title, Genre,duration,rating,country} = config;
+  const {Title, Genre, duration, rating, country, listed_in, director} = config;
   const keyword = arr.value;
   
-  if(Title || Genre || duration || rating || country ){
+  if(Title || Genre || duration || rating || country || listed_in || director ){
     
     const filtered_arr = arr.filter((o)=>{
-      var cond = true;
+      var cond = false;
 
       if(Title){
-        cond = cond && o.Title.includes(Title);
+        cond = cond || o.Title.toUpperCase().includes(Title.toUpperCase());
       }
 
       if(Genre){
-        cond = cond && o.Genre.includes(Genre);
+        cond = cond || o.Genre.toUpperCase().includes(Genre.toUpperCase());
       }
 
-      if(duration){
-       // cond = cond && o.duration.includes(duration); 
-       cond = cond && Number(o.duration) >= Number(duration);
-      }
+      // if(listed_in){
+      //   cond = cond || o.listed_in.toUpperCase().includes(listed_in.toUpperCase());
+      // }
 
-      if(rating){
-        cond = cond && Number(o.rating)>= Number(rating);
-      }
+      if(director){
+        cond = cond || o.director.toUpperCase().includes(director.toUpperCase());
+      }      
 
       if(country){
-        cond = cond && o.country.includes(country);
-      }
+        cond = cond || o.country.toUpperCase().includes(country.toUpperCase());
+      }   
+      
+      // if(duration){
+      //   // cond = cond && o.duration.includes(duration); 
+      //   cond = cond || Number(o.duration) >= Number(duration);
+      //  }
+
+      // if(rating){
+      //   // cond = cond && o.duration.includes(duration); 
+      //   cond = cond || Number(o.rating) >= Number(rating);
+      //  }
+ 
+      //  if(rating){
+      //    cond = cond || o.rating.toUpperCase().includes(rating.toUpperCase());
+      //  }
+
       return cond;
     })
     return filtered_arr;
-    // console.log(filtered_arr);
+    console.log(filtered_arr);
   } 
 }
 /*
