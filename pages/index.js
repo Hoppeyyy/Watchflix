@@ -13,7 +13,8 @@ import PageBttn from "@/comps/PageBttn";
 import newmovie from "@/utils/newmovie";
 import React from "react";
 import Header from "@/comps/Header/index";
-import { basicColor, whiteblack, shadow } from "@/utils/variables";
+import Jigsaw from '@/comps/Jigsaw'
+import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
 
 const Cont = styled.div`
   width: 100%;
@@ -75,6 +76,8 @@ export default function Test() {
   const [color, setColor] = useState(true);
   const [sbr, setSbr] = useState(false);
   const [sbr_type, setSbrType] = useState("asc");
+  const [sort_direct, setSbDirect] = useState("asc");
+  // const [director, setDirector] = useState(false);
   const [inptxt, setInpTxt] = useState("");
   const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
@@ -94,47 +97,19 @@ export default function Test() {
 
   const onChangeColor = () => {
     if (color === false) {
+      // theme === "dark"
+      setTheme(theme === "dark" ? "light" : "dark");
       setColor(true);
-      console.log("light mode");
+      // console.log("light mode");
     } else if (color === true) {
+      setTheme(theme === "dark" ? "light" : "dark");
       setColor(false);
-      console.log("dark mode");
+      // console.log("dark mode");
     }
   };
-  /*
-  const inputFilter = async (txt) => {
-    console.log(txt);
-    //console.log(myObj);
-    // results the timer if the inputs keeps changing
-    if (timer) {
-      clearTimeout(timer);
-      timer = null;
-    }
 
-    // start a timer to wait 2 seconds before making an asynchronous call
-    if (timer === null) {
-      timer = setTimeout(async () => {
-        console.log("async call");
-        const res = await ax.get("/api/movie2", {
-          params: {
-            
-          },
-      
-        });
-        console.log(res.data);
-        setData(res.data);
-        setMovie_num(res.data.length);
-      
-        //setCurPage(res.data);
-        timer = null;
-      }, 1000);
-    }
-    else{
-
-    }
-  };
- console.log(movie_num);
- */
+// setTheme(theme === "dark" ? "light" : "dark")}
+  
   const StoreResult = (item) => {
     console.log(item);
 
@@ -146,13 +121,16 @@ export default function Test() {
     setResult(b_obj);
   };
 
-  // ============== PaginatioWn
+// ============== PaginatioWn
 
   const PageClick = async (p, txt) => {
     console.log(txt);
     var obj = {};
     if (txt) {
       obj.txt = txt;
+      obj.sort_type = sbr_type
+      obj.release_year = sbr_type
+      obj.director = sort_direct
       // obj.sort_rating=sbr;
       // obj.sort_type = sbr_type;
     }
@@ -205,8 +183,6 @@ export default function Test() {
     PageClick(1, "");
   }, []);
   console.log(data);
-  //console.log(myObj);
-  //console.log(movie_num);
 
   var butt_arr = [];
   var ind = 1;
@@ -239,7 +215,7 @@ export default function Test() {
 
   butt_arr = butt_arr.slice(cur_page - 2 < 0 ? 0 : cur_page - 2, lastpage);
   //console.log(butt_arr)
-  // ============== Pagination ends
+// ============== Pagination ends
 
   // const [searchInput, setSearchInput] = useState("");
 
@@ -252,30 +228,38 @@ export default function Test() {
             PageClick(1, e.target.value);
           }}
           isView={View}
+          isColor={color}
           handleView={() => onChangeView()}
+          handleColor={() => onChangeColor()}
+
+          onAscClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}
+          onDirClick={() => setSbDirect(sort_direct === "asc" ? "desc" : "asc")}
+
+          ascBkColor={
+            // theme === "light" ? "#fff"
+            // : theme === "dark" ? "#B08584" : "transparent"
+            sbr_type === "desc" ? "white" : hBttnBkColor[theme]
+          }
+          ascChildren ={sbr_type === "desc" ? "Sort By Z-A" : "Sort By A-Z" }
+
+
+          rateBkColor = {            
+            sort_direct === "desc" ? "white" : hBttnBkColor[theme]
+          }
+          rateChildren = {sort_direct === "desc" ? "Clear" : "Sort By Director" }
+
           // isColor = {color}
           // handleColor={() => onChangeColor()}
           // handleColor={()=>{setTheme(
           //   (theme === ('light') ? 'dark' : 'light')
           // )}}
         />
-
-        {/* <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>
-        {sbr_type === "asc" ? "Sort By Ascending" : "Sort By Decending"}
-      </Button>
-      <Button
-        style={{ backgroundColor: sbr ? "pink" : "white" }}
-        onClick={() => setSbr(!sbr)}
-      >
-        Sory By Ratings
-      </Button>
-      <Button onClick={onChangeView}>Change Layout</Button> */}
       </HeadCont>
 
 {/* ====================== Filtering result show below  ==================================== */}
       {View ? (
         <PagCont>
-          <Wrap>
+          <Wrap>            
             {data && data.length > 0
               ? data.map((item) => (
                   <HMovie
@@ -285,6 +269,7 @@ export default function Test() {
                     src={item.Poster}
                     place={item.country}
                     text={item.description}
+                    director={item.director}
                     clicked={
                       result[item.imdbId] != undefined &&
                       result[item.imdbId] !== null
@@ -303,6 +288,7 @@ export default function Test() {
                     year={item.release_year}
                     src={item.Poster}
                     place={item.country}
+                    director={item.director}
                     text={item.description}
                     onClick={() => {
                       StoreResult(item);
@@ -326,6 +312,7 @@ export default function Test() {
                     year={item.release_year}
                     src={item.Poster}
                     place={item.country}
+                    director={item.director}
                     text={item.description}
                     clicked={
                       result[item.imdbId] != undefined &&
@@ -346,6 +333,7 @@ export default function Test() {
                     year={item.release_year}
                     src={item.Poster}
                     place={item.country}
+                    director={item.director}
                     text={item.description}
                     onClick={() => {
                       StoreResult(item);

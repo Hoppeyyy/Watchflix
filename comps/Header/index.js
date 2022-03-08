@@ -57,7 +57,6 @@ const FlexHeader = styled.div`
 const LogoCont = styled.a`
   display: block;
   margin: 0 1rem;
-
 `
 
 const Image = styled.img`
@@ -82,19 +81,8 @@ const SearchBar = styled.input`
   @media only screen and (min-width: 1px) and (max-width: 870px) {
     width: 80%;
     margin: 1rem;
-  }
-  
+  }  
 `
-
-// const SearchIcon = styled.a`
-//   background-image: url('./images/Icon_search.svg');
-//   background-position: center;
-//   background-repeat: no-repeat;  
-//   display: block;
-//   width: 24px; height: 24px;
-//   position: absolute;
-  
-// `
 
 const FlexRow = styled.div`
   display: flex;
@@ -139,8 +127,7 @@ const sortby = [
 const Header = ({
   rowbg = bgpopup,
   colbg = bgpopup,
-  src = "./images/watchflix_logo.png",
-  //onInput = (event) => {},
+  src = "/images/watchflix_logo.png",
   onInput=()=>{},
   handleView = () => {},
   handleColor = () => {},
@@ -149,12 +136,10 @@ const Header = ({
   onAscClick = () => {},
   onDirClick = () => {},
   ascBkColor = null,
-  dirBkColor = null,
+  rateBkColor = null,
   ascChildren = null,
-  dirChildren = null,
-  // changeColor = () => {},
-  // onPosterBox = () => {},
-  // onHorizontal = () => {}
+  rateChildren = null,
+
 }) => {
   // const { theme } = useTheme();
   const { theme, setTheme } = useTheme();
@@ -203,12 +188,6 @@ const Header = ({
     setDur(newDur);
   };
 
-  // const [searchInput, setSearchInput] = useState("");
-
-  // const handleChange = (e) => {
-  //   e.preventDefault();
-  //   setSearchInput(e.target.value);
-  // };
 
 
   return (
@@ -223,27 +202,15 @@ const Header = ({
             alt="Watchflix logo"          
           />
         </LogoCont>
-        {/* <Search fluid/> */}
+
         <SearchBar
           placeholder="Search for a Movie..."
-          //onChange={(event) => onInput(event.target.value)}
           onChange={onInput}
-          // onChange={handleChange}
-          // value={searchInput}
         >         
         </SearchBar>
-        {/* <button onChange={onInput}>go</button> */}
+
         <FlexRow>
-          {/* <Input icon='search' type='text' placeholder='Search...' autoWidth/> */}
-          {/* <Switch onChange={changeColor} name="Dark Mode" />
-          <Switch onChange={changeView} /> */}
-
           <SwitchCont>
-
-            {/* <ToggleBttn 
-              leftClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              rightClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            /> */}
 
             <ToggleSlide 
               isOn={isView}
@@ -256,12 +223,9 @@ const Header = ({
               isOn={isColor}
               handleToggle={handleColor}
               id="toggleTwo"
-              url='./images/icon_lightdark.svg'
+              url='/images/icon_lightdark.svg'
               marginR = '0'
-              // onColor="#777"
-              // handleToggle={() => setTheme(theme === "dark" ? "light" : "dark")}
-            />
-            
+            />            
 
           </SwitchCont>
         </FlexRow>
@@ -292,7 +256,6 @@ const Header = ({
           </Select>
         </FormControl>
 
-        {/* https://mui.com/components/slider/#minimum-distance */}
         <FormControl size="small" sx={{ width: "19%" }}>
           <InputLabel id="select-duration">Duration</InputLabel>
           <Select
@@ -341,58 +304,14 @@ const Header = ({
           </Select>
         </FormControl>
 
-        {/* <FormControl size="small" sx={{ width: "19%" }}>
-          <InputLabel id="select-country">Country</InputLabel>
-          <Select
-            labelId="select-country"
-            multiple
-            value={countryName}
-            onChange={handleCountry}
-            input={<OutlinedInput label="Country" />}
-            renderValue={(selected) => selected.join(", ")}
-          >
-            {country.map((country) => (
-              <MenuItem key={country} value={country}>
-                <Checkbox checked={countryName.indexOf(country) > -1} />
-                <ListItemText primary={country} />
-              </MenuItem>
-            ))}
-            <FlexRow>
-              <Button>Clear</Button>
-              <Button>Apply</Button>
-            </FlexRow>
-          </Select>
-        </FormControl> */}
-
         <FormControl size="small" sx={{ width: "19%" }}>
-          {/* <InputLabel id="select-sortby">Sort By...</InputLabel>
-          <Select
-            labelId="select-sortby"
-            // multiple
-            value={sortbyName}
-            // label='Sort By'
-            onChange={handleSortby}
-            input={<OutlinedInput label="Sortby" />}
-            // renderValue={(selected) => selected.join(', ')}
-          >
-            {sortby.map((sortby) => (
-              <MenuItem key={sortby} value={sortby}>
-                <ListItemText primary={sortby} />
-              </MenuItem>
-            ))}
-            <FlexRow>
-              <Button>Clear</Button>
-              <Button>Apply</Button>
-            </FlexRow>
-          </Select> */}
-
           <FilterBttn 
             onAscClick = {onAscClick}
             onDirClick = {onDirClick}
             ascBkColor = {ascBkColor}
-            dirBkColor = {dirBkColor}
+            rateBkColor = {rateBkColor}
             ascChildren = {ascChildren}
-            dirChildren = {dirChildren}
+            rateChildren = {rateChildren}
           />
           
         </FormControl>

@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   //const lists = [];
   //res.status(200).json([]);
 
-  const { txt, sort_rating, sbr_year, sbr_type } = req.query;
+  const { txt, sort_rating, sbr_year, sbr_type, sbd_type, sby_type } = req.query;
   
   var lists =[];
 
@@ -32,6 +32,7 @@ export default async function handler(req, res) {
       listed_in:txt,
       rating:txt
     })
+    
   } else {
     lists = newmovie
   } 
@@ -43,12 +44,51 @@ export default async function handler(req, res) {
     })
   }  
 
-  if(sbr_year){
-    lists = sortArr(lists,{
-      key:'year_added',
-      type:sbr_type
+  // if(sbr_year){
+  //   lists = sortArr(lists,{
+  //     key:'release_year',
+  //     type:sby_type
+  //   })
+  // }
+
+  // let sort_direct = "asc"
+  // if(sort_direct){
+  //   lists = lists.sort((a, b) => {
+  //     if(sort_direct === "asc") {
+  //       if( a.Title > b.Title) return 1
+  //       if( a.Title < b.Title) return -1
+
+  //     } else {
+  //       if( a.Title > b.Title) return -1
+  //       if( a.Title < b.Title) return 1
+  //     }
+
+  //     return 0
+  //   })
+  // }
+
+  let sort_alpha = "asc"
+  if(sort_alpha){
+    lists = lists.sort((a, b) => {
+      if(sort_alpha === "asc") {
+        if( a.Title > b.Title) return 1
+        if( a.Title < b.Title) return -1
+
+      } else {
+        if( a.Title > b.Title) return -1
+        if( a.Title < b.Title) return 1
+      }
+      return 0
     })
   }
+  
+
+  // if(sort_direct){
+  //   lists = sortArr(lists,{
+  //     key:'director',
+  //     type:sbd_type
+  //   })
+  // }
 
   const nummovies = lists.length;
   
