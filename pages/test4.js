@@ -11,36 +11,20 @@ import PosterBox from "@/comps/PosterBox";
 import Pagination from "@/comps/Pagination/index2";
 import PageBttn from '@/comps/PageBttn';
 import newmovie from '@/utils/newmovie';
-import React from 'react';
-import Header from '@/comps/Header/index';
-import { basicColor, whiteblack, shadow } from "@/utils/variables";
-
+ import React from 'react';
 
 const Cont = styled.div`
   width: 100%;
-  height: 100%;  
-`;
-
-const HeadCont = styled.div`
-  width: 100%;
-  dislplay: flex;
-  justify-content: center;
-  align-items: center;
-  // margin-bottom: 80px;
-  padding: 0 2rem;
-  background-color: ${(props) => props.colbg};  
-  box-shadow: ${props => props.shadow}; 
+  height: 100%;
 `;
 
 const PagCont = styled.div`
   width: 100%;
-  dislplay: flex;
+  dislplay: flex; 
   justify-content: center;
   align-items: center;
-  margin-bottom: 50px;
-  flex-wrap: wrap;
-  padding: 2rem 1rem;
-`;
+  padding-bottom: 50px;
+`
 
 const Wrap = styled.div`
   width: 100%;
@@ -48,7 +32,15 @@ const Wrap = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: 70px;
+`;
+const Default = styled.div`
+  width: 100%;
+  display:${props=>props.display};
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 70px;
 `;
 
 const Button = styled.button`
@@ -56,12 +48,12 @@ const Button = styled.button`
 `;
 
 const PageCont = styled.div`
-  width: 100%;
+  width: 100%; 
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-`;
+`
 
 var timer = null;
 //var nummovies = 1971;
@@ -79,7 +71,6 @@ export default function Test() {
   const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
-  const { theme, setTheme } = useTheme();
   //const [Def, setDef] = useState(false);
 
 
@@ -213,8 +204,7 @@ console.log(data)
     butt_arr.push(
       <PageBttn 
         onClick={PageClick.bind(this, ind, inptxt)}
-       // bgcolor = {cur_page === ind ? '#F9E7E7' : ""}
-        bgcolor= {cur_page === ind && theme === 'light' ? "#F9E7E7": (cur_page === ind &&theme === 'dark' ? "#B08584":"transparent")}
+        bgcolor = {cur_page === ind ? '#F9E7E7' : "#fff"}
         btnnumber = {ind}
       />
     );
@@ -239,19 +229,12 @@ console.log(data)
 
   return (
     <Cont>
-<HeadCont colbg={whiteblack[theme]} shadow = {shadow[theme]}>
 {/* ====================== Input and Button area ==================================== */}
-      <Header 
-        onInput={(e) => {
-          PageClick(1, e.target.value)
-        }}
-        changeView={()=>{onChangeView()}}
-        changeColor={()=>{setTheme(
-          (theme === ('light') ? 'dark' : 'light')
-        )}}
+      <input
+        placeholder="Search"
+        onChange={(e) => PageClick(1, e.target.value)}
       />
-      
-      {/* <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>
+      <Button onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}>
         {sbr_type === "asc" ? "Sort By Ascending" : "Sort By Decending"}
       </Button>
       <Button
@@ -260,10 +243,7 @@ console.log(data)
       >
         Sory By Ratings
       </Button>
-      <Button onClick={onChangeView}>Change Layout</Button> */}
-
-      </HeadCont>
-
+      <Button onClick={onChangeView}>Change Layout</Button>
 
 {/* ====================== Filtering result show below  ==================================== */}
       {View ? (

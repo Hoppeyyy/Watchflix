@@ -64,10 +64,7 @@ const PageCont = styled.div`
 `;
 
 var timer = null;
-//var nummovies = 1971;
-//var myObj ={};
-//var myObj = newmovie.length;
-//var count = Object.keys(myObj).length;
+
 
 export default function Test() {
   const r = useRouter();
@@ -92,40 +89,7 @@ export default function Test() {
       console.log("set to posterbox");
     }
   };
-  /*
-  const inputFilter = async (txt) => {
-    console.log(txt);
-    //console.log(myObj);
-    // results the timer if the inputs keeps changing
-    if (timer) {
-      clearTimeout(timer);
-      timer = null;
-    }
 
-    // start a timer to wait 2 seconds before making an asynchronous call
-    if (timer === null) {
-      timer = setTimeout(async () => {
-        console.log("async call");
-        const res = await ax.get("/api/movie2", {
-          params: {
-            
-          },
-      
-        });
-        console.log(res.data);
-        setData(res.data);
-        setMovie_num(res.data.length);
-      
-        //setCurPage(res.data);
-        timer = null;
-      }, 1000);
-    }
-    else{
-
-    }
-  };
- console.log(movie_num);
- */
   const StoreResult = (item) => {
     console.log(item);
    
@@ -164,7 +128,7 @@ console.log(txt);
     timer = setTimeout(async () => 
     {
     console.log("async call");
-    const res = await ax.get("/api/movie2",
+    const res = await ax.get("/api/movie3",
     {
       params: {
         page: p,
