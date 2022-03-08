@@ -42,7 +42,7 @@ var timer = null;
 
 const FilterBttn = ({
   onAscClick = () => {},
-  onDirClick = () => {},
+  onRateClick = () => {},
   ascBkColor = null,
   rateBkColor = null,
   ascChildren = null,
@@ -73,8 +73,8 @@ const FilterBttn = ({
       <ListItem>
         <Bttn
           // style={{ backgroundColor: director ? "green" : "white" }}
+          onClick={onRateClick}
           bkColor={rateBkColor}
-          onClick={onDirClick}
           // onClick={() => setDirector(!director)}
           mwidth={mDWidth}
         >          

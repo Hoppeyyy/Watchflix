@@ -50,7 +50,7 @@ const Image = styled.img`
   // background-color: ${props => props.imgBkColor};
   display: block;
   min-height: 440px;
-  background-image: url('./images/img_NoImage.svg');
+  background-image: url('/images/img_NoImage.svg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

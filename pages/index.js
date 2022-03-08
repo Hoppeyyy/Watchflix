@@ -63,10 +63,6 @@ const PageCont = styled.div`
 `;
 
 var timer = null;
-//var nummovies = 1971;
-//var myObj ={};
-//var myObj = newmovie.length;
-//var count = Object.keys(myObj).length;
 
 export default function Test() {
   const r = useRouter();
@@ -74,15 +70,13 @@ export default function Test() {
   const [View, setView] = useState(true);
   const [color, setColor] = useState(true);
   const [sbr, setSbr] = useState(false);
-  const [sbr_type, setSbrType] = useState("asc");
-  const [sort_direct, setSbDirect] = useState("asc");
-  // const [director, setDirector] = useState(false);
+  const [sba_type, setSbaType] = useState("asc");
+  const [sbr_type, setSbrType] = useState("desc");
   const [inptxt, setInpTxt] = useState("");
   const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
-  //const [Def, setDef] = useState(false);
 
   const onChangeView = () => {
     if (View === false) {
@@ -96,19 +90,15 @@ export default function Test() {
 
   const onChangeColor = () => {
     if (color === false) {
-      // theme === "dark"
       setTheme(theme === "dark" ? "light" : "dark");
       setColor(true);
-      // console.log("light mode");
     } else if (color === true) {
       setTheme(theme === "dark" ? "light" : "dark");
       setColor(false);
-      // console.log("dark mode");
     }
   };
 
-// setTheme(theme === "dark" ? "light" : "dark")}
-  
+ 
   const StoreResult = (item) => {
     console.log(item);
 
@@ -127,21 +117,14 @@ export default function Test() {
     var obj = {};
     if (txt) {
       obj.txt = txt;
-      obj.sort_type = sbr_type
-      obj.release_year = sbr_type
-      obj.director = sort_direct
-      // obj.sort_rating=sbr;
-      // obj.sort_type = sbr_type;
+      obj.sort_alpha = sba_type;
+      obj.sort_rating = sbr_type;
     }
     if (timer) {
       clearTimeout(timer);
       timer = null;
     }
-    /*
-        txt: txt,
-        sort_rating: sbr,
-        sort_type: sbr_type
-    */
+
     if (timer === null) {
       timer = setTimeout(async () => {
         console.log("async call");
@@ -157,8 +140,6 @@ export default function Test() {
         setData(res.data.lists);
         setCurPage(p);
         setInpTxt(txt);
-        //console.log(txt); // triggering the text
-        //console.log(p); // page number
         setMovie_num(res.data.nummovies);
         console.log(res.data.nummovies); // total movie numbers including after sorting
         timer = null;
@@ -168,15 +149,6 @@ export default function Test() {
         }
       }, 1000);
     }
-    //setAllData(res.Alldata);
-    //setData(res.data.lists);
-
-    //setNumMovies(res.data.nummovies);
-    //setCurPage(p);
-    //setInpTxt(txt);
-    //myObj = res.data.length;
-    // setMovie_num(res.data.length);
-    //console.log(res.data);
   };
   useEffect(() => {
     PageClick(1, "");
@@ -202,7 +174,7 @@ export default function Test() {
     );
     ind++;
   }
-  //console.log(movie_num)
+
   var lastpage = cur_page + 2;
 
   var numpages = Math.ceil(movie_num / 10);
@@ -213,10 +185,8 @@ export default function Test() {
   }
 
   butt_arr = butt_arr.slice(cur_page - 2 < 0 ? 0 : cur_page - 2, lastpage);
-  //console.log(butt_arr)
-// ============== Pagination ends
 
-  // const [searchInput, setSearchInput] = useState("");
+// ============== Pagination ends
 
   return (
     <Cont>
@@ -231,27 +201,21 @@ export default function Test() {
           handleView={() => onChangeView()}
           handleColor={() => onChangeColor()}
 
-          onAscClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}
-          onDirClick={() => setSbDirect(sort_direct === "asc" ? "desc" : "asc")}
-
-          ascBkColor={
-            // theme === "light" ? "#fff"
-            // : theme === "dark" ? "#B08584" : "transparent"
-            sbr_type === "desc" ? "white" : hBttnBkColor[theme]
+          onAscClick={()=>{
+            setSbrType("")
+            setSbaType(sba_type === "asc" ? "desc" : "asc")}          
           }
-          ascChildren ={sbr_type === "desc" ? "Sort By Z-A" : "Sort By A-Z" }
 
-
-          rateBkColor = {            
-            sort_direct === "desc" ? "white" : hBttnBkColor[theme]
+          onRateClick={()=>{
+            setSbaType("")
+            setSbrType(sbr_type === "asc" ? "desc" : "asc")}
           }
-          rateChildren = {sort_direct === "desc" ? "Clear" : "Sort By Director" }
 
-          // isColor = {color}
-          // handleColor={() => onChangeColor()}
-          // handleColor={()=>{setTheme(
-          //   (theme === ('light') ? 'dark' : 'light')
-          // )}}
+          ascBkColor = {sba_type === "desc" ? "white" : hBttnBkColor[theme]}
+          ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
+
+          rateBkColor = {sbr_type === "desc" ? hBttnBkColor[theme] : "white"}
+          rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
         />
       </HeadCont>
 

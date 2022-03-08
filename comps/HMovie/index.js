@@ -28,7 +28,7 @@ const Cont = styled.div`
     margin-right: 0px;
   }
 
-  @media only screen and (min-width: 601px) and (max-width: 1255px) {
+  @media only screen and (min-width: 601px) and (max-width: 1283px) {
     margin-right: 0;
   }
 
@@ -50,7 +50,7 @@ const Img = styled.img`
   flex: 1;
   // background-color: ${(props) => props.imgBkColor};
   overflow: hidden;
-  background-image: url('./images/img_NoImage.svg');
+  background-image: url('/images/img_NoImage.svg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

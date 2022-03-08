@@ -134,7 +134,7 @@ const Header = ({
   isView,
   isColor,
   onAscClick = () => {},
-  onDirClick = () => {},
+  onRateClick = () => {},
   ascBkColor = null,
   rateBkColor = null,
   ascChildren = null,
@@ -307,7 +307,7 @@ const Header = ({
         <FormControl size="small" sx={{ width: "19%" }}>
           <FilterBttn 
             onAscClick = {onAscClick}
-            onDirClick = {onDirClick}
+            onRateClick = {onRateClick}
             ascBkColor = {ascBkColor}
             rateBkColor = {rateBkColor}
             ascChildren = {ascChildren}

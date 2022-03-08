@@ -41,10 +41,10 @@ function filtering(
       //   cond = cond || Number(o.duration) >= Number(duration);
       //  }
 
-      // if(rating){
-      //   // cond = cond && o.duration.includes(duration); 
-      //   cond = cond || Number(o.rating) >= Number(rating);
-      //  }
+      if(rating){
+        // cond = cond && o.duration.includes(duration); 
+        cond = cond || Number(o.IMDB_Score) >= Number(rating);
+       }
  
       //  if(rating){
       //    cond = cond || o.rating.toUpperCase().includes(rating.toUpperCase());
