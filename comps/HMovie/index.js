@@ -28,7 +28,7 @@ const Cont = styled.div`
     margin-right: 0px;
   }
 
-  @media only screen and (min-width: 601px) and (max-width: 1255px) {
+  @media only screen and (min-width: 601px) and (max-width: 1283px) {
     margin-right: 0;
   }
 
@@ -50,7 +50,7 @@ const Img = styled.img`
   flex: 1;
   // background-color: ${(props) => props.imgBkColor};
   overflow: hidden;
-  background-image: url('./images/img_NoImage.svg');
+  background-image: url('/images/img_NoImage.svg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -109,6 +109,7 @@ const SubWrap = styled.div`
   flex-direction: row;
   align-items: flex-end;
   justify-contents: flex-start;
+  margin-bottom: 0.25rem;
 `;
 
 const Title = styled.h3`
@@ -123,11 +124,22 @@ const Title = styled.h3`
 `;
 const SubText = styled.p`
   width: 95%;
-  font-size: 16px;
+  font-size: 1em;
   font-weight: 600;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: ${(props) => props.color};
+
+`;
+
+const GnereTxt = styled.p`
+  width: 95%;
+  font-size: 1em;
+  font-weight: 600;
+  hite-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   color: ${(props) => props.color};
@@ -141,7 +153,10 @@ const Desc = styled.p`
   color: ${(props) => props.color};
   @media only screen and (min-width: 600px) {
     padding: 0.8rem;
+    text-overflow: ellipsis;
+    display: -webkit-box;
     -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
   }
 
   @media only screen and (max-width: 600px) {
@@ -215,6 +230,8 @@ const HMovie = ({
   alt = "Undifined",
   year = "Undefined",
   place = "Undefined",
+  genre = "Undefined",
+  rate = "Undefined",
   text = "Movie description",
   bttnTxt = "check this movie",
   title = "Undefined",
@@ -253,6 +270,14 @@ const HMovie = ({
             <SubText className="hoverTxt" color={basicColor[theme]}>
               {place}
             </SubText>
+          </SubWrap>
+          <SubWrap>
+            <SubText className="hoverTxt" color={basicColor[theme]}>
+              Rate: {rate}
+            </SubText>
+            <GnereTxt className="hoverTxt" color={basicColor[theme]}>
+              {genre}
+            </GnereTxt>
           </SubWrap>
         </Top>
         <Desc color={basicColor[theme]} className="hoverTxt">
