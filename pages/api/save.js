@@ -3,15 +3,15 @@ import {Save, Read} from '@/utils/helpers';
 export default async function handler(req, res) {
 
   if(req.method === 'POST'){
-  const {uuid,result} = req.body;
+  const {uuid,result, ns} = req.body;
   console.log(uuid,result);
-  await Save (uuid,result);
+  await Save (uuid,result,ns);
   res.status(200).json({ name: 'John Doe' })
   }
   
   if(req.method === 'GET'){
-    const { uuid }= req.query;
-    console.log(uuid);
+    const { uuid, ns }= req.query;
+    console.log(uuid, ns);
   try{
     const results = await import (`@/saves/${uuid}.json`);
     res.status(200).json(results);
