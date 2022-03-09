@@ -70,6 +70,7 @@ export default function Test() {
   const [View, setView] = useState(true);
   const [color, setColor] = useState(true);
   const [sbr, setSbr] = useState(false);
+  const [sba, setSba] = useState(false);
   const [sba_type, setSbaType] = useState("asc");
   const [sbr_type, setSbrType] = useState("desc");
   const [inptxt, setInpTxt] = useState("");
@@ -202,12 +203,18 @@ export default function Test() {
           handleColor={() => onChangeColor()}
 
           onAscClick={()=>{
-            setSbrType("")
+            setSbr(sbr)
+            setSba(!sba)
+            setSbrType(null)
+
             setSbaType(sba_type === "asc" ? "desc" : "asc")}          
           }
 
           onRateClick={()=>{
-            setSbaType("")
+            setSba(sba)
+            setSbr(!sbr)
+            setSbaType(null)
+
             setSbrType(sbr_type === "asc" ? "desc" : "asc")}
           }
 
