@@ -99,6 +99,13 @@ export default function Test() {
     }
   };
 
+  const HandleSave = async() => {
+    const resp = await ax.post('/api/save', {
+      uuid,
+      ns
+    })
+  }
+
  
   const StoreResult = (item) => {
     console.log(item);
@@ -210,7 +217,7 @@ export default function Test() {
             setSbaType(sba_type === "asc" ? "desc" : "asc")}          
           }
 
-          onRateClick={()=>{
+          onRateClick={()=>{            
             setSba(sba)
             setSbr(!sbr)
             setSbaType(null)
@@ -233,6 +240,7 @@ export default function Test() {
             {data && data.length > 0
               ? data.map((item) => (
                   <HMovie
+                    key={item.imdbId}
                     title={item.Title}
                     alt={item.Title}
                     year={item.release_year}
@@ -249,12 +257,14 @@ export default function Test() {
                     onClick={() => {
                       StoreResult(item);
                       r.push(`/result/${uuidv4()}`);
+                      HandleSave
                     }}
                     //pages = {item.num_pages}
                   />
                 ))
               : newmovie.slice(0, 10).map((item) => (
                   <HMovie
+                    key={item.imdbId}
                     title={item.Title}
                     alt={item.Title}
                     year={item.release_year}
@@ -267,6 +277,7 @@ export default function Test() {
                     onClick={() => {
                       StoreResult(item);
                       r.push(`/result/${uuidv4()}`);
+                      HandleSave
                     }}
                     //pages = {item.num_pages}
                   />
@@ -281,6 +292,7 @@ export default function Test() {
             {data && data.length > 0
               ? data.map((item) => (
                   <PosterBox
+                    key={item.imdbId}
                     title={item.Title}
                     alt={item.Title}
                     year={item.release_year}
@@ -297,6 +309,7 @@ export default function Test() {
                     onClick={() => {
                       StoreResult(item);
                       r.push(`/result/${uuidv4()}`);
+                      HandleSave;
                     }}
 
                     //pages = {item.num_pages}
@@ -304,6 +317,7 @@ export default function Test() {
                 ))
               : newmovie.slice(0, 10).map((item) => (
                   <PosterBox
+                    key={item.imdbId}
                     title={item.Title}
                     alt={item.Title}
                     year={item.release_year}
@@ -316,6 +330,7 @@ export default function Test() {
                     onClick={() => {
                       StoreResult(item);
                       r.push(`/result/${uuidv4()}`);
+                      HandleSave;
                     }}
                     //pages = {item.num_pages}
                   />
