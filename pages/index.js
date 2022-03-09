@@ -211,10 +211,10 @@ export default function Test() {
             setSbrType(sbr_type === "asc" ? "desc" : "asc")}
           }
 
-          ascBkColor = {sba_type === "desc" ? "white" : hBttnBkColor[theme]}
+          ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
           ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
 
-          rateBkColor = {sbr_type === "desc" ? hBttnBkColor[theme] : "white"}
+          rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
           rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
         />
       </HeadCont>
@@ -232,6 +232,8 @@ export default function Test() {
                     src={item.Poster}
                     place={item.country}
                     text={item.description}
+                    genre={item.Genre}
+                    rate={item.IMDB_Score}
                     director={item.director}
                     clicked={
                       result[item.imdbId] != undefined &&
@@ -253,6 +255,8 @@ export default function Test() {
                     place={item.country}
                     director={item.director}
                     text={item.description}
+                    genre={item.Genre}
+                    rate={item.IMDB_Score}
                     onClick={() => {
                       StoreResult(item);
                       r.push(`/result/${uuidv4()}`);
@@ -276,6 +280,8 @@ export default function Test() {
                     src={item.Poster}
                     place={item.country}
                     director={item.director}
+                    genre={item.Genre}
+                    rate={item.IMDB_Score}
                     text={item.description}
                     clicked={
                       result[item.imdbId] != undefined &&
@@ -297,6 +303,8 @@ export default function Test() {
                     src={item.Poster}
                     place={item.country}
                     director={item.director}
+                    genre={item.Genre}
+                    rate={item.IMDB_Score}
                     text={item.description}
                     onClick={() => {
                       StoreResult(item);

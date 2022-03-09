@@ -41,7 +41,7 @@ const FlexHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  // margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
   @media only screen and (min-width: 681px) and (max-width: 870px) {
     flex-direction: column;
@@ -86,7 +86,6 @@ const SearchBar = styled.input`
 
 const FlexRow = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
   align-items: center;
   background-color: ${(props) => props.rowbg};
@@ -110,6 +109,13 @@ const DurationCont = styled.div`
   margin: 25px 15px 0 15px;
 `;
 
+const BttnCont = styled.div`
+  width: ${props => props.width}%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
 const genre = ["Documentaries", "Children & Family Movies", "Dramas"];
 
 const rating = ["TV-MA", "TV-14", "R", "TV-PG", "PG-13"];
@@ -127,6 +133,7 @@ const sortby = [
 const Header = ({
   rowbg = bgpopup,
   colbg = bgpopup,
+  width = 30,
   src = "/images/watchflix_logo.png",
   onInput=()=>{},
   handleView = () => {},
@@ -211,7 +218,6 @@ const Header = ({
 
         <FlexRow>
           <SwitchCont>
-
             <ToggleSlide 
               isOn={isView}
               handleToggle={handleView}
@@ -304,7 +310,7 @@ const Header = ({
           </Select>
         </FormControl>
 
-        <FormControl size="small" sx={{ width: "19%" }}>
+        <BttnCont width={width}>
           <FilterBttn 
             onAscClick = {onAscClick}
             onRateClick = {onRateClick}
@@ -314,7 +320,7 @@ const Header = ({
             rateChildren = {rateChildren}
           />
           
-        </FormControl>
+        </BttnCont>
       </FlexRow>
     </FlexCol>
   );

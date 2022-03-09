@@ -27,8 +27,8 @@ const Bttn = styled.button`
   width: 100%;
   padding: 10px;
   background-color: ${(props) => props.bkColor};
-  min-width: 6rem;
-  max-width: ${props => props.mwidth}rem;
+  min-width:  ${props => props.minWidth}rem;;
+  max-width: ${props => props.maxWidth}rem;
   border: none;
   border-radius: 12px;
   box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
@@ -38,7 +38,6 @@ const Bttn = styled.button`
   }
 `;
 
-var timer = null;
 
 const FilterBttn = ({
   onAscClick = () => {},
@@ -47,36 +46,30 @@ const FilterBttn = ({
   rateBkColor = null,
   ascChildren = null,
   rateChildren = null,
-  mAWidth = 8,
-  mDWidth = 10,
-
+  minWidthL = 6,
+  maxWidthL = 8,
+  minWidthR = 8.75,
+  maxWidthR = 10,
 }) => {
-  const [data, setData] = useState([]);
-  const [sbr, setSbr] = useState(false);
-  const [sbr_type, setSbrType] = useState("asc");
-  const [director, setDirector] = useState(false);
 
   return (
     <List>
-      {/* <input onChange={(e)=>inputFilter(e.target.value)} />
-      <button style ={{backgroundColor:sbr?"pink":"white"}} onClick ={()=>setSbr(!sbr)}>Sort By Ratings</button> */}
       <ListItem>
         <Bttn
-          // onClick={() => setSbrType(sbr_type === "asc" ? "desc" : "asc")}
           onClick={onAscClick}
           bkColor={ascBkColor}
-          mwidth={mAWidth}
+          maxWidth={maxWidthL}
+          minWidth={minWidthL}
         >
           {ascChildren}
         </Bttn>
       </ListItem>
       <ListItem>
         <Bttn
-          // style={{ backgroundColor: director ? "green" : "white" }}
           onClick={onRateClick}
           bkColor={rateBkColor}
-          // onClick={() => setDirector(!director)}
-          mwidth={mDWidth}
+          maxWidth={maxWidthR}
+          minWidth={minWidthR}
         >          
           {rateChildren}
         </Bttn>
