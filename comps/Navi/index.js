@@ -1,37 +1,21 @@
 import styled from "styled-components";
 import ax from "axios";
 import { useState } from "react";
-import {
-  Switch,
-  InputLabel,
-  Select,
-  MenuItem,
-  Checkbox,
-  ListItemText,
-  OutlinedInput,
-  Box,
-  Slider,
-  FormControl,
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
+// import {  Switch,  InputLabel,  Select,  MenuItem,  Checkbox,  ListItemText,  OutlinedInput,
+//   Box,  Slider,  FormControl,  InputAdornment,  IconButton,} from "@mui/material";
 import { bgpopup, popuptext } from "@/utils/variables";
 import { useTheme } from "@/utils/provider";
 // import SearchIcon from '@mui/icons-material/Search';
 import { Search, Radio, Button, Icon } from "semantic-ui-react";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { basicColor, whiteblack } from "@/utils/variables";
-import ToggleBttn from '@/comps/ToggleBttn';
-import ToggleSlide from '@/comps/ToggleSlide';
-import FilterBttn from '@/comps/FilterBttn'
-
 
 const FlexCol = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${(props) => props.colbg};  
   width: 100%;
-  padding: 2rem 1rem;   
+  padding: 2.5rem 1rem 2rem;   
 `;
 
 const FlexHeader = styled.div`
@@ -41,7 +25,7 @@ const FlexHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 
   @media only screen and (min-width: 681px) and (max-width: 870px) {
     flex-direction: column;
@@ -57,6 +41,7 @@ const FlexHeader = styled.div`
 const LogoCont = styled.a`
   display: block;
   margin: 0 1rem;
+
 `
 
 const Image = styled.img`
@@ -81,11 +66,23 @@ const SearchBar = styled.input`
   @media only screen and (min-width: 1px) and (max-width: 870px) {
     width: 80%;
     margin: 1rem;
-  }  
+  }
+  
 `
+
+// const SearchIcon = styled.a`
+//   background-image: url('./images/Icon_search.svg');
+//   background-position: center;
+//   background-repeat: no-repeat;  
+//   display: block;
+//   width: 24px; height: 24px;
+//   position: absolute;
+  
+// `
 
 const FlexRow = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
   align-items: center;
   background-color: ${(props) => props.rowbg};
@@ -109,13 +106,6 @@ const DurationCont = styled.div`
   margin: 25px 15px 0 15px;
 `;
 
-const BttnCont = styled.div`
-  width: ${props => props.width}%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
-
 const genre = ["Documentaries", "Children & Family Movies", "Dramas"];
 
 const rating = ["TV-MA", "TV-14", "R", "TV-PG", "PG-13"];
@@ -130,28 +120,21 @@ const sortby = [
   "Most Reviews",
 ];
 
-const Header = ({
+const Navi = ({
   rowbg = bgpopup,
   colbg = bgpopup,
-  width = 30,
-  src = "/images/watchflix_logo.png",
+  src = "./images/watchflix_logo.png",
+  //onInput = (event) => {},
   onInput=()=>{},
-  handleView = () => {},
-  handleColor = () => {},
-  isView,
-  isColor,
-  onAscClick = () => {},
-  onRateClick = () => {},
-  ascBkColor = null,
-  rateBkColor = null,
-  ascChildren = null,
-  rateChildren = null,
-
+  changeView = () => {},
+  changeColor = () => {},
+  // onPosterBox = () => {},
+  // onHorizontal = () => {}
 }) => {
-  // const { theme } = useTheme();
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const [label, setLabel] = useState();
   //const [label2, setLabel2] = useState(false);
+ 
 
 
   const [genreName, setGenreName] = useState([]);
@@ -189,13 +172,10 @@ const Header = ({
   function duration(dur) {
     return `${dur} minutes`;
   }
-
   const [dur, setDur] = useState([60, 80]);
   const handleDur = (event, newDur) => {
     setDur(newDur);
   };
-
-
 
   return (
     <FlexCol>
@@ -209,31 +189,42 @@ const Header = ({
             alt="Watchflix logo"          
           />
         </LogoCont>
-
+        {/* <Search fluid/> */}
         <SearchBar
-          placeholder="Search for a Movie..."
+          placeholder="Search for a Movie Title..."
+          //onChange={(event) => onInput(event.target.value)}
           onChange={onInput}
-        >         
-        </SearchBar>
+        /> 
+        <FlexRow rowbg={rowbg[theme]}>
+          {/* <Input icon='search' type='text' placeholder='Search...' autoWidth/> */}
+          {/* <Switch onChange={changeColor} name="Dark Mode" />
+          <Switch onChange={changeView} /> */}
 
-        <FlexRow>
           <SwitchCont>
-            <ToggleSlide 
-              isOn={isView}
-              handleToggle={handleView}
-              style ={{marginRight: "20px"}}
-              id="toggleOne"
+            <FormControlLabel
+              control={<Switch onChange={changeColor||setLabel(!label)} name="Dark Mode" />}
+              //label="Dark Mode"
+              label = {label || theme === 'light'? "Dark Mode":"Light Mode"}
+              className="labelColor"
+              sx={{ backgroundColor: "rgba(0,0,0,0)"  }}
+              />
+            <FormControlLabel
+              control={<Switch onChange={changeView} name="List View" />}
+              label="List View"
+              className="labelColor"
+              sx={{ backgroundColor: "rgba(0,0,0,0)" }}
             />
-
-            <ToggleSlide 
-              isOn={isColor}
-              handleToggle={handleColor}
-              id="toggleTwo"
-              url='/images/icon_lightdark.svg'
-              marginR = '0'
-            />            
-
           </SwitchCont>
+
+          {/* <Radio toggle/> */}
+          {/* <Button.Group>
+            <Button icon onClick={() => {onPosterBox()}}>
+              <Icon name='grid layout'/>
+            </Button>
+            <Button icon >
+              <Icon name='list'/>
+            </Button>
+          </Button.Group> */}
         </FlexRow>
       </FlexHeader>
 {/* =================== HEADER ENDS =================== */}
@@ -262,6 +253,7 @@ const Header = ({
           </Select>
         </FormControl>
 
+        {/* https://mui.com/components/slider/#minimum-distance */}
         <FormControl size="small" sx={{ width: "19%" }}>
           <InputLabel id="select-duration">Duration</InputLabel>
           <Select
@@ -310,20 +302,54 @@ const Header = ({
           </Select>
         </FormControl>
 
-        <BttnCont width={width}>
-          <FilterBttn 
-            onAscClick = {onAscClick}
-            onRateClick = {onRateClick}
-            ascBkColor = {ascBkColor}
-            rateBkColor = {rateBkColor}
-            ascChildren = {ascChildren}
-            rateChildren = {rateChildren}
-          />
-          
-        </BttnCont>
+        <FormControl size="small" sx={{ width: "19%" }}>
+          <InputLabel id="select-country">Country</InputLabel>
+          <Select
+            labelId="select-country"
+            multiple
+            value={countryName}
+            onChange={handleCountry}
+            input={<OutlinedInput label="Country" />}
+            renderValue={(selected) => selected.join(", ")}
+          >
+            {country.map((country) => (
+              <MenuItem key={country} value={country}>
+                <Checkbox checked={countryName.indexOf(country) > -1} />
+                <ListItemText primary={country} />
+              </MenuItem>
+            ))}
+            <FlexRow>
+              <Button>Clear</Button>
+              <Button>Apply</Button>
+            </FlexRow>
+          </Select>
+        </FormControl>
+
+        <FormControl size="small" sx={{ width: "19%" }}>
+          <InputLabel id="select-sortby">Sort By...</InputLabel>
+          <Select
+            labelId="select-sortby"
+            // multiple
+            value={sortbyName}
+            // label='Sort By'
+            onChange={handleSortby}
+            input={<OutlinedInput label="Sortby" />}
+            // renderValue={(selected) => selected.join(', ')}
+          >
+            {sortby.map((sortby) => (
+              <MenuItem key={sortby} value={sortby}>
+                <ListItemText primary={sortby} />
+              </MenuItem>
+            ))}
+            <FlexRow>
+              <Button>Clear</Button>
+              <Button>Apply</Button>
+            </FlexRow>
+          </Select>
+        </FormControl>
       </FlexRow>
     </FlexCol>
   );
 };
 
-export default Header;
+export default Navi;

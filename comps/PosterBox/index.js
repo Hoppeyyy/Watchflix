@@ -50,7 +50,7 @@ const Image = styled.img`
   // background-color: ${props => props.imgBkColor};
   display: block;
   min-height: 440px;
-  background-image: url('./images/img_NoImage.svg');
+  background-image: url('/images/img_NoImage.svg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -71,10 +71,11 @@ const BkCont = styled.div`
 `;
 
 const TitCont = styled.div`
-  WIDTH: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  // align-items: flex-end;
+  // justify-content: flex-start;
   margin-bottom: 20px;
 `;
 
@@ -95,17 +96,28 @@ const SubWrap = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  justify-contents: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 0.25rem;
 `;
 
-const SubTit = styled.p`
-  font-weight: 600;
-  font-size: 1em;
+const SubText = styled.p`
   width: ${props => props.width}%;
+  font-size: 1em;
+  font-weight: 600;
   text-align: left;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const GnereTxt = styled.p`
+  width: ${props => props.width}%;
+  font-size: 1em;
+  font-weight: 600;
+  text-align: left;
+  hite-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
@@ -158,11 +170,13 @@ const PosterBox = ({
   alt ="",
   bkConWidth = "297px",
   bkConHeight = "440px",
-  ywidth = '50',
-  cwidth = '50',
+  ywidth = '40',
+  cwidth = '60',
   title = "Undefined",
   year = "Undefined",
   place = "Undefined",
+  genre = "Undefined",
+  rate = "Undefined",
   text = "Undefined",
   bttnTxt = "check this movie",
   color='#000',
@@ -196,8 +210,12 @@ const PosterBox = ({
           <TitCont>
             <Title>{title}</Title>
             <SubWrap>
-              <SubTit width = {ywidth}>{year}</SubTit>
-              <SubTit width = {cwidth}>{place}</SubTit>
+              <SubText width = {ywidth}>{year}</SubText>
+              <SubText width = {cwidth}>{place}</SubText>
+            </SubWrap>
+            <SubWrap>
+              <SubText width = {ywidth}>Rate: {rate}</SubText>
+              <GnereTxt width = {cwidth}>{genre}</GnereTxt>
             </SubWrap>
           </TitCont>
 

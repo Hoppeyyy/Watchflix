@@ -1,11 +1,9 @@
-import {Save, Read} from '@/utils/helpers';
-import {movie, filtering, sortArr} from '@/utils/combine';
-import { GoToPage } from '@/utils/func';
-import newmovie from '@/utils/newmovie.json';
-
+import { Save, Read } from "@/utils/helpers";
+import { filtering, sortArr } from "@/utils/combine";
+import newmovie from "@/utils/newmovie.json";
+import { GoToPage } from "@/utils/func";
 
 export default async function handler(req, res) {
-
   //HELPER FUNCTIONS FOR YOU TO USE!
   //console.log(req.query, req.body)
   //await Save("test", json);
@@ -15,60 +13,64 @@ export default async function handler(req, res) {
   //const lists = [];
   //res.status(200).json([]);
 
-  // const { txt, sort_rating, sbr_type } = req.query;
-  
-  // var lists =[];
+  const { txt, sort_alpha, sba_type, sort_rating, sbr_type, sort_type } =
+    req.query;
+
+  var lists = [];
 
   // if(!txt){
-  //   lists = movie()
-  // } 
-  
-  // if(txt){
-  //   lists = filtering(movie(),{
-  //     Title:txt,
-  //   })
-  // }  
-
-  // if(sort_rating){
-  //   lists = sortArr(lists,{
-  //     key:'IMDB Score',
-  //     type:sbr_type
-  //   })
-  // }  
-  
-  // if(req.query.page){
-  //   const numresults = req.query.num || 10;
-  //   lists = GoToPage(req.query.page, movie(), numresults);
+  //   lists = newmovie
   // }
 
-  const { txt, sort_rating, sbr_type } = req.query;
-  
-  var lists =[];
-
-  if(!txt){
+  if (txt) {
+    lists = filtering(newmovie, {
+      Title: txt,
+      Genre: txt,
+      director: txt,
+      country: txt,
+      rating: txt,
+    });
+  } else {
     lists = newmovie;
-  } 
-  
-  if(txt){
-    lists = filtering(newmovie,{
-      Title:txt,
-    })
-  }  
-
-  if(sort_rating){
-    lists = sortArr(lists,{
-      key:'IMDB Score',
-      type:sbr_type
-    })
-  }  
-  
-  if(req.query.page){
-    const numresults = req.query.num || 10;
-    lists = GoToPage(req.query.page, newmovie, numresults);
   }
 
-  const nummovies = lists.length;
-  lists = lists.slice(0,10);
+  if(sort_rating){
+    lists = lists.sort((a, b) => {
+      if(sort_rating === "asc") {
+        if( a.IMDB_Score > b.IMDB_Score) return 1
+        if( a.IMDB_Score < b.IMDB_Score) return -1
 
-  res.status(200).json({lists, nummovies});
+      } else {
+        if( a.IMDB_Score > b.IMDB_Score) return -1
+        if( a.IMDB_Score < b.IMDB_Score) return 1
+      }
+      return 0
+    })
+  }
+
+  if(sort_alpha){
+    lists = lists.sort((a, b) => {
+      if(sort_alpha === "asc") {
+        if( a.Title > b.Title) return 1
+        if( a.Title < b.Title) return -1
+
+      } else {
+        if( a.Title > b.Title) return -1
+        if( a.Title < b.Title) return 1
+      }
+      return 0
+    })
+  }
+ 
+  const nummovies = lists.length;
+
+  if (req.query.page) {
+    const numresults = req.query.num;
+
+    lists = GoToPage(req.query.page, lists, numresults);
+  }
+
+  //lists = lists.slice(0,10);
+
+  res.status(200).json({ lists, nummovies });
 }
