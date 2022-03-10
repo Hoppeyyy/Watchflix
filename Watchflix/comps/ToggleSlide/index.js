@@ -2,11 +2,14 @@ import React, { useState } from 'react'
 import styled from "styled-components";
 
 const Cont = styled.div`
+  display:flex;
   margin-right: ${props => props.marginR}rem;
+
 `
 
 const LableBox = styled.label`
-  background-image: url("${props => props.url}");
+ 
+  
 `
 
 const ToggleSlide = ({  
@@ -14,7 +17,7 @@ const ToggleSlide = ({
   isOn, 
   handleToggle =() =>{}, 
   id,
-  url= './images/icon_view.svg',
+  src= './images/icon_view.svg',
 }) => {
   return (
     <Cont marginR={marginR}>
@@ -29,8 +32,9 @@ const ToggleSlide = ({
         style={{ background: isOn }}
         className="react-switch-label"
         htmlFor={id}
-        url={url}
+       
       >
+        <img src={src}/>
         <span className={`react-switch-button`} />
       </LableBox>
     </Cont>

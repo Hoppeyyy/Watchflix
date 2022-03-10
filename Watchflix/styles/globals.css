@@ -169,6 +169,7 @@ li {
   background-color: #777;
 	color: #fff;
   box-shadow: none;
+  
 }
 
 .switch-field label:first-of-type {
@@ -182,6 +183,7 @@ li {
 .switch-bkImg {
   background-repeat: no-repeat;
   background-position: center;
+
 }/* ToggleBttn ends*/
 
 /* ToggleSlide */
@@ -197,13 +199,14 @@ li {
   justify-content: space-between;
   cursor: pointer;
   width: 100px;
-  height: 50px;
+  height: 40px;
   /* background-image: url('../public/images/icon_view.svg'); */
   background-color: #777;
   border-radius: 12px;
   position: relative;  
   transition: background-color .2s;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+  
 }
 
 .react-switch-label .react-switch-button {
@@ -212,11 +215,12 @@ li {
   top: 2px;
   left: 2px;
   width: 50px;
-  height: 46px;
+  height: 36px;
   border-radius: 10px;
   transition: 0.2s;
   background: #f4f4f4;
   box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+  
 }
 
 .react-switch-checkbox:checked + .react-switch-label .react-switch-button {

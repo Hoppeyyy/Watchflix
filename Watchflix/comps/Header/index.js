@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { bgpopup, popuptext } from "@/utils/variables";
 import { useTheme } from "@/utils/provider";
+
 // import SearchIcon from '@mui/icons-material/Search';
 import { Search, Radio, Button, Icon } from "semantic-ui-react";
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -24,7 +25,11 @@ import { basicColor, whiteblack } from "@/utils/variables";
 import ToggleBttn from '@/comps/ToggleBttn';
 import ToggleSlide from '@/comps/ToggleSlide';
 import FilterBttn from '@/comps/FilterBttn';
+<<<<<<< HEAD:comps/Header/index.js
 import SearchBar from '@/comps/SearchBar'
+=======
+import AuthBtn from '@/comps/AuthBtn';
+>>>>>>> main:Watchflix/comps/Header/index.js
 
 
 
@@ -60,7 +65,11 @@ const LogoCont = styled.a`
   display: block;
   margin: 0 1rem;
 `
+const AuthBox = styled.div`
+display:flex;
+flex-direction:row;
 
+`
 const Image = styled.img`
   min-width: 144px;
   height: 36px;
@@ -132,6 +141,8 @@ const Header = ({
   isColor,
   onAscClick = () => {},
   onRateClick = () => {},
+  AuthSignClick = () =>{},
+  AuthLogClick = () =>{},
   ascBkColor = null,
   rateBkColor = null,
   ascChildren = null,
@@ -161,13 +172,42 @@ const Header = ({
           placeholder="Search for a Movie..."
           onChange={onInput}
         >         
+<<<<<<< HEAD:comps/Header/index.js
         </SearchBar> */}
 
         <SearchBar 
           onChange = {onInput}
           onClick = {onSearchClick}
         />
+=======
+        </SearchBar>
+        <AuthBox>
+          <AuthBtn
+          text="Sign Up"
+          AuthClick={AuthSignClick}
+          />
+          <AuthBtn
+          text="Log In"
+          AuthClick={AuthLogClick}
+          />
+          
+        </AuthBox>
+      </FlexHeader>
+{/* =================== HEADER ENDS =================== */}
+>>>>>>> main:Watchflix/comps/Header/index.js
 
+      <FlexRow>
+        <BttnCont width={width}>
+          <FilterBttn 
+            onAscClick = {onAscClick}
+            onRateClick = {onRateClick}
+            ascBkColor = {ascBkColor}
+            rateBkColor = {rateBkColor}
+            ascChildren = {ascChildren}
+            rateChildren = {rateChildren}
+          />
+          
+        </BttnCont>
         <FlexRow>
           <SwitchCont>
             <ToggleSlide 
@@ -181,12 +221,13 @@ const Header = ({
               isOn={isColor}
               handleToggle={handleColor}
               id="toggleTwo"
-              url='/images/icon_lightdark.svg'
+              src='/images/icon_lightdark.svg'
               marginR = '0'
             />            
 
           </SwitchCont>
         </FlexRow>
+<<<<<<< HEAD:comps/Header/index.js
       </FlexHeader>
 {/* =================== HEADER ENDS =================== */}
 
@@ -203,6 +244,8 @@ const Header = ({
           />
           
         </BttnCont>
+=======
+>>>>>>> main:Watchflix/comps/Header/index.js
       </FlexRow>
     </FlexCol>
   );
