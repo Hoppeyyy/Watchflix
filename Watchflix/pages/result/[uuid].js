@@ -130,9 +130,11 @@ const SaveResult = async ()=>{
         });
         console.log(res.data.lists);
         setData(res.data.lists);
+        r.push("/", res.data.lists);
         setInpTxt(txt);
         setMovie_num(res.data.nummovies);
         console.log(res.data.nummovies); 
+        
         timer = null;
         if (res.data.nummovies <= 0) {
           alert("no movie found");
