@@ -1,8 +1,8 @@
 import { Save, Read } from "@/utils/helpers";
 import { filtering, sortArr } from "@/utils/combine";
-import newmovie from "@/utils/newmovie.json";
+//import newmovie from "@/utils/newmovie.json";
 import { GoToPage } from "@/utils/func";
-
+import ax from "axios";
 export default async function handler(req, res) {
   //HELPER FUNCTIONS FOR YOU TO USE!
   //console.log(req.query, req.body)
@@ -13,17 +13,16 @@ export default async function handler(req, res) {
   //const lists = [];
   //res.status(200).json([]);
 
-  const { txt, sort_alpha, sba_type, sort_rating, sbr_type, sort_type } =
-    req.query;
-
+  const { txt, sort_alpha, sba_type, sort_rating, sbr_type, sort_type } = req.query;
+  const movies = await ax.get("http://localhost:3001/getmovies")
   var lists = [];
-
+  console.log(movies.data)
   // if(!txt){
   //   lists = newmovie
   // }
 
   if (txt) {
-    lists = filtering(newmovie, {
+    lists = filtering(movies.data, {
       Title: txt,
       Genre: txt,
       director: txt,
@@ -31,7 +30,7 @@ export default async function handler(req, res) {
       rating: txt,
     });
   } else {
-    lists = newmovie;
+    lists = movies.data;
   }
 
   if(sort_rating){
