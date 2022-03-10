@@ -56,6 +56,17 @@ export default function Result() {
   const r = useRouter();
   const { uuid } = r.query;
   const { result, setResult } = useResult();
+  const [data, setData] = useState([]);
+  const [View, setView] = useState(true);
+  const [color, setColor] = useState(true);
+  const [sbr, setSbr] = useState(false);
+  const [sba, setSba] = useState(false);
+  const [sba_type, setSbaType] = useState("asc");
+  const [sbr_type, setSbrType] = useState("desc");
+  const [inptxt, setInpTxt] = useState("");
+  const [cur_page, setCurPage] = useState([]);
+  const [movie_num, setMovie_num] = useState();
+  const { theme, setTheme } = useTheme();
 
   console.log(Object.values(result));
 
@@ -67,8 +78,6 @@ const SaveResult = async ()=>{
   })
 }
 */
-  const { theme, setTheme } = useTheme();
-  const [View, setView] = useState(false);
   // const [data, setData] = useState([]);
   // const [sbr, setSbr] = useState(false);
   // const [sbr_type, setSbrType] = useState("asc");
@@ -132,17 +141,39 @@ const SaveResult = async ()=>{
     <Cont>
 {/* ====================== Header area ==================================== */}
       <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
-        <Header
-          onInput={(event) => {
-            inputFilter(event);
+      <Header
+          onInput={(e) => {
+            PageClick(1, e.target.value);
           }}
-          changeView={() => {
-            onChangeView();
-          }}
-          changeColor={() => {
-            setTheme(theme === "dark" ? "light" : "dark");
-          }}
-          src = "/images/watchflix_logo.png"
+
+          onSearchClick={() => r.push('/')}
+
+          isView={View}
+          isColor={color}
+          handleView={() => onChangeView()}
+          handleColor={() => onChangeColor()}
+
+          onAscClick={()=>{
+            setSbr(sbr)
+            setSba(!sba)
+            setSbrType(null)
+
+            setSbaType(sba_type === "asc" ? "desc" : "asc")}          
+          }
+
+          onRateClick={()=>{            
+            setSba(sba)
+            setSbr(!sbr)
+            setSbaType(null)
+
+            setSbrType(sbr_type === "asc" ? "desc" : "asc")}
+          }
+
+          ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+          ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
+
+          rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+          rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
         />
       </HeadCont>
 

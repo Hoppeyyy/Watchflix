@@ -161,7 +161,7 @@ export default function Test() {
   useEffect(() => {
     PageClick(1, "");
   }, []);
-  console.log(data);
+  // console.log(data);
 
   var butt_arr = [];
   var ind = 1;
@@ -204,6 +204,12 @@ export default function Test() {
           onInput={(e) => {
             PageClick(1, e.target.value);
           }}
+          onSearchClick={(s)=>{
+            console.log("this is query", r.query)
+            PageClick(1, s)
+          }}
+
+
           isView={View}
           isColor={color}
           handleView={() => onChangeView()}
