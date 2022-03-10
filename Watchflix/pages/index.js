@@ -10,7 +10,7 @@ import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
 import Pagination from "@/comps/Pagination/index2";
 import PageBttn from "@/comps/PageBttn";
-import newmovie from "@/utils/newmovie";
+//mport newmovie from "@/utils/newmovie";
 import React from "react";
 import Header from "@/comps/Header/index";
 import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
@@ -78,7 +78,7 @@ export default function Test() {
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
-
+ 
   const onChangeView = () => {
     if (View === false) {
       setView(true);
@@ -260,7 +260,7 @@ export default function Test() {
                     //pages = {item.num_pages}
                   />
                 ))
-              : newmovie.slice(0, 10).map((item) => (
+              : data.slice(0, 10).map((item) => (
                   <HMovie
                     key={item.imdbId}
                     title={item.Title}
@@ -313,7 +313,7 @@ export default function Test() {
                     //pages = {item.num_pages}
                   />
                 ))
-              : newmovie.slice(0, 10).map((item) => (
+              : data.slice(0, 10).map((item) => (
                   <PosterBox
                     key={item.imdbId}
                     title={item.Title}
