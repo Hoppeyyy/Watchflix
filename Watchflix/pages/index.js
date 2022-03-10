@@ -213,7 +213,6 @@ export default function Test() {
             setSbr(sbr)
             setSba(!sba)
             setSbrType(null)
-
             setSbaType(sba_type === "asc" ? "desc" : "asc")}          
           }
 
@@ -221,7 +220,6 @@ export default function Test() {
             setSba(sba)
             setSbr(!sbr)
             setSbaType(null)
-
             setSbrType(sbr_type === "asc" ? "desc" : "asc")}
           }
 

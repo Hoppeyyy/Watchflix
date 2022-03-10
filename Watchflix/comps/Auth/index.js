@@ -21,7 +21,6 @@ const Auth = ({
      const router = useRouter();
   
     return <Cont>
-         
     </Cont>
 }
 
