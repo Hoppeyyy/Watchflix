@@ -11,7 +11,7 @@ user.save((err, done)=>{
   console.log(err)
   if(err) return res.status(500).send("signup failed")
   res.status(201).send("signed up successfully")
-  
+
 })
 }
 
@@ -22,6 +22,7 @@ User.findOne({email:req.body.email},(err,user)=>{
   if(user.comparePassword(req.body.password)){
     const token = jwt.sign({ id:user._id },'thisismysecret');
     res.send(token)
+    res.redirect('http://localhost:3000')
   }else{
     res.send("could not login")
   }
