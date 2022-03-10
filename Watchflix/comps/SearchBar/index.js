@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useRouter } from "next/router";
-
+import Link from 'next/link'
 const Cont = styled.div`
   width: 40%;
   position: relative;
@@ -54,12 +54,16 @@ const SearchBar = ({
             setSearch(e.target.value)
           }}         
         />
-        <Bttn 
-          onClick={() => {
+        <Link href={{pathname:'/', query:{search:search}}}>
+        <Bttn onClick={
+          ()=>{
+            if(r.pathname == '/'){
             onClick(search)
-            // r.push({pathname:'/', query:{search:search}})
-          }}
-        > Search </Bttn>
+            }
+          }
+        }> Search </Bttn>
+          </Link>
+        
       </Cont>
     );
 };
