@@ -256,6 +256,7 @@ const Header = ({
               isOn={isView}
               handleToggle={handleView}
               style ={{marginRight: "20px"}}
+              src='/images/icon_view.svg'
               id="toggleOne"
             />
 
