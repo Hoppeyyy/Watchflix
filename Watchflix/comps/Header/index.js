@@ -23,7 +23,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { basicColor, whiteblack } from "@/utils/variables";
 import ToggleBttn from '@/comps/ToggleBttn';
 import ToggleSlide from '@/comps/ToggleSlide';
-import FilterBttn from '@/comps/FilterBttn'
+import FilterBttn from '@/comps/FilterBttn';
+
 
 
 const FlexCol = styled.div`

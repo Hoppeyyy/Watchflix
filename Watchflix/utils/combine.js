@@ -1,113 +1,103 @@
 // --------------------------- filtering ---------------------------------- //
-const rating = 'IMDB Score';
+const rating = "IMDB_Score";
+const year = "release_year";
 
 function filtering(
   arr = [],
-  
-  config={Title: null, Genre:null, duration:null, rating:null, country:null, listed_in:null, director:null}
-  
-){
 
-  const {Title, Genre, duration, rating, country, listed_in, director} = config;
+  config = {
+    Title: null,
+    Genre: null,
+    // country: null,
+    // director: null,
+    // rating: null,
+    // year: null,
+    // listed_in: null,
+    // duration: null,
+  }
+) {
+  const { Title, Genre, country, director, rating } = config;
   const keyword = arr.value;
-  
-  if(Title || Genre || duration || rating || country || listed_in || director ){
-    
-    const filtered_arr = arr.filter((o)=>{
+
+  if (Title || Genre || country || director || rating) {
+
+    const filtered_arr = arr.filter((o, i) => {
       var cond = false;
 
-      if(Title){
+      if (Title) {
         cond = cond || o.Title.toUpperCase().includes(Title.toUpperCase());
       }
 
-      if(Genre){
+      if (Genre) {
         cond = cond || o.Genre.toUpperCase().includes(Genre.toUpperCase());
       }
 
-      // if(listed_in){
-      //   cond = cond || o.listed_in.toUpperCase().includes(listed_in.toUpperCase());
+      // if (director) {
+      //   cond = cond || o.director.toUpperCase().includes(director.toUpperCase());
       // }
 
-      if(director){
-        cond = cond || o.director.toUpperCase().includes(director.toUpperCase());
-      }      
+      // if (country) {
+      //   cond = cond || o.country.toUpperCase().includes(country.toUpperCase());
+      // }
 
-      if(country){
-        cond = cond || o.country.toUpperCase().includes(country.toUpperCase());
-      }   
-      
-      // if(duration){
-      //   // cond = cond && o.duration.includes(duration); 
-      //   cond = cond || Number(o.duration) >= Number(duration);
-      //  }
+      // if (rating) {
+      //   cond = cond || Number(o.IMDB_Score) >= Number(rating);
+      // }
 
-      if(rating){
-        // cond = cond && o.duration.includes(duration); 
-        cond = cond || Number(o.IMDB_Score) >= Number(rating);
-       }
- 
-      //  if(rating){
+      // if (year) {
+      //   cond = cond || Number(o.release_year) >= Number(year);
+      // }
+
+      //  if(rate){
       //    cond = cond || o.rating.toUpperCase().includes(rating.toUpperCase());
       //  }
 
+      // if (listed_in) {
+      //   cond = cond || o.listed_in.toUpperCase().includes(listed_in.toUpperCase());
+      // }
+
       return cond;
-    })
+    });
     return filtered_arr;
     console.log(filtered_arr);
-  } 
+  }
 }
-/*
-console.log(filtering(movie(),{
-  duration:120
-}))
-*/
+
 // -------------------- sorting ---------------------------- //
-function sortArr(
-  arr=[],
-  config={key:null, type:null }
-){
+function sortArr(arr = [], config = { key: null, type: null }) {
+  const { key, type } = config;
 
-  const {key, type} = config;
+  if (key) {
+    arr.sort((cur, next) => {
+      var num1 = Number(cur[key]);
+      var num2 = Number(next[key]);
 
-  if(key){
+      if (isNaN(cur[key])) {
+        num1 = cur[key];
+        num2 = next[key];
+      }
 
-  arr.sort((cur,next) =>{
-
-    var num1 = Number(cur[key]);
-    var num2 = Number(next[key]);
-
-    if(isNaN(cur[key])){
-      num1 = cur[key];
-      num2 = next[key];
-    }
-
-    if(num1 > num2){    
-     
-      if(type && type == "asc"){
-      return 1;
-    }
-    else { 
-      return -1;
-    }
-
-    }
-
-      if(num1 < num2){
-
-        if(type && type === "asc"){
+      if (num1 > num2) {
+        if (type && type == "asc") {
+          return 1;
+        } else {
           return -1;
         }
-        else{ 
+      }
+
+      if (num1 < num2) {
+        if (type && type === "asc") {
+          return -1;
+        } else {
           return 1;
         }
-    }
+      }
 
-    return 0;
-  })
-  return arr;
+      return 0;
+    });
+    return arr;
+  }
 }
-}
-
 
 /*
 console.log(sortArr(movie(),{
@@ -116,6 +106,4 @@ console.log(sortArr(movie(),{
 }))
 */
 // export {movie, filtering, sortArr }
-export { filtering, sortArr }
-
-
+export { filtering, sortArr };

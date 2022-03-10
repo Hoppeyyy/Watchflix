@@ -142,7 +142,7 @@ const SaveResult = async ()=>{
           changeColor={() => {
             setTheme(theme === "dark" ? "light" : "dark");
           }}
-          src = "../../images/watchflix_logo.png"
+          src = "/images/watchflix_logo.png"
         />
       </HeadCont>
 
