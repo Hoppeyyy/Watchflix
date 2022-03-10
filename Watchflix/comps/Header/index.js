@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { bgpopup, popuptext } from "@/utils/variables";
 import { useTheme } from "@/utils/provider";
+
 // import SearchIcon from '@mui/icons-material/Search';
 import { Search, Radio, Button, Icon } from "semantic-ui-react";
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -24,6 +25,7 @@ import { basicColor, whiteblack } from "@/utils/variables";
 import ToggleBttn from '@/comps/ToggleBttn';
 import ToggleSlide from '@/comps/ToggleSlide';
 import FilterBttn from '@/comps/FilterBttn';
+import AuthBtn from '@/comps/AuthBtn';
 
 
 
@@ -59,7 +61,11 @@ const LogoCont = styled.a`
   display: block;
   margin: 0 1rem;
 `
+const AuthBox = styled.div`
+display:flex;
+flex-direction:row;
 
+`
 const Image = styled.img`
   min-width: 144px;
   height: 36px;
@@ -143,6 +149,8 @@ const Header = ({
   isColor,
   onAscClick = () => {},
   onRateClick = () => {},
+  AuthSignClick = () =>{},
+  AuthLogClick = () =>{},
   ascBkColor = null,
   rateBkColor = null,
   ascChildren = null,
@@ -216,7 +224,32 @@ const Header = ({
           onChange={onInput}
         >         
         </SearchBar>
+        <AuthBox>
+          <AuthBtn
+          text="Sign Up"
+          AuthClick={AuthSignClick}
+          />
+          <AuthBtn
+          text="Log In"
+          AuthClick={AuthLogClick}
+          />
+          
+        </AuthBox>
+      </FlexHeader>
+{/* =================== HEADER ENDS =================== */}
 
+      <FlexRow>
+        <BttnCont width={width}>
+          <FilterBttn 
+            onAscClick = {onAscClick}
+            onRateClick = {onRateClick}
+            ascBkColor = {ascBkColor}
+            rateBkColor = {rateBkColor}
+            ascChildren = {ascChildren}
+            rateChildren = {rateChildren}
+          />
+          
+        </BttnCont>
         <FlexRow>
           <SwitchCont>
             <ToggleSlide 
@@ -230,98 +263,12 @@ const Header = ({
               isOn={isColor}
               handleToggle={handleColor}
               id="toggleTwo"
-              url='/images/icon_lightdark.svg'
+              src='/images/icon_lightdark.svg'
               marginR = '0'
             />            
 
           </SwitchCont>
         </FlexRow>
-      </FlexHeader>
-{/* =================== HEADER ENDS =================== */}
-
-      <FlexRow>
-        <FormControl size="small" sx={{ width: "19%" }}>
-          <InputLabel id="select-genre">Genre</InputLabel>
-          <Select
-            labelId="select-genre"
-            multiple
-            value={genreName}
-            onChange={handleGenre}
-            input={<OutlinedInput label="Genre" />}
-            renderValue={(selected) => selected.join(", ")}
-          >
-            {genre.map((genre) => (
-              <MenuItem key={genre} value={genre}>
-                <Checkbox checked={genreName.indexOf(genre) > -1} />
-                <ListItemText primary={genre} />
-              </MenuItem>
-            ))}
-            <FlexRow>
-              <Button>Clear</Button>
-              <Button>Apply</Button>
-            </FlexRow>
-          </Select>
-        </FormControl>
-
-        <FormControl size="small" sx={{ width: "19%" }}>
-          <InputLabel id="select-duration">Duration</InputLabel>
-          <Select
-            labelId="select-duration"
-            multiple
-            value={dur}
-            onChange={handleDur}
-            input={<OutlinedInput label="Duration" />}
-            renderValue={(selected) => selected.join(" - ")}
-          >
-            <DurationCont>
-              <Slider
-                value={dur}
-                onChange={handleDur}
-                valueLabelDisplay="auto"
-                getAriaValueText={duration}
-              />
-            </DurationCont>
-            <FlexRow>
-              <Button>Clear</Button>
-              <Button>Apply</Button>
-            </FlexRow>
-          </Select>
-        </FormControl>
-
-        <FormControl size="small" sx={{ width: "19%" }}>
-          <InputLabel id="select-rating">Rating</InputLabel>
-          <Select
-            labelId="select-rating"
-            multiple
-            value={ratingName}
-            onChange={handleRating}
-            input={<OutlinedInput label="Rating" />}
-            renderValue={(selected) => selected.join(", ")}
-          >
-            {rating.map((rating) => (
-              <MenuItem key={rating} value={rating}>
-                <Checkbox checked={ratingName.indexOf(rating) > -1} />
-                <ListItemText primary={rating} />
-              </MenuItem>
-            ))}
-            <FlexRow>
-              <Button>Clear</Button>
-              <Button>Apply</Button>
-            </FlexRow>
-          </Select>
-        </FormControl>
-
-        <BttnCont width={width}>
-          <FilterBttn 
-            onAscClick = {onAscClick}
-            onRateClick = {onRateClick}
-            ascBkColor = {ascBkColor}
-            rateBkColor = {rateBkColor}
-            ascChildren = {ascChildren}
-            rateChildren = {rateChildren}
-          />
-          
-        </BttnCont>
       </FlexRow>
     </FlexCol>
   );

@@ -9,7 +9,7 @@ const List = styled.ul`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
+  margin-left:5px;
   :last-child {
     margin-right: 0;
   }
@@ -26,8 +26,8 @@ const ListItem = styled.li`
 const Bttn = styled.button`
   width: 100%;
   padding: 10px;
-  background-color: ${(props) => props.bkColor};
-  min-width:  ${props => props.minWidth}rem;;
+  background-color: ${props => props.bkColor};
+  min-width:  ${props => props.minWidth}rem;
   max-width: ${props => props.maxWidth}rem;
   border: none;
   border-radius: 12px;
@@ -46,9 +46,9 @@ const FilterBttn = ({
   rateBkColor = null,
   ascChildren = null,
   rateChildren = null,
-  minWidthL = 6,
+  minWidthL = 8,
   maxWidthL = 8,
-  minWidthR = 8.75,
+  minWidthR = 9.75,
   maxWidthR = 10,
 }) => {
 
