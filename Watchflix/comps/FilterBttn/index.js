@@ -31,10 +31,12 @@ const Bttn = styled.button`
   max-width: ${props => props.maxWidth}rem;
   border: none;
   border-radius: 12px;
-  box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  cursor: pointer;
 
   :hover {
-    cursor: pointer;
+    transform: scale(0.95);
+    transition-duration: 0.3s;
   }
 `;
 

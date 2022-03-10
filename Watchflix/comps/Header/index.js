@@ -25,11 +25,9 @@ import { basicColor, whiteblack } from "@/utils/variables";
 import ToggleBttn from '@/comps/ToggleBttn';
 import ToggleSlide from '@/comps/ToggleSlide';
 import FilterBttn from '@/comps/FilterBttn';
-<<<<<<< HEAD:comps/Header/index.js
-import SearchBar from '@/comps/SearchBar'
-=======
+import SearchBar from '@/comps/SearchBar';
 import AuthBtn from '@/comps/AuthBtn';
->>>>>>> main:Watchflix/comps/Header/index.js
+
 
 
 
@@ -172,15 +170,13 @@ const Header = ({
           placeholder="Search for a Movie..."
           onChange={onInput}
         >         
-<<<<<<< HEAD:comps/Header/index.js
         </SearchBar> */}
 
         <SearchBar 
           onChange = {onInput}
           onClick = {onSearchClick}
         />
-=======
-        </SearchBar>
+
         <AuthBox>
           <AuthBtn
           text="Sign Up"
@@ -194,7 +190,6 @@ const Header = ({
         </AuthBox>
       </FlexHeader>
 {/* =================== HEADER ENDS =================== */}
->>>>>>> main:Watchflix/comps/Header/index.js
 
       <FlexRow>
         <BttnCont width={width}>
@@ -214,6 +209,7 @@ const Header = ({
               isOn={isView}
               handleToggle={handleView}
               style ={{marginRight: "20px"}}
+              src='/images/icon_view.svg'
               id="toggleOne"
             />
 
@@ -227,27 +223,9 @@ const Header = ({
 
           </SwitchCont>
         </FlexRow>
-<<<<<<< HEAD:comps/Header/index.js
-      </FlexHeader>
-{/* =================== HEADER ENDS =================== */}
 
-      <FlexRow>        
-
-        <BttnCont width={width}>
-          <FilterBttn 
-            onAscClick = {onAscClick}
-            onRateClick = {onRateClick}
-            ascBkColor = {ascBkColor}
-            rateBkColor = {rateBkColor}
-            ascChildren = {ascChildren}
-            rateChildren = {rateChildren}
-          />
-          
-        </BttnCont>
-=======
->>>>>>> main:Watchflix/comps/Header/index.js
-      </FlexRow>
-    </FlexCol>
+      </FlexRow> 
+    </FlexCol> 
   );
 };
 
