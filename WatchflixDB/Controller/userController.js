@@ -22,7 +22,7 @@ User.findOne({email:req.body.email},(err,user)=>{
   if(user.comparePassword(req.body.password)){
     const token = jwt.sign({ id:user._id },'thisismysecret');
     res.send(token)
-    res.redirect('http://localhost:3000')
+    //res.redirect('http://localhost:3000')
   }else{
     res.send("could not login")
   }
