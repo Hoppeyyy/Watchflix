@@ -57,13 +57,19 @@ export default function Result() {
   const { uuid } = r.query;
   const { result, setResult } = useResult();
   const [data, setData] = useState([]);
+  const [View, setView] = useState(true);
+
   const [color, setColor] = useState(true);
   const [sbr, setSbr] = useState(false);
   const [sba, setSba] = useState(false);
   const [sba_type, setSbaType] = useState("asc");
   const [sbr_type, setSbrType] = useState("desc");
   const [inptxt, setInpTxt] = useState("");
+
+  const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
+  const { theme, setTheme } = useTheme();
+
   console.log(Object.values(result));
 
   /*
@@ -74,8 +80,6 @@ const SaveResult = async ()=>{
   })
 }
 */
-  const { theme, setTheme } = useTheme();
-  const [View, setView] = useState(false);
   // const [data, setData] = useState([]);
   // const [sbr, setSbr] = useState(false);
   // const [sbr_type, setSbrType] = useState("asc");
@@ -165,15 +169,15 @@ const SaveResult = async ()=>{
   
   return (
     <Cont>
-{/* ====================== Header area ==================================== */}
-<HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
-{/* ====================== Input and Button area ==================================== */}
-        <Header
+
+      <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
+      <Header
           onInput={(e) => {
-            inputFilter(e.target.value)
-            
-            //PageClick(1, e.target.value);
+            PageClick(1, e.target.value);
           }}
+
+          onSearchClick={() => r.push('/')}
+
           isView={View}
           isColor={color}
           handleView={() => onChangeView()}

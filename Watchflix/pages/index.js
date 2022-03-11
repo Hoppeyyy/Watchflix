@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { setRequestMeta } from "next/dist/server/request-meta";
 import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
-import Pagination from "@/comps/Pagination/index2";
+import Pagination from "@/pages/_old/index2-pagination";
 import PageBttn from "@/comps/PageBttn";
 //mport newmovie from "@/utils/newmovie";
 import React from "react";
@@ -121,7 +121,6 @@ export default function Home() {
 // ============== PaginatioWn
 
   const PageClick = async (p, txt) => {
-    console.log(txt);
     var obj = {};
     if (txt) {
       obj.txt = txt;
@@ -143,8 +142,7 @@ export default function Home() {
             ...obj,
           },
         });
-      //  console.log(res.data.lists); // lists of 10 movies
-      //  console.log(res.data); // {}: both lists and nummovies
+
         setData(res.data.lists);
         setCurPage(p);
         setInpTxt(txt);
@@ -159,9 +157,8 @@ export default function Home() {
     }
   };
   useEffect(() => {
-    PageClick(1, "");
+    PageClick(1, r.query.search || "");
   }, []);
- // console.log(data);
 
   var butt_arr = [];
   var ind = 1;
@@ -202,8 +199,15 @@ export default function Home() {
 {/* ====================== Input and Button area ==================================== */}
         <Header
           onInput={(e) => {
-            PageClick(1, e.target.value);
+            //PageClick(1, e.target.value);
           }}
+          onSearchClick={(searchTerm)=>{
+            
+              PageClick(1, searchTerm)
+            
+          }}
+
+
           isView={View}
           isColor={color}
           handleView={() => onChangeView()}
@@ -252,7 +256,7 @@ export default function Home() {
                     place={item.country}
                     text={item.description}
                     genre={item.Genre}
-                    rate={item.IMDB_Score}
+                    rate={item["IMDB Score"]}
                     director={item.director}
                     clicked={
                       result[item.imdbId] != undefined &&
@@ -277,7 +281,7 @@ export default function Home() {
                     director={item.director}
                     text={item.description}
                     genre={item.Genre}
-                    rate={item.IMDB_Score}
+                    rate={item["IMDB Score"]}
                     onClick={() => {
                       StoreResult(item);
                       r.push(`/result/${uuidv4()}`);
@@ -304,7 +308,7 @@ export default function Home() {
                     place={item.country}
                     director={item.director}
                     genre={item.Genre}
-                    rate={item.IMDB_Score}
+                    rate={item["IMDB Score"]}
                     text={item.description}
                     clicked={
                       result[item.imdbId] != undefined &&
@@ -329,7 +333,7 @@ export default function Home() {
                     place={item.country}
                     director={item.director}
                     genre={item.Genre}
-                    rate={item.IMDB_Score}
+                    rate={item["IMDB Score"]}
                     text={item.description}
                     onClick={() => {
                       StoreResult(item);
