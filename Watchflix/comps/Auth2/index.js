@@ -91,13 +91,12 @@ value="Sign Up",
             email:input.email,
             password:input.password
         }
-        ax.post('http://localhost:3001/signup', user)
-        router.push("/")
+        ax.post('http://localhost:3001/login', user)
 
     }
 
     return <Cont>
-        <Title>Sign Up</Title>
+        <Title>Log In</Title>
         <Form>
             <Name placeholder="Name" onChange={handleChange} name="name" value={input.name} autoComplete="off"/>
             <Email placeholder="Email" onChange={handleChange} name="email" value={input.email} autoComplete="off"/>

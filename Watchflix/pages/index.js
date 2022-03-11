@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useTheme, useResult } from "@/utils/provider";
-import { useRouter } from "next/router";
+import { useRouter, Router } from "next/router";
 import ax from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { setRequestMeta } from "next/dist/server/request-meta";
@@ -63,7 +63,7 @@ const PageCont = styled.div`
 
 var timer = null;
 
-export default function Test() {
+export default function Home() {
   const r = useRouter();
   const [data, setData] = useState([]);
   const [View, setView] = useState(true);
@@ -77,7 +77,7 @@ export default function Test() {
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
-
+ 
   const onChangeView = () => {
     if (View === false) {
       setView(true);
@@ -141,13 +141,11 @@ export default function Test() {
             ...obj,
           },
         });
-        // console.log(res.data.lists); // lists of 10 movies
-        // console.log("got data",res.data); // {}: both lists and nummovies
         setData(res.data.lists);
         setCurPage(p);
         setInpTxt(txt);
         setMovie_num(res.data.nummovies);
-        // console.log(res.data.nummovies); // total movie numbers including after sorting
+
         timer = null;
 
         if (res.data.nummovies <= 0) {
@@ -231,6 +229,12 @@ export default function Test() {
 
           rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
           rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+          AuthSignClick={() =>{
+            r.push("/signup");
+          }}
+         AuthLogClick={()=>{
+          r.push("/login");
+         }}
         />
       </HeadCont>
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, Router } from "next/router";
 import ax from "axios";
 import React from "react";
-import Auth from '@/comps/Auth'
+import Auth from '@/comps/Auth2'
 
 
 const Cont = styled.div`
@@ -16,13 +16,13 @@ const Cont = styled.div`
   align-items:center;
   background:#F9E7E7;
 `
-export default function Signup() {
+export default function LogIn() {
 
 return(
   
 <Cont>
   <Auth
-  value="Sign Up" 
+  value="Log In" 
   />
 </Cont>
 );}

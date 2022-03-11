@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   const { txt, sort_alpha, sba_type, sort_rating, sbr_type, sort_type } = req.query;
   const movies = await ax.get("http://localhost:3001/getmovies")
   var lists = [];
-  console.log(movies.data)
+  //console.log(movies.data)
   // if(!txt){
   //   lists = newmovie
   // }
