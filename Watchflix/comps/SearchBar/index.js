@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Link from 'next/link'
+import Link from "next/link";
 const Cont = styled.div`
   width: 40%;
   position: relative;
@@ -30,42 +30,40 @@ const Bttn = styled.button`
   right: 20px;
 `;
 
-const SearchBar = ({ 
-  onChange = () => {},
-  onClick = () => {},
-}) => {
-  
+const SearchBar = ({ onChange = () => {}, onClick = () => {} }) => {
   const r = useRouter();
-  const [search, setSearch] = useState()
-   
-    return (
-      <Cont action="/?searh=movie" method="get">
-        <label htmlFor="header-search">
-          <span className="visually-hidden">
-            Search for a Movie Title or Genre...
-          </span>
-        </label>
-        <SearchInput
-          type="text"
-          id="header-search"
-          placeholder="Search for a Movie Title or Genre..."
-          name="s"
-          onChange={(e) => {
-            setSearch(e.target.value)
-          }}         
-        />
-        <Link href={{pathname:'/', query:{search:search}}}>
-        <Bttn onClick={
-          ()=>{
-            if(r.pathname == '/'){
-            onClick(search)
+  const [search, setSearch] = useState();
+
+  return (
+    <Cont action="/?searh=movie" method="get">
+      <label htmlFor="header-search">
+        <span className="visually-hidden">
+          Search for a Movie Title or Genre...
+        </span>
+      </label>
+      <SearchInput
+        type="text"
+        id="header-search"
+        placeholder="Search for a Movie Title or Genre..."
+        name="s"
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+      />
+      <Link href={{ pathname: "/", query: { search: search } }}>
+        <Bttn
+          onClick={() => {
+            if (r.pathname == "/") {
+              onClick(search);
             }
-          }
-        }> Search </Bttn>
-          </Link>
-        
-      </Cont>
-    );
+          }}
+        >
+          {" "}
+          Search{" "}
+        </Bttn>
+      </Link>
+    </Cont>
+  );
 };
 
 export default SearchBar;

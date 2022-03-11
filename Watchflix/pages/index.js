@@ -10,7 +10,6 @@ import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
 import Pagination from "@/pages/_old/index2-pagination";
 import PageBttn from "@/comps/PageBttn";
-import newmovie from "@/utils/newmovie";
 import React from "react";
 import Header from "@/comps/Header/index";
 import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
@@ -142,13 +141,13 @@ export default function Test() {
             ...obj,
           },
         });
-        console.log(res.data.lists); // lists of 10 movies
-        console.log("got data",res.data); // {}: both lists and nummovies
+        // console.log(res.data.lists); // lists of 10 movies
+        // console.log("got data",res.data); // {}: both lists and nummovies
         setData(res.data.lists);
         setCurPage(p);
         setInpTxt(txt);
         setMovie_num(res.data.nummovies);
-        console.log(res.data.nummovies); // total movie numbers including after sorting
+        // console.log(res.data.nummovies); // total movie numbers including after sorting
         timer = null;
 
         if (res.data.nummovies <= 0) {
@@ -160,7 +159,6 @@ export default function Test() {
   useEffect(() => {
     PageClick(1, r.query.search || "");
   }, []);
-  // console.log(data);
 
   var butt_arr = [];
   var ind = 1;
@@ -168,7 +166,6 @@ export default function Test() {
     butt_arr.push(
       <PageBttn
         onClick={PageClick.bind(this, ind, inptxt)}
-        // bgcolor = {cur_page === ind ? '#F9E7E7' : ""}
         bgcolor={
           cur_page === ind && theme === "light"
             ? "#F9E7E7"
@@ -263,7 +260,6 @@ export default function Test() {
                       r.push(`/result/${uuidv4()}`);
                       HandleSave
                     }}
-                    //pages = {item.num_pages}
                   />
                 ))
               : data.slice(0, 10).map((item) => (
@@ -283,11 +279,10 @@ export default function Test() {
                       r.push(`/result/${uuidv4()}`);
                       HandleSave
                     }}
-                    //pages = {item.num_pages}
                   />
                 ))}
           </Wrap>
-          {/* <Pagination /> */}
+{/* <Pagination /> */}
           <PageCont>{butt_arr}</PageCont>
         </PagCont>
       ) : (
@@ -315,8 +310,6 @@ export default function Test() {
                       r.push(`/result/${uuidv4()}`);
                       HandleSave;
                     }}
-
-                    //pages = {item.num_pages}
                   />
                 ))
               : data.slice(0, 10).map((item) => (
@@ -336,11 +329,10 @@ export default function Test() {
                       r.push(`/result/${uuidv4()}`);
                       HandleSave;
                     }}
-                    //pages = {item.num_pages}
                   />
                 ))}
           </Wrap>
-          {/* <Pagination /> */}
+{/* <Pagination /> */}
           <PageCont>{butt_arr}</PageCont>
         </PagCont>
       )}
