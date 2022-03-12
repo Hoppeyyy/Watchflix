@@ -25,7 +25,9 @@ import { basicColor, whiteblack } from "@/utils/variables";
 import ToggleBttn from '@/comps/ToggleBttn';
 import ToggleSlide from '@/comps/ToggleSlide';
 import FilterBttn from '@/comps/FilterBttn';
+import SearchBar from '@/comps/SearchBar';
 import AuthBtn from '@/comps/AuthBtn';
+
 
 
 
@@ -74,22 +76,22 @@ const Image = styled.img`
   display: block;
 `
 
-const SearchBar = styled.input`
-  width: 40%;
-  height: 3rem;
-  border: solid 1px #B08584;
-  border-radius: 30px;
-  padding: 1rem 1.5rem;
-  box-sizing: border-box;
-  background-color: #fff;
-  position: relative;
-  margin-right: 2rem;
+// const SearchBar = styled.input`
+//   width: 40%;
+//   height: 3rem;
+//   border: solid 1px #B08584;
+//   border-radius: 30px;
+//   padding: 1rem 1.5rem;
+//   box-sizing: border-box;
+//   background-color: #fff;
+//   position: relative;
+//   margin-right: 2rem;
 
-  @media only screen and (min-width: 1px) and (max-width: 870px) {
-    width: 80%;
-    margin: 1rem;
-  }  
-`
+//   @media only screen and (min-width: 1px) and (max-width: 870px) {
+//     width: 80%;
+//     margin: 1rem;
+//   }  
+// `
 
 const FlexRow = styled.div`
   display: flex;
@@ -123,21 +125,10 @@ const BttnCont = styled.div`
   align-items: center;
 `
 const Text = styled.h3`
+display:flex;
+align-items:center;
+text-align:center;
 `
-
-const genre = ["Documentaries", "Children & Family Movies", "Dramas"];
-
-const rating = ["TV-MA", "TV-14", "R", "TV-PG", "PG-13"];
-
-const country = ["Canada"];
-
-const sortby = [
-  "Date (newest)",
-  "Date (oldest)",
-  "Alphabet A-Z",
-  "Alphabet Z-A",
-  "Most Reviews",
-];
 
 const Header = ({
   rowbg = bgpopup,
@@ -145,67 +136,24 @@ const Header = ({
   width = 30,
   src = "/images/watchflix_logo.png",
   onInput=()=>{},
+  onSearchClick = () => {},
   handleView = () => {},
   handleColor = () => {},
   isView,
   isColor,
   onAscClick = () => {},
   onRateClick = () => {},
-  AuthSignClick = () =>{},
-  AuthLogClick = () =>{},
+  AuthOutClick = () =>{},
   ascBkColor = null,
   rateBkColor = null,
   ascChildren = null,
   rateChildren = null,
-
+  user="",
 }) => {
   // const { theme } = useTheme();
   const { theme, setTheme } = useTheme();
   const [label, setLabel] = useState();
   //const [label2, setLabel2] = useState(false);
-
-
-  const [genreName, setGenreName] = useState([]);
-  const handleGenre = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setGenreName(typeof value === "string" ? value.split(",") : value);
-  };
-
-  const [ratingName, setRatingName] = useState([]);
-  const handleRating = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setRatingName(typeof value === "string" ? value.split(",") : value);
-  };
-
-  const [countryName, setCountryName] = useState([]);
-  const handleCountry = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setCountryName(typeof value === "string" ? value.split(",") : value);
-  };
-
-  const [sortbyName, setSortbyName] = useState([]);
-  const handleSortby = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setSortbyName(typeof value === "string" ? value.split(",") : value);
-  };
-
-  function duration(dur) {
-    return `${dur} minutes`;
-  }
-
-  const [dur, setDur] = useState([60, 80]);
-  const handleDur = (event, newDur) => {
-    setDur(newDur);
-  };
-
 
 
   return (
@@ -221,16 +169,22 @@ const Header = ({
           />
         </LogoCont>
 
-        <SearchBar
+        {/* <SearchBar
           placeholder="Search for a Movie..."
           onChange={onInput}
         >         
-        </SearchBar>
+        </SearchBar> */}
+
+        <SearchBar 
+          onChange = {onInput}
+          onClick = {onSearchClick}
+        />
+
         <AuthBox>
-     <Text>Welcome User</Text>
+      <Text>Welcome {user}</Text>
       <AuthBtn
       text="Log Out"
-      AuthClick={AuthLogClick}
+      AuthClick={AuthOutClick}
       />
         </AuthBox>
       </FlexHeader>
@@ -268,8 +222,9 @@ const Header = ({
 
           </SwitchCont>
         </FlexRow>
-      </FlexRow>
-    </FlexCol>
+
+      </FlexRow> 
+    </FlexCol> 
   );
 };
 

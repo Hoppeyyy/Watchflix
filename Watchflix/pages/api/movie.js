@@ -36,14 +36,14 @@ export default async function handler(req, res) {
   if(sort_rating){
     lists = lists.sort((a, b) => {
       if(sort_rating === "asc") {
-        if( a.IMDB_Score > b.IMDB_Score) return 1
-        if( a.IMDB_Score < b.IMDB_Score) return -1
+        if( a["IMDB Score"] > b["IMDB Score"]) return 1
+        if( a["IMDB Score"] < b["IMDB Score"]) return -1
 
       } else {
-        if( a.IMDB_Score > b.IMDB_Score) return -1
-        if( a.IMDB_Score < b.IMDB_Score) return 1
+        if( a["IMDB Score"] > b["IMDB Score"]) return -1
+        if( a["IMDB Score"] < b["IMDB Score"]) return 1
       }
-      return 0
+      //return 0
     })
   }
 
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
         if( a.Title > b.Title) return -1
         if( a.Title < b.Title) return 1
       }
-      return 0
+      //return 0
     })
   }
  

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, Router } from "next/router";
 import ax from "axios";
 import React from "react";
-import Auth from '@/comps/Auth2'
+import Auth2 from '@/comps/Auth2'
 
 
 const Cont = styled.div`
@@ -21,7 +21,7 @@ export default function LogIn() {
 return(
   
 <Cont>
-  <Auth
+  <Auth2
   value="Log In" 
   />
 </Cont>

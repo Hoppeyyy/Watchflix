@@ -8,6 +8,7 @@ import ax from 'axios';
 const Cont = styled.div`
 width:30%;
 height:60%;
+min-width:300px;
 display:flex;
 flex-direction:column;
 padding:2.5rem;
@@ -72,7 +73,7 @@ value="Sign Up",
         password:'',
     })
     const handleChange=(event)=>{
-        console.log(event.target)
+        //console.log(event.target)
         const {name, value} = event.target;
         setInput(prevInput =>{
             return{

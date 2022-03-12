@@ -1,6 +1,4 @@
 // --------------------------- filtering ---------------------------------- //
-const rating = "IMDB_Score";
-const year = "release_year";
 
 function filtering(
   arr = [],
@@ -8,18 +6,12 @@ function filtering(
   config = {
     Title: null,
     Genre: null,
-    // country: null,
-    // director: null,
-    // rating: null,
-    // year: null,
-    // listed_in: null,
-    // duration: null,
   }
 ) {
-  const { Title, Genre, country, director, rating } = config;
+  const { Title, Genre } = config;
   const keyword = arr.value;
 
-  if (Title || Genre || country || director || rating) {
+  if (Title || Genre) {
 
     const filtered_arr = arr.filter((o, i) => {
       var cond = false;
@@ -31,30 +23,6 @@ function filtering(
       if (Genre) {
         cond = cond || o.Genre.toUpperCase().includes(Genre.toUpperCase());
       }
-
-      // if (director) {
-      //   cond = cond || o.director.toUpperCase().includes(director.toUpperCase());
-      // }
-
-      // if (country) {
-      //   cond = cond || o.country.toUpperCase().includes(country.toUpperCase());
-      // }
-
-      // if (rating) {
-      //   cond = cond || Number(o.IMDB_Score) >= Number(rating);
-      // }
-
-      // if (year) {
-      //   cond = cond || Number(o.release_year) >= Number(year);
-      // }
-
-      //  if(rate){
-      //    cond = cond || o.rating.toUpperCase().includes(rating.toUpperCase());
-      //  }
-
-      // if (listed_in) {
-      //   cond = cond || o.listed_in.toUpperCase().includes(listed_in.toUpperCase());
-      // }
 
       return cond;
     });
@@ -99,11 +67,4 @@ function sortArr(arr = [], config = { key: null, type: null }) {
   }
 }
 
-/*
-console.log(sortArr(movie(),{
-  //key:'IMDB Score',type:'asc',
-  //key:'duration', type:"asc"
-}))
-*/
-// export {movie, filtering, sortArr }
 export { filtering, sortArr };
