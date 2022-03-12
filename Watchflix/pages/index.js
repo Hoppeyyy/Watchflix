@@ -13,6 +13,7 @@ import PageBttn from "@/comps/PageBttn";
 //mport newmovie from "@/utils/newmovie";
 import React from "react";
 import Header from "@/comps/Header/index";
+import Header2 from "@/comps/Header/index2";
 import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
 
 const Cont = styled.div`
@@ -63,7 +64,6 @@ const PageCont = styled.div`
 `;
 
 var timer = null;
-
 export default function Home() {
   const r = useRouter();
   const [data, setData] = useState([]);
@@ -78,7 +78,7 @@ export default function Home() {
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
- 
+  const [user, setUser] = useState(null)
   const onChangeView = () => {
     if (View === false) {
       setView(true);
@@ -193,52 +193,115 @@ export default function Home() {
 
 // ============== Pagination ends
 
+// ============== Authentication
+useEffect(() => {
+  if ( !globalThis.localStorage ) {
+    return;
+  }
+  var token = localStorage.getItem('token');
+  
+  console.log(token)
+  setUser(token)
+
+  // do server side stuff
+}, []);
+console.log(user)
+var header_arr =[];
+{user?
+  (header_arr.push(<Header2
+    onInput={(e) => {
+      //PageClick(1, e.target.value);
+    }}
+    onSearchClick={(searchTerm)=>{
+      
+        PageClick(1, searchTerm)
+      
+    }}
+    isView={View}
+    isColor={color}
+    handleView={() => onChangeView()}
+    handleColor={() => onChangeColor()}
+
+    onAscClick={()=>{
+      setSbr(sbr)
+      setSba(!sba)
+      setSbrType(null)
+      setSbaType(sba_type === "asc" ? "desc" : "asc")}          
+    }
+
+    onRateClick={()=>{            
+      setSba(sba)
+      setSbr(!sbr)
+      setSbaType(null)
+      setSbrType(sbr_type === "asc" ? "desc" : "asc")}
+    }
+
+    ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+    ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
+
+    rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+    rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+    AuthOutClick = {()=>{
+      setUser(!user)
+      r.push("/");
+    }
+    }
+  />)):(
+    header_arr.push(<Header
+      onInput={(e) => {
+        //PageClick(1, e.target.value);
+      }}
+      onSearchClick={(searchTerm)=>{
+        
+          PageClick(1, searchTerm)
+        
+      }}
+  
+  
+      isView={View}
+      isColor={color}
+      handleView={() => onChangeView()}
+      handleColor={() => onChangeColor()}
+  
+      onAscClick={()=>{
+        setSbr(sbr)
+        setSba(!sba)
+        setSbrType(null)
+        setSbaType(sba_type === "asc" ? "desc" : "asc")}          
+      }
+  
+      onRateClick={()=>{            
+        setSba(sba)
+        setSbr(!sbr)
+        setSbaType(null)
+        setSbrType(sbr_type === "asc" ? "desc" : "asc")}
+      }
+  
+      ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+      ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
+  
+      rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+      rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+      AuthSignClick={() =>{
+        r.push("/signup");
+      }}
+     AuthLogClick={()=>{
+      r.push("/login");
+     }}
+    />)
+  )
+}
+
+  
+
+
+    
+
   return (
     <Cont>
       <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
 {/* ====================== Input and Button area ==================================== */}
-        <Header
-          onInput={(e) => {
-            //PageClick(1, e.target.value);
-          }}
-          onSearchClick={(searchTerm)=>{
-            
-              PageClick(1, searchTerm)
-            
-          }}
-
-
-          isView={View}
-          isColor={color}
-          handleView={() => onChangeView()}
-          handleColor={() => onChangeColor()}
-
-          onAscClick={()=>{
-            setSbr(sbr)
-            setSba(!sba)
-            setSbrType(null)
-            setSbaType(sba_type === "asc" ? "desc" : "asc")}          
-          }
-
-          onRateClick={()=>{            
-            setSba(sba)
-            setSbr(!sbr)
-            setSbaType(null)
-            setSbrType(sbr_type === "asc" ? "desc" : "asc")}
-          }
-
-          ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-          ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
-
-          rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-          rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
-          AuthSignClick={() =>{
-            r.push("/signup");
-          }}
-         AuthLogClick={()=>{
-          r.push("/login");
-         }}
-        />
+   {header_arr}
       </HeadCont>
 
 {/* ====================== Filtering result show below  ==================================== */}

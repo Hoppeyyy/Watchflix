@@ -43,7 +43,7 @@ export default async function handler(req, res) {
         if( a["IMDB Score"] > b["IMDB Score"]) return -1
         if( a["IMDB Score"] < b["IMDB Score"]) return 1
       }
-      return 0
+      //return 0
     })
   }
 
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
         if( a.Title > b.Title) return -1
         if( a.Title < b.Title) return 1
       }
-      return 0
+      //return 0
     })
   }
  

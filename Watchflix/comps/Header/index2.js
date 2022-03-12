@@ -124,7 +124,11 @@ const BttnCont = styled.div`
   justify-content: space-between;
   align-items: center;
 `
-
+const Text = styled.h3`
+display:flex;
+align-items:center;
+text-align:center;
+`
 
 const Header = ({
   rowbg = bgpopup,
@@ -139,13 +143,12 @@ const Header = ({
   isColor,
   onAscClick = () => {},
   onRateClick = () => {},
-  AuthSignClick = () =>{},
-  AuthLogClick = () =>{},
+  AuthOutClick = () =>{},
   ascBkColor = null,
   rateBkColor = null,
   ascChildren = null,
   rateChildren = null,
-
+  user="",
 }) => {
   // const { theme } = useTheme();
   const { theme, setTheme } = useTheme();
@@ -178,13 +181,10 @@ const Header = ({
         />
 
         <AuthBox>
-        <AuthBtn
-      text="Sign Up"
-      AuthClick={AuthSignClick}
-      />
+      <Text>Welcome {user}</Text>
       <AuthBtn
-      text="Log In"
-      AuthClick={AuthLogClick}
+      text="Log Out"
+      AuthClick={AuthOutClick}
       />
         </AuthBox>
       </FlexHeader>
