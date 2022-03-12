@@ -122,6 +122,8 @@ const BttnCont = styled.div`
   justify-content: space-between;
   align-items: center;
 `
+const Text = styled.h3`
+`
 
 const genre = ["Documentaries", "Children & Family Movies", "Dramas"];
 
@@ -204,6 +206,8 @@ const Header = ({
     setDur(newDur);
   };
 
+
+
   return (
     <FlexCol>
 {/* =================== HEADER STARTS =================== */}
@@ -223,12 +227,9 @@ const Header = ({
         >         
         </SearchBar>
         <AuthBox>
-        <AuthBtn
-      text="Sign Up"
-      AuthClick={AuthSignClick}
-      />
+     <Text>Welcome User</Text>
       <AuthBtn
-      text="Log In"
+      text="Log Out"
       AuthClick={AuthLogClick}
       />
         </AuthBox>

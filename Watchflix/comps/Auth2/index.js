@@ -83,7 +83,7 @@ value="Sign Up",
         console.log(input)
     }
  
-    const handlePost = (event) =>{
+    const handlePost = async (event) =>{
         event.preventDefault();
        
         const user = {
@@ -91,7 +91,21 @@ value="Sign Up",
             email:input.email,
             password:input.password
         }
-        ax.post('http://localhost:3001/login', user)
+
+        try{
+          let res = await ax.post('http://localhost:3001/login', user)
+         router.push("/signedup")
+         console.log(res)
+         localStorage.setItem('token', res.data)
+
+
+         // check if token exists/ user is signed in
+         if(localStorage.getItem('token')){
+           // allow some operstion for logen in user
+         }
+        }catch(e){
+          alert(" something went wrong")
+        }
 
     }
 

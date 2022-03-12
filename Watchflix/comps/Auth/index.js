@@ -80,10 +80,10 @@ value="Sign Up",
                 [name]:value
             }
         })
-        console.log(input)
+        //console.log(input)
     }
  
-    const handlePost = (event) =>{
+    const handlePost = async (event) =>{
         event.preventDefault();
        
         const user = {
@@ -91,8 +91,14 @@ value="Sign Up",
             email:input.email,
             password:input.password
         }
-        ax.post('http://localhost:3001/signup', user)
-        router.push("/")
+        try{
+            let res = await ax.post('http://localhost:3001/signup', user)
+           router.push("/login")
+           //console.log(res)
+          
+          }catch(e){
+            alert(" something went wrong")
+          }
 
     }
 
