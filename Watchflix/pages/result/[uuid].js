@@ -17,6 +17,17 @@ import { DndProvider } from "react-dnd";
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { v4 as uuidv4 } from "uuid";
 
+//sticker images
+import angry from '../../public/images/angry.png';
+import clown from '../../public/images/clown.png';
+import crying from '../../public/images/crying.png';
+import doghappy from '../../public/images/dog-happy.png';
+import dogmad from '../../public/images/dog-mad.png';
+import laughing from '../../public/images/laughing.png';
+import love from '../../public/images/love.png';
+import sad from '../../public/images/sad.png';
+import smile from '../../public/images/smile.png';
+
 const Cont = styled.div`
   width: 100%;
   height: 100%;
@@ -57,6 +68,13 @@ const ButCont = styled.div`
   justify-content: flex-end;
   margin-top: 50px;
 `;
+
+const StickerCont = styled.div`
+  display:flex;
+  justify-content: center;
+  width:100%;
+`
+
 var timer = null;
 export default function Result() {
   const r = useRouter();
@@ -332,8 +350,8 @@ const SaveResult = async ()=>{
             <ClickButton src={uuid} cwidth='' />
           </ButCont>
         </PageCont>
-        {/*STICKER SECTION*/}
 
+        {/*STICKER SECTION*/}
 
         <Divider text="Moodboard"></Divider>
         <DndProvider backend={TouchBackend} options={{
@@ -355,8 +373,8 @@ const SaveResult = async ()=>{
         onDragOver={dragOverHandler}
 				onDragEnd={()=>setOp(1)}
         >
-      <h3>Mood Board Notes - {uuid}</h3>
-      <button onClick={HandleSave}>Save</button>
+      {/* <h3>Mood Board Notes - {uuid}</h3> */}
+      {/* <button onClick={HandleSave}>Save</button> */}
       {Object.values(ns).map(o=><Sticker 
         type='boardnotes' 
         key={o.id}
@@ -368,21 +386,35 @@ const SaveResult = async ()=>{
       </Sticker>)}
         </StickerBoard>
 
-      <div>
+      {/* <div>
         <h3>Menu</h3>
         <Sticker />
-      </div>
+      </div> */}
 
-      <div>
+      {/* <div>
         <h3>Sticker</h3>
         {src && <img height ={100} src={src}/> }
         <div>{fname}</div>
         <Sticker/>
-      </div>
+      </div> */}
+
+      <StickerCont>
+      
+        <Sticker stickerImage={laughing}></Sticker>
+        <Sticker stickerImage={sad}></Sticker>
+        <Sticker stickerImage={crying}></Sticker>
+        <Sticker stickerImage={love}></Sticker>
+        <Sticker stickerImage={smile}></Sticker>
+        <Sticker stickerImage={doghappy}></Sticker>
+        <Sticker stickerImage={dogmad}></Sticker>
+        <Sticker stickerImage={clown}></Sticker>
+        <Sticker stickerImage={angry}></Sticker>
+
+
+      </StickerCont>
+
 
       </DndProvider>
-
-
 
           {/*REVIEW SECTION*/}
         <ReviewSection text="Reviews" />

@@ -3,8 +3,11 @@ import { useDrag, useDrop } from 'react-dnd'
 
 import styled from 'styled-components';
 
+//sticker drag n drop
+import Image from 'next/image';
+import angry from '../../public/images/angry.png';
+
 const NoteCont = styled.div`
-  background-color:#ABC;
   color:#666;
   padding:5px;
   display:inline-flex;
@@ -13,10 +16,12 @@ const NoteCont = styled.div`
   top:${top}px;
   position:${position};
   `}
+  z-index:999
 `
 
 const Sticker = ({
   //props
+  stickerImage = angry,
   type='notes',
   children=null,
   notepos=null,
@@ -87,6 +92,8 @@ const Sticker = ({
      >
        </textarea>}
       </div>
+      <Image src={stickerImage} width={100} height={100}/>
+      
 	</NoteCont>
 }
 
