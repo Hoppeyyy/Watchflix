@@ -1,18 +1,22 @@
 import styled from "styled-components";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { useTheme, useResult } from "@/utils/provider";
+import { useTheme, useResult, useFav } from "@/utils/provider";
 import { useRouter, Router } from "next/router";
 import ax from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { setRequestMeta } from "next/dist/server/request-meta";
 import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
-import Pagination from "@/pages/_old/index2-pagination";
 import PageBttn from "@/comps/PageBttn";
 import React from "react";
 import Header from "@/comps/Header/index";
-import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
+import {
+  basicColor,
+  whiteblack,
+  shadow,
+  hBttnBkColor,
+} from "@/utils/variables";
 
 const Cont = styled.div`
   width: 100%;
@@ -77,7 +81,9 @@ export default function Home() {
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
- 
+  const { fav, setFav } = useFav();
+  const [ uid, setUid] = useState(uuidv4())
+
   const onChangeView = () => {
     if (View === false) {
       setView(true);
@@ -98,17 +104,21 @@ export default function Home() {
     }
   };
 
-  const HandleSave = async() => {
-    const resp = await ax.post('/api/save', {
-      uuid,
-      ns
-    })
-  }
+  const { uuid } = r.query;
 
- 
+  const HandleSave = async (item) => {
+    const m_obj = {};
+
+    m_obj[item.imdbId] = item;
+
+    console.log("this is my fav", uuid);
+    const resp = await ax.post("/api/save", {
+      uuid:uid,
+      item: m_obj,
+    });
+  };
+
   const StoreResult = (item) => {
-    console.log(item);
-
     console.log(item);
     console.log("clicked");
 
@@ -117,7 +127,7 @@ export default function Home() {
     setResult(b_obj);
   };
 
-// ============== PaginatioWn
+  // ============== PaginatioWn
 
   const PageClick = async (p, txt) => {
     var obj = {};
@@ -141,6 +151,7 @@ export default function Home() {
             ...obj,
           },
         });
+        console.log(res.data);
         setData(res.data.lists);
         setCurPage(p);
         setInpTxt(txt);
@@ -154,6 +165,7 @@ export default function Home() {
       }, 1000);
     }
   };
+
   useEffect(() => {
     PageClick(1, r.query.search || "");
   }, []);
@@ -188,60 +200,54 @@ export default function Home() {
 
   butt_arr = butt_arr.slice(cur_page - 2 < 0 ? 0 : cur_page - 2, lastpage);
 
-// ============== Pagination ends
+  // ============== Pagination ends
 
   return (
     <Cont>
       <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
-{/* ====================== Input and Button area ==================================== */}
+        {/* ====================== Input and Button area ==================================== */}
         <Header
           onInput={(e) => {
             //PageClick(1, e.target.value);
           }}
-          onSearchClick={(searchTerm)=>{
-            
-              PageClick(1, searchTerm)
-            
+          onSearchClick={(searchTerm) => {
+            PageClick(1, searchTerm);
           }}
-
-
           isView={View}
           isColor={color}
           handleView={() => onChangeView()}
           handleColor={() => onChangeColor()}
-
-          onAscClick={()=>{
-            setSbr(sbr)
-            setSba(!sba)
-            setSbrType(null)
-            setSbaType(sba_type === "asc" ? "desc" : "asc")}          
+          onAscClick={() => {
+            setSbr(sbr);
+            setSba(!sba);
+            setSbrType(null);
+            setSbaType(sba_type === "asc" ? "desc" : "asc");
+          }}
+          onRateClick={() => {
+            setSba(sba);
+            setSbr(!sbr);
+            setSbaType(null);
+            setSbrType(sbr_type === "asc" ? "desc" : "asc");
+          }}
+          ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+          ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
+          rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+          rateChildren={
+            sbr_type === "asc" ? "Acending Rate" : "Descending Rate"
           }
-
-          onRateClick={()=>{            
-            setSba(sba)
-            setSbr(!sbr)
-            setSbaType(null)
-            setSbrType(sbr_type === "asc" ? "desc" : "asc")}
-          }
-
-          ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-          ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
-
-          rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-          rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
-          AuthSignClick={() =>{
+          AuthSignClick={() => {
             r.push("/signup");
           }}
-         AuthLogClick={()=>{
-          r.push("/login");
-         }}
+          AuthLogClick={() => {
+            r.push("/login");
+          }}
         />
       </HeadCont>
 
-{/* ====================== Filtering result show below  ==================================== */}
+      {/* ====================== Filtering result show below  ==================================== */}
       {View ? (
         <PagCont>
-          <Wrap>            
+          <Wrap>
             {data && data.length > 0
               ? data.map((item) => (
                   <HMovie
@@ -259,10 +265,11 @@ export default function Home() {
                       result[item.imdbId] != undefined &&
                       result[item.imdbId] !== null
                     }
-                    onClick={() => {
+                    onClick={(e) => {
+                      // let uid = uuidv4()
                       StoreResult(item);
-                      r.push(`/result/${uuidv4()}`);
-                      HandleSave
+                      HandleSave(item);
+                      r.push(`/result/${uid}`);
                     }}
                   />
                 ))
@@ -280,13 +287,13 @@ export default function Home() {
                     rate={item["IMDB Score"]}
                     onClick={() => {
                       StoreResult(item);
-                      r.push(`/result/${uuidv4()}`);
-                      HandleSave
+                      HandleSave(item);
+                      r.push(`/result/${uid}`);
                     }}
                   />
                 ))}
           </Wrap>
-{/* <Pagination /> */}
+          {/* <Pagination /> */}
           <PageCont>{butt_arr}</PageCont>
         </PagCont>
       ) : (
@@ -311,8 +318,8 @@ export default function Home() {
                     }
                     onClick={() => {
                       StoreResult(item);
-                      r.push(`/result/${uuidv4()}`);
-                      HandleSave;
+                      HandleSave(item);
+                      r.push(`/result/${uid}`);
                     }}
                   />
                 ))
@@ -330,13 +337,13 @@ export default function Home() {
                     text={item.description}
                     onClick={() => {
                       StoreResult(item);
-                      r.push(`/result/${uuidv4()}`);
-                      HandleSave;
+                      HandleSave(item);
+                      r.push(`/result/${uid}`);
                     }}
                   />
                 ))}
           </Wrap>
-{/* <Pagination /> */}
+          {/* <Pagination /> */}
           <PageCont>{butt_arr}</PageCont>
         </PagCont>
       )}

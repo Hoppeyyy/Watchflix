@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React, { useEffect, useState } from "react";
-import { useTheme } from "@/utils/provider";
+
+import { useTheme, useFav } from "@/utils/provider";
 import {
   bkColor,
   hovColor,
@@ -84,6 +85,7 @@ const ClickButton = ({
 }) => {
   const { theme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const { fav, setFav } = useFav();
   const togglePopup = () => {
     setIsOpen(!isOpen);
   };

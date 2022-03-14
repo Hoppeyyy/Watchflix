@@ -128,8 +128,6 @@ const SaveResult = async ()=>{
           params: {
             txt: txt,
             ...obj,
-            // sort_rating: sbr,
-            // sort_type: sbr_type,
           },
         });
         console.log(res.data.lists);
@@ -148,7 +146,6 @@ const SaveResult = async ()=>{
     } else {
     }
   };
-
 
   useEffect(() => {
     if (uuid) {

@@ -1,26 +1,21 @@
-import {Save, Read} from '@/utils/helpers';
+import { Save, Read } from "@/utils/helpers";
 
 export default async function handler(req, res) {
-
-  if(req.method === 'POST'){
-  const {uuid,result, ns} = req.body;
-  console.log(uuid,result);
-  await Save (uuid,result,ns);
-  res.status(200).json({ name: 'John Doe' })
+  if (req.method === "POST") {
+    const { uuid, item } = req.body;
+    console.log(uuid, item);
+    await Save(uuid, item);
+    res.status(200).json({ name: "John Doe" });
   }
-  
-  if(req.method === 'GET'){
-    const { uuid, ns }= req.query;
-    console.log(uuid, ns);
-  try{
-    const results = await import (`@/saves/${uuid}.json`);
-    res.status(200).json(results);
-  
-    }catch(e){
-  
+
+  if (req.method === "GET") {
+    const { uuid } = req.query;
+    console.log(uuid);
+    try {
+      const favs = await import(`@/saves/${uuid}.json`);
+      res.status(200).json(favs);
+    } catch (e) {
       res.status(200).json(false);
     }
-   
   }
 }
-
