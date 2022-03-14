@@ -10,6 +10,23 @@ import styled from "styled-components";
 import Header from "@/comps/Header/index";
 import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
 
+//Sticker drag n drop
+import StickerBoard from "@/comps/StickerBoard";
+import Sticker from "@/comps/Sticker";
+import { DndProvider } from "react-dnd";
+import { TouchBackend } from 'react-dnd-touch-backend';
+import { v4 as uuidv4 } from "uuid";
+
+//sticker images
+import angry from '../../public/images/angry.png';
+import clown from '../../public/images/clown.png';
+import crying from '../../public/images/crying.png';
+import doghappy from '../../public/images/dog-happy.png';
+import dogmad from '../../public/images/dog-mad.png';
+import laughing from '../../public/images/laughing.png';
+import love from '../../public/images/love.png';
+import sad from '../../public/images/sad.png';
+import smile from '../../public/images/smile.png';
 
 const Cont = styled.div`
   width: 100%;
@@ -51,6 +68,13 @@ const ButCont = styled.div`
   justify-content: flex-end;
   margin-top: 50px;
 `;
+
+const StickerCont = styled.div`
+  display:flex;
+  justify-content: center;
+  width:100%;
+`
+
 var timer = null;
 export default function Result() {
   const r = useRouter();
@@ -163,6 +187,104 @@ const SaveResult = async ()=>{
       GetUuid();
     }
   }, [uuid]);
+
+
+ //---------------Moodboard------------------------
+
+ const [ns, setNs] = useState({})
+
+ // useEffect(()=>{
+ //   if(uuid){
+ //     const GetNotes = async()=>{
+ //       const resp = await ax.get('/api/load', {
+ //         params:{uuid}
+ //       });
+ //       if(resp !== false){
+ //         setNs(resp.data)
+ //       }
+ //     }
+ //     GetNotes();
+ //   }
+ // }, [uuid]);
+
+ console.log(ns);
+
+ const HandleUpdateNote = (id, notedata)=>{
+   ns[id] = {
+     ...ns[id],
+     ...notedata
+   }
+
+   setNs({
+     ...ns
+   })
+ }
+
+ const HandleSave = async () => {
+   const resp = await ax.post('/api/save', {
+     uuid,
+     ns
+   })
+ }
+
+ const [src, setSrc] = useState(null);
+
+ const [fname, setFName] = useState('');
+
+ const [op, setOp] = useState(1);
+
+ async function dropHandler(ev) {
+   console.log("dropped", ev.dataTransfer.files, ev.dataTransfer.items);
+   if (ev.dataTransfer.items) {
+
+     var file = null
+     // Use DataTransferItemList interface to access the file(s)
+     for (var i = 0; i < ev.dataTransfer.items.length; i++) {
+       // If dropped items aren't files, reject them
+       if (ev.dataTransfer.items[i].kind === 'file') {
+       var file = ev.dataTransfer.items[i].getAsFile();
+       console.log('... file[' + i + '].name = ' + file.name);
+       }
+     }
+     
+     var reader = new FileReader();
+     if(file.type.includes('image')){
+       reader.readAsDataURL(file);
+     }
+
+     if(file.type.includes('csv')){
+       reader.readAsText(file);
+     }
+
+     reader.onload = ()=>{
+       //console.log("result", reader.result);
+       if(file.type.includes('image')){
+         setSrc(reader.result);
+       }
+
+       if(file.type.includes('csv')){
+         console.log(reader.result.split('\n').map(o=>o.split(',')));
+       }
+       
+     }
+
+     console.log(file);
+     setFName(`You dropped file ${file.name}`);
+     setOp(1);
+     } 
+   ev.preventDefault();
+ }
+
+
+ function dragOverHandler(ev) {
+   console.log("dragged over")
+   setOp(0.5);
+
+   ev.preventDefault();
+ }
+
+ //--------------Moodboard end-------------------------
+
   
   return (
     <Cont>
@@ -204,6 +326,7 @@ const SaveResult = async ()=>{
 
 {/* ====================== Body area ==================================== */}
       <BodyCont>
+       
         <Divider text="Result"></Divider>
 
         <PageCont>
@@ -225,6 +348,72 @@ const SaveResult = async ()=>{
           </ButCont>
         </PageCont>
 
+        {/*STICKER SECTION*/}
+
+        <Divider text="Moodboard"></Divider>
+        <DndProvider backend={TouchBackend} options={{
+        enableTouchEvents:false,
+        enableMouseEvents:true
+      }}>
+        <StickerBoard onDropItem={(item)=>{
+          //console.log(ns);
+          const n_id = uuidv4();
+          // ns[n_id] = {
+          //   id:n_id
+          // };
+          setNs((prev)=>({
+            ...prev,
+            [n_id]:{id:n_id}
+          }))
+        }}
+        onDrop={dropHandler}
+        onDragOver={dragOverHandler}
+				onDragEnd={()=>setOp(1)}
+        >
+      {/* <h3>Mood Board Notes - {uuid}</h3> */}
+      {/* <button onClick={HandleSave}>Save</button> */}
+      {Object.values(ns).map(o=><Sticker 
+        type='boardnotes' 
+        key={o.id}
+        notepos={o.pos}
+        notecontent={o.content}
+        onUpdateNote={(obj)=>HandleUpdateNote(o.id, obj)}
+        >
+        {o.id}
+      </Sticker>)}
+        </StickerBoard>
+
+      {/* <div>
+        <h3>Menu</h3>
+        <Sticker />
+      </div> */}
+
+      {/* <div>
+        <h3>Sticker</h3>
+        {src && <img height ={100} src={src}/> }
+        <div>{fname}</div>
+        <Sticker/>
+      </div> */}
+
+      <StickerCont>
+      
+        <Sticker stickerImage={laughing}></Sticker>
+        <Sticker stickerImage={sad}></Sticker>
+        <Sticker stickerImage={crying}></Sticker>
+        <Sticker stickerImage={love}></Sticker>
+        <Sticker stickerImage={smile}></Sticker>
+        <Sticker stickerImage={doghappy}></Sticker>
+        <Sticker stickerImage={dogmad}></Sticker>
+        <Sticker stickerImage={clown}></Sticker>
+        <Sticker stickerImage={angry}></Sticker>
+
+
+      </StickerCont>
+
+
+      </DndProvider>
+
+          {/*REVIEW SECTION*/}
         <ReviewSection text="Reviews" />
       </BodyCont>
     </Cont>
