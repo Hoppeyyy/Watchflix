@@ -103,7 +103,7 @@ value="Sign Up",
          localStorage.setItem('token', res.data)
          localStorage.setItem('user', res.config.data)
          console.log("log in suceed")
-         router.push("/",userData.name)
+         router.push("/")
 
          // check if token exists/ user is signed in
          if(localStorage.getItem('token')){

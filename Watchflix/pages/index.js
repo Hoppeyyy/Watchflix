@@ -194,17 +194,35 @@ export default function Home() {
 // ============== Pagination ends
 
 // ============== Authentication
+/*const LogoutClick =(a,b)=>{
+  if(!user){
+    setUser(a)
+  }else if(user){
+    setUser(b)
+  }
+}*/
 useEffect(() => {
   if ( !globalThis.localStorage ) {
     return;
   }
   var token = localStorage.getItem('token');
-  
+  //var forget = localStorage.removeItem('token');
+
+  /*
+  if(token == true){
+    setUser(forget)
+  }else if (token == false){
+    setUser(token)
+  }
+  */
   console.log(token)
   setUser(token)
 
+//LogoutClick(token, forget)
+
   // do server side stuff
 }, []);
+
 console.log(user)
 var header_arr =[];
 {user?
@@ -242,7 +260,9 @@ var header_arr =[];
     rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
     rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
     AuthOutClick = {()=>{
-      setUser(!user)
+      setUser("")
+      //LogoutClick()
+      localStorage.removeItem('token')
       r.push("/");
     }
     }
