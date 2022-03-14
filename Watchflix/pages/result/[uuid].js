@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState, useRef } from "react";
-import { useTheme, useResult } from "@/utils/provider";
+import { useTheme, useResult, useFav } from "@/utils/provider";
 import ax from "axios";
 import ClickButton from "@/comps/ClickButton";
 import Detail from "@/comps/Detail";
@@ -69,20 +69,9 @@ export default function Result() {
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
+  const { fav, setFav } = useFav();
 
-  console.log(Object.values(result));
-
-  /*
-const SaveResult = async ()=>{
-  const res = await ax.post("/api/save", {
-    uuid,
-    result
-  })
-}
-*/
-  // const [data, setData] = useState([]);
-  // const [sbr, setSbr] = useState(false);
-  // const [sbr_type, setSbrType] = useState("asc");
+  console.log("value is", Object.values(fav));
 
   const onChangeView = () => {
     if (View === false) {
@@ -103,7 +92,6 @@ const SaveResult = async ()=>{
       setColor(false);
     }
   };
-
 
 
   const inputFilter = async (txt) => {
@@ -130,12 +118,12 @@ const SaveResult = async ()=>{
             ...obj,
           },
         });
-        console.log(res.data.lists);
+        // console.log(res.data.lists);
         setData(res.data.lists);
         r.push("/", res.data.lists);
         setInpTxt(txt);
         setMovie_num(res.data.nummovies);
-        console.log(res.data.nummovies); 
+        // console.log(res.data.nummovies); 
         
         timer = null;
         if (res.data.nummovies <= 0) {
@@ -179,14 +167,12 @@ const SaveResult = async ()=>{
           isColor={color}
           handleView={() => onChangeView()}
           handleColor={() => onChangeColor()}
-
           onAscClick={()=>{
             setSbr(sbr)
             setSba(!sba)
             setSbrType(null)
             setSbaType(sba_type === "asc" ? "desc" : "asc")}          
           }
-
           onRateClick={()=>{            
             setSba(sba)
             setSbr(!sbr)
@@ -196,9 +182,15 @@ const SaveResult = async ()=>{
 
           ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
           ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
-
           rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
           rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+          
+          AuthSignClick={() => {
+            r.push("/signup");
+          }}
+          AuthLogClick={() => {
+            r.push("/login");
+          }}      
         />
       </HeadCont>
 
@@ -207,8 +199,8 @@ const SaveResult = async ()=>{
         <Divider text="Result"></Divider>
 
         <PageCont>
-          {Object.values(result).map((item) => (
-            <div>
+          {Object.values(fav).map((item, i) => (
+            <div>              
               <Detail
                 alt={item.Title}
                 title={item.Title}
@@ -216,6 +208,7 @@ const SaveResult = async ()=>{
                 genre={item.Genre}
                 cast={item.cast}
                 description={item.description}
+                rate={item["IMDB Score"]}
                 src={item.Poster}
               />
             </div>

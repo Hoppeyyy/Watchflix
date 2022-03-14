@@ -11,12 +11,7 @@ import PosterBox from "@/comps/PosterBox";
 import PageBttn from "@/comps/PageBttn";
 import React from "react";
 import Header from "@/comps/Header/index";
-import {
-  basicColor,
-  whiteblack,
-  shadow,
-  hBttnBkColor,
-} from "@/utils/variables";
+import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
 
 const Cont = styled.div`
   width: 100%;
@@ -118,14 +113,14 @@ export default function Home() {
     });
   };
 
-  const StoreResult = (item) => {
-    console.log(item);
-    console.log("clicked");
+  // const StoreResult = (item) => {
+  //   console.log(item);
+  //   console.log("clicked");
 
-    const b_obj = {};
-    b_obj[item.imdbId] = item;
-    setResult(b_obj);
-  };
+  //   const b_obj = {};
+  //   b_obj[item.imdbId] = item;
+  //   setResult(b_obj);
+  // };
 
   // ============== PaginatioWn
 
@@ -266,8 +261,7 @@ export default function Home() {
                       result[item.imdbId] !== null
                     }
                     onClick={(e) => {
-                      // let uid = uuidv4()
-                      StoreResult(item);
+                      // StoreResult(item);
                       HandleSave(item);
                       r.push(`/result/${uid}`);
                     }}
@@ -286,7 +280,7 @@ export default function Home() {
                     genre={item.Genre}
                     rate={item["IMDB Score"]}
                     onClick={() => {
-                      StoreResult(item);
+                      // StoreResult(item);
                       HandleSave(item);
                       r.push(`/result/${uid}`);
                     }}
@@ -317,7 +311,7 @@ export default function Home() {
                       result[item.imdbId] !== null
                     }
                     onClick={() => {
-                      StoreResult(item);
+                      // StoreResult(item);
                       HandleSave(item);
                       r.push(`/result/${uid}`);
                     }}
@@ -336,7 +330,7 @@ export default function Home() {
                     rate={item["IMDB Score"]}
                     text={item.description}
                     onClick={() => {
-                      StoreResult(item);
+                      // StoreResult(item);
                       HandleSave(item);
                       r.push(`/result/${uid}`);
                     }}
