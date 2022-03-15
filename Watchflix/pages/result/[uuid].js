@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState, useRef } from "react";
-import { useTheme, useResult } from "@/utils/provider";
+import { useTheme, useResult, useFav } from "@/utils/provider";
 import ax from "axios";
 import ClickButton from "@/comps/ClickButton";
 import Detail from "@/comps/Detail";
@@ -71,20 +71,9 @@ export default function Result() {
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
   const [user, setUser] = useState(null)
+  const { fav, setFav } = useFav();
 
-  console.log(Object.values(result));
-
-  /*
-const SaveResult = async ()=>{
-  const res = await ax.post("/api/save", {
-    uuid,
-    result
-  })
-}
-*/
-  // const [data, setData] = useState([]);
-  // const [sbr, setSbr] = useState(false);
-  // const [sbr_type, setSbrType] = useState("asc");
+  console.log("value is", Object.values(fav));
 
   const onChangeView = () => {
     if (View === false) {
@@ -177,7 +166,7 @@ var header_arr =[];
     AuthOutClick = {()=>{
       setUser("")
       localStorage.removeItem('token')
-      //r.push("/");
+    
     }
     }
   />)):(
@@ -237,8 +226,8 @@ var header_arr =[];
         <Divider text="Result"></Divider>
 
         <PageCont>
-          {Object.values(result).map((item) => (
-            <div>
+          {Object.values(fav).map((item, i) => (
+            <div>              
               <Detail
                 alt={item.Title}
                 title={item.Title}
@@ -246,6 +235,7 @@ var header_arr =[];
                 genre={item.Genre}
                 cast={item.cast}
                 description={item.description}
+                rate={item["IMDB Score"]}
                 src={item.Poster}
               />
             </div>

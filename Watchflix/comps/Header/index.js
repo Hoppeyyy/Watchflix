@@ -47,12 +47,10 @@ const FlexHeader = styled.div`
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 1rem;
-
   @media only screen and (min-width: 681px) and (max-width: 870px) {
     flex-direction: column;
     justify-content: center;
   }
-
   @media only screen and (max-width: 680px) {
     flex-direction: column;
     justify-content: center;
@@ -66,7 +64,6 @@ const LogoCont = styled.a`
 const AuthBox = styled.div`
 display:flex;
 flex-direction:row;
-
 `
 const Image = styled.img`
   min-width: 144px;
@@ -76,22 +73,18 @@ const Image = styled.img`
   display: block;
 `
 
-// const SearchBar = styled.input`
-//   width: 40%;
-//   height: 3rem;
-//   border: solid 1px #B08584;
-//   border-radius: 30px;
-//   padding: 1rem 1.5rem;
-//   box-sizing: border-box;
-//   background-color: #fff;
-//   position: relative;
-//   margin-right: 2rem;
-
-//   @media only screen and (min-width: 1px) and (max-width: 870px) {
-//     width: 80%;
-//     margin: 1rem;
-//   }  
-// `
+const SecondRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: ${(props) => props.rowbg};
+  flex-wrap: wrap;
+  
+  @media only screen and (max-width:680px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+`;
 
 const FlexRow = styled.div`
   display: flex;
@@ -99,7 +92,6 @@ const FlexRow = styled.div`
   align-items: center;
   background-color: ${(props) => props.rowbg};
   flex-wrap: wrap;
-
   @media only screen and (max-width: 820px) {
   //   flex-direction: column;
   //   justify-content: center;
@@ -113,16 +105,15 @@ const SwitchCont = styled.div`
   background: transparent;
 `
 
-const DurationCont = styled.div`
-  min-width: 300px;
-  margin: 25px 15px 0 15px;
-`;
-
 const BttnCont = styled.div`
-  width: ${props => props.width}%;
+  width: 30%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  
+  @media only screen and (max-width: 680px) {
+    width: 100%;
+  }
 `
 
 
@@ -155,7 +146,7 @@ const Header = ({
 
   return (
     <FlexCol>
-{/* =================== HEADER STARTS =================== */}
+{/* =================== FIRST ROW STARTS =================== */}
       <FlexHeader>
         <LogoCont
           href="/"
@@ -166,32 +157,28 @@ const Header = ({
           />
         </LogoCont>
 
-        {/* <SearchBar
-          placeholder="Search for a Movie..."
-          onChange={onInput}
-        >         
-        </SearchBar> */}
-
         <SearchBar 
           onChange = {onInput}
           onClick = {onSearchClick}
         />
 
         <AuthBox>
-        <AuthBtn
-      text="Sign Up"
-      AuthClick={AuthSignClick}
-      />
-      <AuthBtn
-      text="Log In"
-      AuthClick={AuthLogClick}
-      />
+          <AuthBtn
+          text="Sign Up"
+          marginL = "0"
+          AuthClick={AuthSignClick}
+          />
+          <AuthBtn
+          text="Log In"
+          AuthClick={AuthLogClick}
+          />
+          
         </AuthBox>
       </FlexHeader>
-{/* =================== HEADER ENDS =================== */}
 
-      <FlexRow>
-        <BttnCont width={width}>
+{/* =================== SECOND ROW STARTS =================== */}
+      <SecondRow>
+        <BttnCont>
           <FilterBttn 
             onAscClick = {onAscClick}
             onRateClick = {onRateClick}
@@ -202,6 +189,7 @@ const Header = ({
           />
           
         </BttnCont>
+
         <FlexRow>
           <SwitchCont>
             <ToggleSlide 
@@ -223,7 +211,7 @@ const Header = ({
           </SwitchCont>
         </FlexRow>
 
-      </FlexRow> 
+      </SecondRow> 
     </FlexCol> 
   );
 };

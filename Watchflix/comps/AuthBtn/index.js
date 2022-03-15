@@ -11,7 +11,7 @@ const Cont = styled.div`
   padding: 10px;
   background-color: ${(props) => props.bkColor};
   border-radius: 12px;
-  margin-left: 30px;
+  margin-left: ${props => props.marginL}px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   cursor: pointer;
 
@@ -24,10 +24,14 @@ const Text = styled.p`
   text-align: center;
 `;
 
-const AuthBtn = ({ text = "Sign up", AuthClick = () => {} }) => {
+const AuthBtn = ({ 
+  text = "Sign up", 
+  marginL = 30,
+  AuthClick = () => {} 
+}) => {
   const { theme, setTheme } = useTheme();
   return (
-    <Cont bkColor={bkColor[theme]} onClick={AuthClick}>
+    <Cont marginL={marginL} bkColor={bkColor[theme]} onClick={AuthClick}>
       <Text>{text}</Text>
     </Cont>
   );

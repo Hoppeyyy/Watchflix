@@ -16,7 +16,6 @@ align-items:center;
 background:#FFFFFF;
 `
 const Title = styled.h1`
-
 `
 const Form = styled.form`
 display:flex;
@@ -31,7 +30,6 @@ background: #E0E0E0;
 border-radius: 5px;
 margin:1rem;
 padding:1rem;
-
 `
 const Email = styled.input`
 border:none;
@@ -97,17 +95,18 @@ value="Sign Up",
           let res = await ax.post('http://localhost:3001/login', user)
         //console.log(res)
         //console.log(res.config.data)
-        let userData = JSON.parse(res.config.data)
+        //let userData = JSON.parse(res.config.data)
         //console.log(userData)
         //console.log(userData.name)
          localStorage.setItem('token', res.data)
          localStorage.setItem('user', res.config.data)
          console.log("log in suceed")
-         router.push("/")
+        // router.push("/")
 
          // check if token exists/ user is signed in
          if(localStorage.getItem('token')){
            // allow some operstion for logen in user
+           router.push("/")
          }
         }catch(e){
           alert(" something went wrong")

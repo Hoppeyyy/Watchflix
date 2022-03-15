@@ -1,16 +1,14 @@
 import styled from "styled-components";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { useTheme, useResult } from "@/utils/provider";
+import { useTheme, useResult, useFav } from "@/utils/provider";
 import { useRouter, Router } from "next/router";
 import ax from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { setRequestMeta } from "next/dist/server/request-meta";
 import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
-import Pagination from "@/pages/_old/index2-pagination";
 import PageBttn from "@/comps/PageBttn";
-//mport newmovie from "@/utils/newmovie";
 import React from "react";
 import Header from "@/comps/Header/index";
 import Header2 from "@/comps/Header/index2";
@@ -64,6 +62,7 @@ const PageCont = styled.div`
 `;
 
 var timer = null;
+
 export default function Home() {
   const r = useRouter();
   const [data, setData] = useState([]);
@@ -78,7 +77,10 @@ export default function Home() {
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState();
+  const { fav, setFav } = useFav();
+  const [ uid, setUid] = useState(uuidv4())
+ 
   const onChangeView = () => {
     if (View === false) {
       setView(true);
@@ -99,17 +101,22 @@ export default function Home() {
     }
   };
 
-  const HandleSave = async() => {
-    const resp = await ax.post('/api/save', {
-      uuid,
-      ns
-    })
-  }
+  const { uuid } = r.query;
+
+  const HandleSave = async (item) => {
+    const m_obj = {};
+
+    m_obj[item.imdbId] = item;
+
+    console.log("this is my fav", uuid);
+    const resp = await ax.post("/api/save", {
+      uuid:uid,
+      item: m_obj,
+    });
+  };
 
  
   const StoreResult = (item) => {
-    console.log(item);
-
     console.log(item);
     console.log("clicked");
 
@@ -142,12 +149,11 @@ export default function Home() {
             ...obj,
           },
         });
-
         setData(res.data.lists);
         setCurPage(p);
         setInpTxt(txt);
         setMovie_num(res.data.nummovies);
-      //  console.log(res.data.nummovies); // total movie numbers including after sorting
+
         timer = null;
 
         if (res.data.nummovies <= 0) {
@@ -166,7 +172,6 @@ export default function Home() {
     butt_arr.push(
       <PageBttn
         onClick={PageClick.bind(this, ind, inptxt)}
-        // bgcolor = {cur_page === ind ? '#F9E7E7' : ""}
         bgcolor={
           cur_page === ind && theme === "light"
             ? "#F9E7E7"
@@ -261,9 +266,7 @@ var header_arr =[];
     rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
     AuthOutClick = {()=>{
       setUser("")
-      //LogoutClick()
       localStorage.removeItem('token')
-      r.push("/");
     }
     }
   />)):(
@@ -321,116 +324,112 @@ var header_arr =[];
     <Cont>
       <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
 {/* ====================== Input and Button area ==================================== */}
-   {header_arr}
-      </HeadCont>
+    {header_arr}
+    </HeadCont>
 
 {/* ====================== Filtering result show below  ==================================== */}
-      {View ? (
-        <PagCont>
-          <Wrap>            
-            {data && data.length > 0
-              ? data.map((item) => (
-                  <HMovie
-                    key={item.imdbId}
-                    title={item.Title}
-                    alt={item.Title}
-                    year={item.release_year}
-                    src={item.Poster}
-                    place={item.country}
-                    text={item.description}
-                    genre={item.Genre}
-                    rate={item["IMDB Score"]}
-                    director={item.director}
-                    clicked={
-                      result[item.imdbId] != undefined &&
-                      result[item.imdbId] !== null
-                    }
-                    onClick={() => {
-                      StoreResult(item);
-                      r.push(`/result/${uuidv4()}`);
-                      HandleSave
-                    }}
-                    //pages = {item.num_pages}
-                  />
-                ))
-              : data.slice(0, 10).map((item) => (
-                  <HMovie
-                    key={item.imdbId}
-                    title={item.Title}
-                    alt={item.Title}
-                    year={item.release_year}
-                    src={item.Poster}
-                    place={item.country}
-                    director={item.director}
-                    text={item.description}
-                    genre={item.Genre}
-                    rate={item["IMDB Score"]}
-                    onClick={() => {
-                      StoreResult(item);
-                      r.push(`/result/${uuidv4()}`);
-                      HandleSave
-                    }}
-                    //pages = {item.num_pages}
-                  />
-                ))}
-          </Wrap>
-          {/* <Pagination /> */}
-          <PageCont>{butt_arr}</PageCont>
-        </PagCont>
-      ) : (
-        <PagCont>
-          <Wrap>
-            {data && data.length > 0
-              ? data.map((item) => (
-                  <PosterBox
-                    key={item.imdbId}
-                    title={item.Title}
-                    alt={item.Title}
-                    year={item.release_year}
-                    src={item.Poster}
-                    place={item.country}
-                    director={item.director}
-                    genre={item.Genre}
-                    rate={item["IMDB Score"]}
-                    text={item.description}
-                    clicked={
-                      result[item.imdbId] != undefined &&
-                      result[item.imdbId] !== null
-                    }
-                    onClick={() => {
-                      StoreResult(item);
-                      r.push(`/result/${uuidv4()}`);
-                      HandleSave;
-                    }}
-
-                    //pages = {item.num_pages}
-                  />
-                ))
-              : data.slice(0, 10).map((item) => (
-                  <PosterBox
-                    key={item.imdbId}
-                    title={item.Title}
-                    alt={item.Title}
-                    year={item.release_year}
-                    src={item.Poster}
-                    place={item.country}
-                    director={item.director}
-                    genre={item.Genre}
-                    rate={item["IMDB Score"]}
-                    text={item.description}
-                    onClick={() => {
-                      StoreResult(item);
-                      r.push(`/result/${uuidv4()}`);
-                      HandleSave;
-                    }}
-                    //pages = {item.num_pages}
-                  />
-                ))}
-          </Wrap>
-          {/* <Pagination /> */}
-          <PageCont>{butt_arr}</PageCont>
-        </PagCont>
-      )}
-    </Cont>
-  );
+    {View ? (
+      <PagCont>
+        <Wrap>
+          {data && data.length > 0
+            ? data.map((item) => (
+                <HMovie
+                  key={item.imdbId}
+                  title={item.Title}
+                  alt={item.Title}
+                  year={item.release_year}
+                  src={item.Poster}
+                  place={item.country}
+                  text={item.description}
+                  genre={item.Genre}
+                  rate={item["IMDB Score"]}
+                  director={item.director}
+                  clicked={
+                    result[item.imdbId] != undefined &&
+                    result[item.imdbId] !== null
+                  }
+                  onClick={(e) => {
+                    // let uid = uuidv4()
+                    StoreResult(item);
+                    HandleSave(item);
+                    r.push(`/result/${uid}`);
+                  }}
+                />
+              ))
+            : data.slice(0, 10).map((item) => (
+                <HMovie
+                  key={item.imdbId}
+                  title={item.Title}
+                  alt={item.Title}
+                  year={item.release_year}
+                  src={item.Poster}
+                  place={item.country}
+                  director={item.director}
+                  text={item.description}
+                  genre={item.Genre}
+                  rate={item["IMDB Score"]}
+                  onClick={() => {
+                    StoreResult(item);
+                    HandleSave(item);
+                    r.push(`/result/${uid}`);
+                  }}
+                />
+              ))}
+        </Wrap>
+        {/* <Pagination /> */}
+        <PageCont>{butt_arr}</PageCont>
+      </PagCont>
+    ) : (
+      <PagCont>
+        <Wrap>
+          {data && data.length > 0
+            ? data.map((item) => (
+                <PosterBox
+                  key={item.imdbId}
+                  title={item.Title}
+                  alt={item.Title}
+                  year={item.release_year}
+                  src={item.Poster}
+                  place={item.country}
+                  director={item.director}
+                  genre={item.Genre}
+                  rate={item["IMDB Score"]}
+                  text={item.description}
+                  clicked={
+                    result[item.imdbId] != undefined &&
+                    result[item.imdbId] !== null
+                  }
+                  onClick={() => {
+                    StoreResult(item);
+                    HandleSave(item);
+                    r.push(`/result/${uid}`);
+                  }}
+                />
+              ))
+            : data.slice(0, 10).map((item) => (
+                <PosterBox
+                  key={item.imdbId}
+                  title={item.Title}
+                  alt={item.Title}
+                  year={item.release_year}
+                  src={item.Poster}
+                  place={item.country}
+                  director={item.director}
+                  genre={item.Genre}
+                  rate={item["IMDB Score"]}
+                  text={item.description}
+                  onClick={() => {
+                    StoreResult(item);
+                    HandleSave(item);
+                    r.push(`/result/${uid}`);
+                  }}
+                />
+              ))}
+        </Wrap>
+        {/* <Pagination /> */}
+        <PageCont>{butt_arr}</PageCont>
+      </PagCont>
+    )}
+  </Cont>
+);
 }

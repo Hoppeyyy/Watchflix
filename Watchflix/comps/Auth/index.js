@@ -16,7 +16,6 @@ align-items:center;
 background:#FFFFFF;
 `
 const Title = styled.h1`
-
 `
 const Form = styled.form`
 display:flex;
@@ -31,7 +30,6 @@ background: #E0E0E0;
 border-radius: 5px;
 margin:1rem;
 padding:1rem;
-
 `
 const Email = styled.input`
 border:none;
