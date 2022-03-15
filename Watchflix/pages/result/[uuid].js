@@ -8,6 +8,7 @@ import Divider from "@/comps/Divider";
 import ReviewSection from "@/comps/ReviewSection";
 import styled from "styled-components";
 import Header from "@/comps/Header/index";
+import Header2 from "@/comps/Header/index2";
 import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
 
 
@@ -69,6 +70,7 @@ export default function Result() {
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
+  const [user, setUser] = useState(null)
   const { fav, setFav } = useFav();
 
   console.log("value is", Object.values(fav));
@@ -94,46 +96,6 @@ export default function Result() {
   };
 
 
-  const inputFilter = async (txt) => {
-    console.log(txt);
-    var obj = {};
-    if (txt) {
-    obj.txt = txt;
-    obj.sort_alpha = sba_type;
-    obj.sort_rating = sbr_type;
-    }
-    // results the timer if the inputs keeps changing
-    if (timer) {
-      clearTimeout(timer);
-      timer = null;
-    }
-
-    // start a timer to wait 2 seconds before making an asynchronous call
-    if (timer === null) {
-      timer = setTimeout(async () => {
-        console.log("async call");
-        const res = await ax.get("/api/movie", {
-          params: {
-            txt: txt,
-            ...obj,
-          },
-        });
-        // console.log(res.data.lists);
-        setData(res.data.lists);
-        r.push("/", res.data.lists);
-        setInpTxt(txt);
-        setMovie_num(res.data.nummovies);
-        // console.log(res.data.nummovies); 
-        
-        timer = null;
-        if (res.data.nummovies <= 0) {
-          alert("no movie found");
-        }
-
-      }, 1000);
-    } else {
-    }
-  };
 
   useEffect(() => {
     if (uuid) {
@@ -151,47 +113,112 @@ export default function Result() {
       GetUuid();
     }
   }, [uuid]);
+
+  // ============== Authentication
+useEffect(() => {
+  if ( !globalThis.localStorage ) {
+    return;
+  }
+  var token = localStorage.getItem('token');
+ 
+  console.log(token)
+  setUser(token)
+
+
+  // do server side stuff
+}, []);
+console.log(user)
+var header_arr =[];
+{user?
+  (header_arr.push(<Header2
+    onInput={(e) => {
+      //PageClick(1, e.target.value);
+    }}
+    onSearchClick={(searchTerm)=>{
+      
+        PageClick(1, searchTerm)
+      
+    }}
+    isView={View}
+    isColor={color}
+    handleView={() => onChangeView()}
+    handleColor={() => onChangeColor()}
+
+    onAscClick={()=>{
+      setSbr(sbr)
+      setSba(!sba)
+      setSbrType(null)
+      setSbaType(sba_type === "asc" ? "desc" : "asc")}          
+    }
+
+    onRateClick={()=>{            
+      setSba(sba)
+      setSbr(!sbr)
+      setSbaType(null)
+      setSbrType(sbr_type === "asc" ? "desc" : "asc")}
+    }
+
+    ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+    ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
+
+    rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+    rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+    AuthOutClick = {()=>{
+      setUser("")
+      localStorage.removeItem('token')
+    
+    }
+    }
+  />)):(
+    header_arr.push(<Header
+      onInput={(e) => {
+        //PageClick(1, e.target.value);
+      }}
+      onSearchClick={(searchTerm)=>{
+        
+          PageClick(1, searchTerm)
+        
+      }}
   
+  
+      isView={View}
+      isColor={color}
+      handleView={() => onChangeView()}
+      handleColor={() => onChangeColor()}
+  
+      onAscClick={()=>{
+        setSbr(sbr)
+        setSba(!sba)
+        setSbrType(null)
+        setSbaType(sba_type === "asc" ? "desc" : "asc")}          
+      }
+  
+      onRateClick={()=>{            
+        setSba(sba)
+        setSbr(!sbr)
+        setSbaType(null)
+        setSbrType(sbr_type === "asc" ? "desc" : "asc")}
+      }
+  
+      ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+      ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
+  
+      rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+      rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+      AuthSignClick={() =>{
+        r.push("/signup");
+      }}
+     AuthLogClick={()=>{
+      r.push("/login");
+     }}
+    />)
+  )
+}
   return (
     <Cont>
 
       <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
-      <Header
-          onInput={(e) => {
-            PageClick(1, e.target.value);
-          }}
-
-          onSearchClick={() => r.push('/')}
-
-          isView={View}
-          isColor={color}
-          handleView={() => onChangeView()}
-          handleColor={() => onChangeColor()}
-          onAscClick={()=>{
-            setSbr(sbr)
-            setSba(!sba)
-            setSbrType(null)
-            setSbaType(sba_type === "asc" ? "desc" : "asc")}          
-          }
-          onRateClick={()=>{            
-            setSba(sba)
-            setSbr(!sbr)
-            setSbaType(null)
-            setSbrType(sbr_type === "asc" ? "desc" : "asc")}
-          }
-
-          ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-          ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
-          rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-          rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
-          
-          AuthSignClick={() => {
-            r.push("/signup");
-          }}
-          AuthLogClick={() => {
-            r.push("/login");
-          }}      
-        />
+      {header_arr}
       </HeadCont>
 
 {/* ====================== Body area ==================================== */}

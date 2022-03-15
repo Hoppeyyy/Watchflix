@@ -7,6 +7,7 @@ import ax from 'axios';
 
 const Cont = styled.div`
 width:30%;
+min-width:300px;
 height:60%;
 display:flex;
 flex-direction:column;
@@ -15,7 +16,6 @@ align-items:center;
 background:#FFFFFF;
 `
 const Title = styled.h1`
-
 `
 const Form = styled.form`
 display:flex;
@@ -30,7 +30,6 @@ background: #E0E0E0;
 border-radius: 5px;
 margin:1rem;
 padding:1rem;
-
 `
 const Email = styled.input`
 border:none;
@@ -72,7 +71,7 @@ value="Sign Up",
         password:'',
     })
     const handleChange=(event)=>{
-        console.log(event.target)
+        //console.log(event.target)
         const {name, value} = event.target;
         setInput(prevInput =>{
             return{
@@ -80,10 +79,10 @@ value="Sign Up",
                 [name]:value
             }
         })
-        console.log(input)
+        //console.log(input)
     }
  
-    const handlePost = (event) =>{
+    const handlePost = async (event) =>{
         event.preventDefault();
        
         const user = {
@@ -91,7 +90,27 @@ value="Sign Up",
             email:input.email,
             password:input.password
         }
-        ax.post('http://localhost:3001/login', user)
+
+        try{
+          let res = await ax.post('http://localhost:3001/login', user)
+        //console.log(res)
+        //console.log(res.config.data)
+        //let userData = JSON.parse(res.config.data)
+        //console.log(userData)
+        //console.log(userData.name)
+         localStorage.setItem('token', res.data)
+         localStorage.setItem('user', res.config.data)
+         console.log("log in suceed")
+        // router.push("/")
+
+         // check if token exists/ user is signed in
+         if(localStorage.getItem('token')){
+           // allow some operstion for logen in user
+           router.push("/")
+         }
+        }catch(e){
+          alert(" something went wrong")
+        }
 
     }
 
