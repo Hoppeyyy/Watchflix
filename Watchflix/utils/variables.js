@@ -132,6 +132,16 @@ export const shadow = {
   dark: 'rgba(0, 0, 0, 0.4) 1.95px 1.95px 2.6px'
 }
 
+export const fShadow = {
+  light: 'rgba(0, 0, 0, 0.15) 1.95px -1.95px 2.6px',
+  dark: 'rgba(0, 0, 0, 0.4) 1.95px -1.95px 2.6px'
+}
+
+export const fImg = {
+  light: 'url("/images/icon_toTop_w.svg")',
+  dark: 'url("/images/icon_toTop_b.svg")',
+}
+
 export const nameColor = {
   light: '#E50914',
   dark: '#fff'

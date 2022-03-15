@@ -11,7 +11,15 @@ import PosterBox from "@/comps/PosterBox";
 import PageBttn from "@/comps/PageBttn";
 import React from "react";
 import Header from "@/comps/Header/index";
-import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
+import {
+  basicColor,
+  whiteblack,
+  shadow,
+  hBttnBkColor,
+  fShadow,
+} from "@/utils/variables";
+import { style } from "@mui/system";
+import Footer from "@/comps/Footer";
 
 const Cont = styled.div`
   width: 100%;
@@ -34,9 +42,9 @@ const PagCont = styled.div`
   dislplay: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 50px;
   flex-wrap: wrap;
   padding: 2rem 1rem;
+  margin-bottom: 2rem;
 `;
 
 const Wrap = styled.div`
@@ -60,6 +68,12 @@ const PageCont = styled.div`
   align-items: center;
 `;
 
+const FooterCont = styled.div`
+  width: 100%;
+  background-color: ${(props) => props.colbg};
+  box-shadow: ${(props) => props.shadow};
+`;
+
 var timer = null;
 
 export default function Home() {
@@ -77,8 +91,8 @@ export default function Home() {
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
   const { fav, setFav } = useFav();
-  const [ uid, setUid] = useState(uuidv4())
- 
+  const [uid, setUid] = useState(uuidv4());
+
   const onChangeView = () => {
     if (View === false) {
       setView(true);
@@ -108,12 +122,11 @@ export default function Home() {
 
     console.log("this is my fav", uuid);
     const resp = await ax.post("/api/save", {
-      uuid:uid,
+      uuid: uid,
       item: m_obj,
     });
   };
 
- 
   const StoreResult = (item) => {
     console.log(item);
     console.log("clicked");
@@ -123,15 +136,16 @@ export default function Home() {
     setResult(b_obj);
   };
 
-// ============== PaginatioWn
+  // ============== PaginatioWn
 
   const PageClick = async (p, txt) => {
     var obj = {};
     if (txt) {
       obj.txt = txt;
-      obj.sort_alpha = sba_type;
+      obj.sort_alpha = sba_type;    
       obj.sort_rating = sbr_type;
-    }
+    }   
+
     if (timer) {
       clearTimeout(timer);
       timer = null;
@@ -144,6 +158,7 @@ export default function Home() {
           params: {
             page: p,
             num: 10,
+            // sort_rating:sbr_type,
             ...obj,
           },
         });
@@ -160,6 +175,7 @@ export default function Home() {
       }, 1000);
     }
   };
+
   useEffect(() => {
     PageClick(1, r.query.search || "");
   }, []);
@@ -196,56 +212,56 @@ export default function Home() {
 
 // ============== Pagination ends
 
-return (
-  <Cont>
-    <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
+  console.log(data);
+  return (
+    <Cont>
+      <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
 {/* ====================== Input and Button area ==================================== */}
-      <Header
-        onInput={(e) => {
-          //PageClick(1, e.target.value);
-        }}
-        onSearchClick={(searchTerm) => {
-          PageClick(1, searchTerm);
-        }}
-        isView={View}
-        isColor={color}
-        handleView={() => onChangeView()}
-        handleColor={() => onChangeColor()}
-        onAscClick={() => {
-          setSbr(sbr);
-          setSba(!sba);
-          setSbrType(null);
-          setSbaType(sba_type === "asc" ? "desc" : "asc");
-        }}
-        onRateClick={() => {
-          setSba(sba);
-          setSbr(!sbr);
-          setSbaType(null);
-          setSbrType(sbr_type === "asc" ? "desc" : "asc");
-        }}
-        ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-        ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
-        rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-        rateChildren={
-          sbr_type === "asc" ? "Acending Rate" : "Descending Rate"
-        }
-        AuthSignClick={() => {
-          r.push("/signup");
-        }}
-        AuthLogClick={() => {
-          r.push("/login");
-        }}
-      />
-    </HeadCont>
+        <Header
+          onInput={(e) => {
+            //PageClick(1, e.target.value);
+          }}
+          onSearchClick={(searchTerm) => {
+            PageClick(1, searchTerm);
+          }}
+          isView={View}
+          isColor={color}
+          handleView={() => onChangeView()}
+          handleColor={() => onChangeColor()}
+          onAscClick={() => {
+            setSbr(false);
+            setSba(true);
+            setSbrType(null)
+            setSbaType(sba_type === "asc" ? "desc" : "asc");
+          }}
+          onRateClick={() => {
+            setSba(false);
+            setSbr(true);
+            setSbaType(null)
+            setSbrType(sbr_type === "desc" ? "asc" : "desc");
+          }}
+          ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+          ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
+          rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+          rateChildren={sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+          AuthSignClick={() => {
+            r.push("/signup");
+          }}
+          AuthLogClick={() => {
+            r.push("/login");
+          }}
+        />
+      </HeadCont>
 
 {/* ====================== Filtering result show below  ==================================== */}
-    {View ? (
-      <PagCont>
-        <Wrap>
-          {data && data.length > 0
-            ? data.map((item) => (
+      {View ? (
+        <PagCont>
+          <Wrap>
+            {data &&
+              data.length > 0 &&
+              data.map((item, i) => (
                 <HMovie
-                  key={item.imdbId}
+                  key={item.imdbId + "ind" + i}
                   title={item.Title}
                   alt={item.Title}
                   year={item.release_year}
@@ -266,37 +282,19 @@ return (
                     r.push(`/result/${uid}`);
                   }}
                 />
-              ))
-            : data.slice(0, 10).map((item) => (
-                <HMovie
-                  key={item.imdbId}
-                  title={item.Title}
-                  alt={item.Title}
-                  year={item.release_year}
-                  src={item.Poster}
-                  place={item.country}
-                  director={item.director}
-                  text={item.description}
-                  genre={item.Genre}
-                  rate={item["IMDB Score"]}
-                  onClick={() => {
-                    StoreResult(item);
-                    HandleSave(item);
-                    r.push(`/result/${uid}`);
-                  }}
-                />
               ))}
-        </Wrap>
-        {/* <Pagination /> */}
-        <PageCont>{butt_arr}</PageCont>
-      </PagCont>
-    ) : (
-      <PagCont>
-        <Wrap>
-          {data && data.length > 0
-            ? data.map((item) => (
+          </Wrap>
+          {/* <Pagination /> */}
+          <PageCont>{butt_arr}</PageCont>
+        </PagCont>
+      ) : (
+        <PagCont>
+          <Wrap>
+            {data &&
+              data.length > 0 &&
+              data.map((item, i) => (
                 <PosterBox
-                  key={item.imdbId}
+                  key={item.imdbId + "ind" + i}
                   title={item.Title}
                   alt={item.Title}
                   year={item.release_year}
@@ -316,31 +314,16 @@ return (
                     r.push(`/result/${uid}`);
                   }}
                 />
-              ))
-            : data.slice(0, 10).map((item) => (
-                <PosterBox
-                  key={item.imdbId}
-                  title={item.Title}
-                  alt={item.Title}
-                  year={item.release_year}
-                  src={item.Poster}
-                  place={item.country}
-                  director={item.director}
-                  genre={item.Genre}
-                  rate={item["IMDB Score"]}
-                  text={item.description}
-                  onClick={() => {
-                    StoreResult(item);
-                    HandleSave(item);
-                    r.push(`/result/${uid}`);
-                  }}
-                />
               ))}
-        </Wrap>
-        {/* <Pagination /> */}
-        <PageCont>{butt_arr}</PageCont>
-      </PagCont>
-    )}
-  </Cont>
-);
+          </Wrap>
+          {/* <Pagination /> */}
+          <PageCont>{butt_arr}</PageCont>
+        </PagCont>
+      )}
+
+      <FooterCont colbg={whiteblack[theme]} shadow={fShadow[theme]}>
+        <Footer />
+      </FooterCont>
+    </Cont>
+  );
 }

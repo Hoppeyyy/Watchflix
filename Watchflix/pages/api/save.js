@@ -13,7 +13,8 @@ export default async function handler(req, res) {
     console.log(uuid);
     try {
       const favs = await import(`@/saves/${uuid}.json`);
-      res.status(200).json(favs);
+      // console.log(favs.default)
+      res.status(200).json(favs.default);
     } catch (e) {
       res.status(200).json(false);
     }
