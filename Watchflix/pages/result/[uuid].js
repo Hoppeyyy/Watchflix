@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState, useRef } from "react";
-import { useTheme, useResult } from "@/utils/provider";
+import { useTheme, useResult, useFav } from "@/utils/provider";
 import ax from "axios";
 import ClickButton from "@/comps/ClickButton";
 import Detail from "@/comps/Detail";
@@ -10,23 +10,6 @@ import styled from "styled-components";
 import Header from "@/comps/Header/index";
 import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
 
-//Sticker drag n drop
-import StickerBoard from "@/comps/StickerBoard";
-import Sticker from "@/comps/Sticker";
-import { DndProvider } from "react-dnd";
-import { TouchBackend } from 'react-dnd-touch-backend';
-import { v4 as uuidv4 } from "uuid";
-
-//sticker images
-import angry from '../../public/images/angry.png';
-import clown from '../../public/images/clown.png';
-import crying from '../../public/images/crying.png';
-import doghappy from '../../public/images/dog-happy.png';
-import dogmad from '../../public/images/dog-mad.png';
-import laughing from '../../public/images/laughing.png';
-import love from '../../public/images/love.png';
-import sad from '../../public/images/sad.png';
-import smile from '../../public/images/smile.png';
 
 const Cont = styled.div`
   width: 100%;
@@ -68,13 +51,6 @@ const ButCont = styled.div`
   justify-content: flex-end;
   margin-top: 50px;
 `;
-
-const StickerCont = styled.div`
-  display:flex;
-  justify-content: center;
-  width:100%;
-`
-
 var timer = null;
 export default function Result() {
   const r = useRouter();
@@ -93,20 +69,9 @@ export default function Result() {
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
+  const { fav, setFav } = useFav();
 
-  console.log(Object.values(result));
-
-  /*
-const SaveResult = async ()=>{
-  const res = await ax.post("/api/save", {
-    uuid,
-    result
-  })
-}
-*/
-  // const [data, setData] = useState([]);
-  // const [sbr, setSbr] = useState(false);
-  // const [sbr_type, setSbrType] = useState("asc");
+  console.log("value is", Object.values(fav));
 
   const onChangeView = () => {
     if (View === false) {
@@ -127,7 +92,6 @@ const SaveResult = async ()=>{
       setColor(false);
     }
   };
-
 
 
   const inputFilter = async (txt) => {
@@ -154,12 +118,12 @@ const SaveResult = async ()=>{
             ...obj,
           },
         });
-        console.log(res.data.lists);
+        // console.log(res.data.lists);
         setData(res.data.lists);
         r.push("/", res.data.lists);
         setInpTxt(txt);
         setMovie_num(res.data.nummovies);
-        console.log(res.data.nummovies); 
+        // console.log(res.data.nummovies); 
         
         timer = null;
         if (res.data.nummovies <= 0) {
@@ -187,104 +151,6 @@ const SaveResult = async ()=>{
       GetUuid();
     }
   }, [uuid]);
-
-
- //---------------Moodboard------------------------
-
- const [ns, setNs] = useState({})
-
- // useEffect(()=>{
- //   if(uuid){
- //     const GetNotes = async()=>{
- //       const resp = await ax.get('/api/load', {
- //         params:{uuid}
- //       });
- //       if(resp !== false){
- //         setNs(resp.data)
- //       }
- //     }
- //     GetNotes();
- //   }
- // }, [uuid]);
-
- console.log(ns);
-
- const HandleUpdateNote = (id, notedata)=>{
-   ns[id] = {
-     ...ns[id],
-     ...notedata
-   }
-
-   setNs({
-     ...ns
-   })
- }
-
- const HandleSave = async () => {
-   const resp = await ax.post('/api/save', {
-     uuid,
-     ns
-   })
- }
-
- const [src, setSrc] = useState(null);
-
- const [fname, setFName] = useState('');
-
- const [op, setOp] = useState(1);
-
- async function dropHandler(ev) {
-   console.log("dropped", ev.dataTransfer.files, ev.dataTransfer.items);
-   if (ev.dataTransfer.items) {
-
-     var file = null
-     // Use DataTransferItemList interface to access the file(s)
-     for (var i = 0; i < ev.dataTransfer.items.length; i++) {
-       // If dropped items aren't files, reject them
-       if (ev.dataTransfer.items[i].kind === 'file') {
-       var file = ev.dataTransfer.items[i].getAsFile();
-       console.log('... file[' + i + '].name = ' + file.name);
-       }
-     }
-     
-     var reader = new FileReader();
-     if(file.type.includes('image')){
-       reader.readAsDataURL(file);
-     }
-
-     if(file.type.includes('csv')){
-       reader.readAsText(file);
-     }
-
-     reader.onload = ()=>{
-       //console.log("result", reader.result);
-       if(file.type.includes('image')){
-         setSrc(reader.result);
-       }
-
-       if(file.type.includes('csv')){
-         console.log(reader.result.split('\n').map(o=>o.split(',')));
-       }
-       
-     }
-
-     console.log(file);
-     setFName(`You dropped file ${file.name}`);
-     setOp(1);
-     } 
-   ev.preventDefault();
- }
-
-
- function dragOverHandler(ev) {
-   console.log("dragged over")
-   setOp(0.5);
-
-   ev.preventDefault();
- }
-
- //--------------Moodboard end-------------------------
-
   
   return (
     <Cont>
@@ -301,14 +167,12 @@ const SaveResult = async ()=>{
           isColor={color}
           handleView={() => onChangeView()}
           handleColor={() => onChangeColor()}
-
           onAscClick={()=>{
             setSbr(sbr)
             setSba(!sba)
             setSbrType(null)
             setSbaType(sba_type === "asc" ? "desc" : "asc")}          
           }
-
           onRateClick={()=>{            
             setSba(sba)
             setSbr(!sbr)
@@ -318,20 +182,25 @@ const SaveResult = async ()=>{
 
           ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
           ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
-
           rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
           rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+          
+          AuthSignClick={() => {
+            r.push("/signup");
+          }}
+          AuthLogClick={() => {
+            r.push("/login");
+          }}      
         />
       </HeadCont>
 
 {/* ====================== Body area ==================================== */}
       <BodyCont>
-       
         <Divider text="Result"></Divider>
 
         <PageCont>
-          {Object.values(result).map((item) => (
-            <div>
+          {Object.values(fav).map((item, i) => (
+            <div>              
               <Detail
                 alt={item.Title}
                 title={item.Title}
@@ -339,6 +208,7 @@ const SaveResult = async ()=>{
                 genre={item.Genre}
                 cast={item.cast}
                 description={item.description}
+                rate={item["IMDB Score"]}
                 src={item.Poster}
               />
             </div>
@@ -348,72 +218,6 @@ const SaveResult = async ()=>{
           </ButCont>
         </PageCont>
 
-        {/*STICKER SECTION*/}
-
-        <Divider text="Moodboard"></Divider>
-        <DndProvider backend={TouchBackend} options={{
-        enableTouchEvents:false,
-        enableMouseEvents:true
-      }}>
-        <StickerBoard onDropItem={(item)=>{
-          //console.log(ns);
-          const n_id = uuidv4();
-          // ns[n_id] = {
-          //   id:n_id
-          // };
-          setNs((prev)=>({
-            ...prev,
-            [n_id]:{id:n_id}
-          }))
-        }}
-        onDrop={dropHandler}
-        onDragOver={dragOverHandler}
-				onDragEnd={()=>setOp(1)}
-        >
-      {/* <h3>Mood Board Notes - {uuid}</h3> */}
-      {/* <button onClick={HandleSave}>Save</button> */}
-      {Object.values(ns).map(o=><Sticker 
-        type='boardnotes' 
-        key={o.id}
-        notepos={o.pos}
-        notecontent={o.content}
-        onUpdateNote={(obj)=>HandleUpdateNote(o.id, obj)}
-        >
-        {o.id}
-      </Sticker>)}
-        </StickerBoard>
-
-      {/* <div>
-        <h3>Menu</h3>
-        <Sticker />
-      </div> */}
-
-      {/* <div>
-        <h3>Sticker</h3>
-        {src && <img height ={100} src={src}/> }
-        <div>{fname}</div>
-        <Sticker/>
-      </div> */}
-
-      <StickerCont>
-      
-        <Sticker stickerImage={laughing}></Sticker>
-        <Sticker stickerImage={sad}></Sticker>
-        <Sticker stickerImage={crying}></Sticker>
-        <Sticker stickerImage={love}></Sticker>
-        <Sticker stickerImage={smile}></Sticker>
-        <Sticker stickerImage={doghappy}></Sticker>
-        <Sticker stickerImage={dogmad}></Sticker>
-        <Sticker stickerImage={clown}></Sticker>
-        <Sticker stickerImage={angry}></Sticker>
-
-
-      </StickerCont>
-
-
-      </DndProvider>
-
-          {/*REVIEW SECTION*/}
         <ReviewSection text="Reviews" />
       </BodyCont>
     </Cont>

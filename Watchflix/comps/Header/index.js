@@ -47,12 +47,10 @@ const FlexHeader = styled.div`
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 1rem;
-
   @media only screen and (min-width: 681px) and (max-width: 870px) {
     flex-direction: column;
     justify-content: center;
   }
-
   @media only screen and (max-width: 680px) {
     flex-direction: column;
     justify-content: center;
@@ -66,7 +64,6 @@ const LogoCont = styled.a`
 const AuthBox = styled.div`
 display:flex;
 flex-direction:row;
-
 `
 const Image = styled.img`
   min-width: 144px;
@@ -95,7 +92,6 @@ const FlexRow = styled.div`
   align-items: center;
   background-color: ${(props) => props.rowbg};
   flex-wrap: wrap;
-
   @media only screen and (max-width: 820px) {
   //   flex-direction: column;
   //   justify-content: center;
@@ -118,7 +114,6 @@ const BttnCont = styled.div`
   @media only screen and (max-width: 680px) {
     width: 100%;
   }
-
 `
 
 

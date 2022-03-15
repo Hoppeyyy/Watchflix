@@ -11,7 +11,6 @@ import PosterBox from "@/comps/PosterBox";
 import PageBttn from "@/comps/PageBttn";
 import React from "react";
 import Header from "@/comps/Header/index";
-import Header2 from "@/comps/Header/index2";
 import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
 
 const Cont = styled.div`
@@ -62,6 +61,7 @@ const PageCont = styled.div`
 `;
 
 var timer = null;
+
 export default function Home() {
   const r = useRouter();
   const [data, setData] = useState([]);
@@ -78,8 +78,7 @@ export default function Home() {
   const { theme, setTheme } = useTheme();
   const { fav, setFav } = useFav();
   const [ uid, setUid] = useState(uuidv4())
-  const [user, setUser] = useState(null)
-
+ 
   const onChangeView = () => {
     if (View === false) {
       setView(true);
@@ -114,6 +113,7 @@ export default function Home() {
     });
   };
 
+ 
   const StoreResult = (item) => {
     console.log(item);
     console.log("clicked");
@@ -123,7 +123,7 @@ export default function Home() {
     setResult(b_obj);
   };
 
-  // ============== PaginatioWn
+// ============== PaginatioWn
 
   const PageClick = async (p, txt) => {
     var obj = {};
@@ -147,7 +147,6 @@ export default function Home() {
             ...obj,
           },
         });
-        console.log(res.data);
         setData(res.data.lists);
         setCurPage(p);
         setInpTxt(txt);
@@ -161,7 +160,6 @@ export default function Home() {
       }, 1000);
     }
   };
-
   useEffect(() => {
     PageClick(1, r.query.search || "");
   }, []);
@@ -196,260 +194,153 @@ export default function Home() {
 
   butt_arr = butt_arr.slice(cur_page - 2 < 0 ? 0 : cur_page - 2, lastpage);
 
-  // ============== Pagination ends
+// ============== Pagination ends
 
-// ============== Authentication
-useEffect(() => {
-  if ( !globalThis.localStorage ) {
-    return;
-  }
-  var token = localStorage.getItem('token');
-  
-  console.log(token)
-  setUser(token)
-
-  // do server side stuff
-}, []);
-console.log(user)
-var header_arr =[];
-{user?
-  (header_arr.push(<Header2
-    onInput={(e) => {
-      //PageClick(1, e.target.value);
-    }}
-    onSearchClick={(searchTerm)=>{
-      
-        PageClick(1, searchTerm)
-      
-    }}
-    isView={View}
-    isColor={color}
-    handleView={() => onChangeView()}
-    handleColor={() => onChangeColor()}
-
-    onAscClick={()=>{
-      setSbr(sbr)
-      setSba(!sba)
-      setSbrType(null)
-      setSbaType(sba_type === "asc" ? "desc" : "asc")}          
-    }
-
-    onRateClick={()=>{            
-      setSba(sba)
-      setSbr(!sbr)
-      setSbaType(null)
-      setSbrType(sbr_type === "asc" ? "desc" : "asc")}
-    }
-
-    ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-    ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
-
-    rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-    rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
-    AuthOutClick = {()=>{
-      setUser(!user)
-      r.push("/");
-    }
-    }
-  />)):(
-    header_arr.push(<Header
-      onInput={(e) => {
-        //PageClick(1, e.target.value);
-      }}
-      onSearchClick={(searchTerm)=>{
-        
-          PageClick(1, searchTerm)
-        
-      }}
-  
-  
-      isView={View}
-      isColor={color}
-      handleView={() => onChangeView()}
-      handleColor={() => onChangeColor()}
-  
-      onAscClick={()=>{
-        setSbr(sbr)
-        setSba(!sba)
-        setSbrType(null)
-        setSbaType(sba_type === "asc" ? "desc" : "asc")}          
-      }
-  
-      onRateClick={()=>{            
-        setSba(sba)
-        setSbr(!sbr)
-        setSbaType(null)
-        setSbrType(sbr_type === "asc" ? "desc" : "asc")}
-      }
-  
-      ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-      ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
-  
-      rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-      rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
-      AuthSignClick={() =>{
-        r.push("/signup");
-      }}
-     AuthLogClick={()=>{
-      r.push("/login");
-     }}
-    />)
-  )
-}
-
-  
-
-
-    
-
-  return (
-    <Cont>
-      <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
-        {/* ====================== Input and Button area ==================================== */}
-        <Header
-          onInput={(e) => {
-            //PageClick(1, e.target.value);
-          }}
-          onSearchClick={(searchTerm) => {
-            PageClick(1, searchTerm);
-          }}
-          isView={View}
-          isColor={color}
-          handleView={() => onChangeView()}
-          handleColor={() => onChangeColor()}
-          onAscClick={() => {
-            setSbr(sbr);
-            setSba(!sba);
-            setSbrType(null);
-            setSbaType(sba_type === "asc" ? "desc" : "asc");
-          }}
-          onRateClick={() => {
-            setSba(sba);
-            setSbr(!sbr);
-            setSbaType(null);
-            setSbrType(sbr_type === "asc" ? "desc" : "asc");
-          }}
-          ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-          ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
-          rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-          rateChildren={
-            sbr_type === "asc" ? "Acending Rate" : "Descending Rate"
-          }
-          AuthSignClick={() => {
-            r.push("/signup");
-          }}
-          AuthLogClick={() => {
-            r.push("/login");
-          }}
-        />
-
+return (
+  <Cont>
+    <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
 {/* ====================== Input and Button area ==================================== */}
-   {header_arr}
-      </HeadCont>
+      <Header
+        onInput={(e) => {
+          //PageClick(1, e.target.value);
+        }}
+        onSearchClick={(searchTerm) => {
+          PageClick(1, searchTerm);
+        }}
+        isView={View}
+        isColor={color}
+        handleView={() => onChangeView()}
+        handleColor={() => onChangeColor()}
+        onAscClick={() => {
+          setSbr(sbr);
+          setSba(!sba);
+          setSbrType(null);
+          setSbaType(sba_type === "asc" ? "desc" : "asc");
+        }}
+        onRateClick={() => {
+          setSba(sba);
+          setSbr(!sbr);
+          setSbaType(null);
+          setSbrType(sbr_type === "asc" ? "desc" : "asc");
+        }}
+        ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+        ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
+        rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+        rateChildren={
+          sbr_type === "asc" ? "Acending Rate" : "Descending Rate"
+        }
+        AuthSignClick={() => {
+          r.push("/signup");
+        }}
+        AuthLogClick={() => {
+          r.push("/login");
+        }}
+      />
+    </HeadCont>
 
-      {/* ====================== Filtering result show below  ==================================== */}
-      {View ? (
-        <PagCont>
-          <Wrap>
-            {data && data.length > 0
-              ? data.map((item) => (
-                  <HMovie
-                    key={item.imdbId}
-                    title={item.Title}
-                    alt={item.Title}
-                    year={item.release_year}
-                    src={item.Poster}
-                    place={item.country}
-                    text={item.description}
-                    genre={item.Genre}
-                    rate={item["IMDB Score"]}
-                    director={item.director}
-                    clicked={
-                      result[item.imdbId] != undefined &&
-                      result[item.imdbId] !== null
-                    }
-                    onClick={(e) => {
-                      // let uid = uuidv4()
-                      StoreResult(item);
-                      HandleSave(item);
-                      r.push(`/result/${uid}`);
-                    }}
-                  />
-                ))
-              : data.slice(0, 10).map((item) => (
-                  <HMovie
-                    key={item.imdbId}
-                    title={item.Title}
-                    alt={item.Title}
-                    year={item.release_year}
-                    src={item.Poster}
-                    place={item.country}
-                    director={item.director}
-                    text={item.description}
-                    genre={item.Genre}
-                    rate={item["IMDB Score"]}
-                    onClick={() => {
-                      StoreResult(item);
-                      HandleSave(item);
-                      r.push(`/result/${uid}`);
-                    }}
-                  />
-                ))}
-          </Wrap>
-          {/* <Pagination /> */}
-          <PageCont>{butt_arr}</PageCont>
-        </PagCont>
-      ) : (
-        <PagCont>
-          <Wrap>
-            {data && data.length > 0
-              ? data.map((item) => (
-                  <PosterBox
-                    key={item.imdbId}
-                    title={item.Title}
-                    alt={item.Title}
-                    year={item.release_year}
-                    src={item.Poster}
-                    place={item.country}
-                    director={item.director}
-                    genre={item.Genre}
-                    rate={item["IMDB Score"]}
-                    text={item.description}
-                    clicked={
-                      result[item.imdbId] != undefined &&
-                      result[item.imdbId] !== null
-                    }
-                    onClick={() => {
-                      StoreResult(item);
-                      HandleSave(item);
-                      r.push(`/result/${uid}`);
-                    }}
-                  />
-                ))
-              : data.slice(0, 10).map((item) => (
-                  <PosterBox
-                    key={item.imdbId}
-                    title={item.Title}
-                    alt={item.Title}
-                    year={item.release_year}
-                    src={item.Poster}
-                    place={item.country}
-                    director={item.director}
-                    genre={item.Genre}
-                    rate={item["IMDB Score"]}
-                    text={item.description}
-                    onClick={() => {
-                      StoreResult(item);
-                      HandleSave(item);
-                      r.push(`/result/${uid}`);
-                    }}
-                  />
-                ))}
-          </Wrap>
-          {/* <Pagination /> */}
-          <PageCont>{butt_arr}</PageCont>
-        </PagCont>
-      )}
-    </Cont>
-  );
+{/* ====================== Filtering result show below  ==================================== */}
+    {View ? (
+      <PagCont>
+        <Wrap>
+          {data && data.length > 0
+            ? data.map((item) => (
+                <HMovie
+                  key={item.imdbId}
+                  title={item.Title}
+                  alt={item.Title}
+                  year={item.release_year}
+                  src={item.Poster}
+                  place={item.country}
+                  text={item.description}
+                  genre={item.Genre}
+                  rate={item["IMDB Score"]}
+                  director={item.director}
+                  clicked={
+                    result[item.imdbId] != undefined &&
+                    result[item.imdbId] !== null
+                  }
+                  onClick={(e) => {
+                    // let uid = uuidv4()
+                    StoreResult(item);
+                    HandleSave(item);
+                    r.push(`/result/${uid}`);
+                  }}
+                />
+              ))
+            : data.slice(0, 10).map((item) => (
+                <HMovie
+                  key={item.imdbId}
+                  title={item.Title}
+                  alt={item.Title}
+                  year={item.release_year}
+                  src={item.Poster}
+                  place={item.country}
+                  director={item.director}
+                  text={item.description}
+                  genre={item.Genre}
+                  rate={item["IMDB Score"]}
+                  onClick={() => {
+                    StoreResult(item);
+                    HandleSave(item);
+                    r.push(`/result/${uid}`);
+                  }}
+                />
+              ))}
+        </Wrap>
+        {/* <Pagination /> */}
+        <PageCont>{butt_arr}</PageCont>
+      </PagCont>
+    ) : (
+      <PagCont>
+        <Wrap>
+          {data && data.length > 0
+            ? data.map((item) => (
+                <PosterBox
+                  key={item.imdbId}
+                  title={item.Title}
+                  alt={item.Title}
+                  year={item.release_year}
+                  src={item.Poster}
+                  place={item.country}
+                  director={item.director}
+                  genre={item.Genre}
+                  rate={item["IMDB Score"]}
+                  text={item.description}
+                  clicked={
+                    result[item.imdbId] != undefined &&
+                    result[item.imdbId] !== null
+                  }
+                  onClick={() => {
+                    StoreResult(item);
+                    HandleSave(item);
+                    r.push(`/result/${uid}`);
+                  }}
+                />
+              ))
+            : data.slice(0, 10).map((item) => (
+                <PosterBox
+                  key={item.imdbId}
+                  title={item.Title}
+                  alt={item.Title}
+                  year={item.release_year}
+                  src={item.Poster}
+                  place={item.country}
+                  director={item.director}
+                  genre={item.Genre}
+                  rate={item["IMDB Score"]}
+                  text={item.description}
+                  onClick={() => {
+                    StoreResult(item);
+                    HandleSave(item);
+                    r.push(`/result/${uid}`);
+                  }}
+                />
+              ))}
+        </Wrap>
+        {/* <Pagination /> */}
+        <PageCont>{butt_arr}</PageCont>
+      </PagCont>
+    )}
+  </Cont>
+);
 }

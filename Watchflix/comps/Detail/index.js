@@ -52,6 +52,11 @@ const Post = styled.img`
   display: block;
   src: ${(props) => props.src};
   object-fit: ${(props) => props.fit};
+  
+  background-image: url('/images/img_NoImage.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 
   @media only screen and (min-width: 1px) and (max-width: 950px) {
     min-width: 360px;
