@@ -56,21 +56,25 @@ const ButCont = styled.div`
   justify-content: flex-end;
   margin-top: 50px;
 `;
-var timer = null;
+const StickerCont = styled.div`
+  display:flex;
+  justify-content: center;
+  width:100%;
+`
+const Text = styled.h3`
+`
 export default function Result() {
   const r = useRouter();
   const { uuid } = r.query;
   const { result, setResult } = useResult();
   const [data, setData] = useState([]);
   const [View, setView] = useState(true);
-
   const [color, setColor] = useState(true);
   const [sbr, setSbr] = useState(false);
   const [sba, setSba] = useState(false);
   const [sba_type, setSbaType] = useState("asc");
   const [sbr_type, setSbrType] = useState("desc");
   const [inptxt, setInpTxt] = useState("");
-
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
@@ -218,6 +222,29 @@ var header_arr =[];
     />)
   )
 }
+ //---------------Moodboard------------------------
+
+
+ const [sticker, setSticker] = useState({})
+ const [img, setImg] = useState(false)
+ console.log(sticker)
+ 
+ const HandleUpdateSticker = (id,data) =>{
+  sticker[id]={
+    ...sticker[id],
+    ...data
+  }
+  setSticker({
+    ...sticker
+  })
+  /*setSticker({
+    ...sticker,
+    id:{
+      data
+    }
+  })*/
+}
+
   return (
     <Cont>
 
@@ -251,6 +278,7 @@ var header_arr =[];
    {/*STICKER SECTION*/}
 
    <Divider text="Moodboard"></Divider>
+    <Text>Tell others how you feel about the movie</Text>
         <DndProvider backend={TouchBackend} options={{
         enableTouchEvents:false,
         enableMouseEvents:true
@@ -261,51 +289,38 @@ var header_arr =[];
           // ns[n_id] = {
           //   id:n_id
           // };
-          setNs((prev)=>({
+        if(item.type === 'sticker'){
+          setSticker((prev)=>({
             ...prev,
-            [n_id]:{id:n_id}
+            [n_id]:{id:n_id, src:item.src}
           }))
+        }
         }}
-        onDrop={dropHandler}
-        onDragOver={dragOverHandler}
-				onDragEnd={()=>setOp(1)}
         >
-      {/* <h3>Mood Board Notes - {uuid}</h3> */}
-      {/* <button onClick={HandleSave}>Save</button> */}
-      {Object.values(ns).map(o=><Sticker 
-        type='boardnotes' 
-        key={o.id}
-        notepos={o.pos}
-        notecontent={o.content}
-        onUpdateNote={(obj)=>HandleUpdateNote(o.id, obj)}
-        >
-        {o.id}
-      </Sticker>)}
+     
+      {Object.values(sticker).map(o=>{
+      return <Sticker 
+      type='boardsticker' 
+      key={o.id}
+      dragImg={o.img}
+      stickerpos={o.pos}
+      src={o.src}
+      onUpdateSticker={(obj)=>HandleUpdateSticker(o.id,obj)}
+      >
+       
+      </Sticker>})}
         </StickerBoard>
-
-      {/* <div>
-        <h3>Menu</h3>
-        <Sticker />
-      </div> */}
-
-      {/* <div>
-        <h3>Sticker</h3>
-        {src && <img height ={100} src={src}/> }
-        <div>{fname}</div>
-        <Sticker/>
-      </div> */}
-
+{/* Sticker images here */}
       <StickerCont>
-      
-        <Sticker stickerImage={laughing}></Sticker>
-        <Sticker stickerImage={sad}></Sticker>
-        <Sticker stickerImage={crying}></Sticker>
-        <Sticker stickerImage={love}></Sticker>
-        <Sticker stickerImage={smile}></Sticker>
-        <Sticker stickerImage={doghappy}></Sticker>
-        <Sticker stickerImage={dogmad}></Sticker>
-        <Sticker stickerImage={clown}></Sticker>
-        <Sticker stickerImage={angry}></Sticker>
+        <Sticker src="/images/laughing.png"></Sticker>
+        <Sticker src="/images/sad.png"></Sticker>
+        <Sticker src="/images/crying.png"></Sticker>
+        <Sticker src="/images/love.png"></Sticker>
+        <Sticker src="/images/smile.png"></Sticker>
+        <Sticker src="/images/dog-happy.png"></Sticker>
+        <Sticker src="/images/dog-mad.png"></Sticker>
+        <Sticker src="/images/clown.png"></Sticker>
+        <Sticker src="/images/angry.png"></Sticker>
 
 
       </StickerCont>

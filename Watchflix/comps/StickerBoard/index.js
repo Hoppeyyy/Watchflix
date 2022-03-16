@@ -1,52 +1,48 @@
 import { useDrag, useDrop } from 'react-dnd'
 import styled from 'styled-components'
-import { useState } from 'react'
-import Sticker from '../Sticker'
-import whiteboard from '../../public/images/whiteboard.png';
-import Image from 'next/image';
 
 const DropCont = styled.div`
-  height:70vh;
-  background:${({bg})=>bg || '#DDD'};
-  width:100%;
-  position:relative;
-  display:flex;
+height:70vh;
+background:${({bg})=>bg || '#AAD6DC'};
+width:100%;
+position:relative;
 `
-const Content = styled.div`
-  border: 1px solid #000;
-  width: 200px;
-  height: 200px;
-  background:url(${whiteboard});
-`;
-
-const SectionHead = styled.div`
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    height:100px;
-    width:100%;
+const Cont = styled.div`
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
 `
-
-const Ost = styled.div`
-    width:100px;
-    text-align:center;
+const Top = styled.div`
+width:100%;
+height:20%;
+display:flex;
+flex-direction:row;
+justify-content:space-between;
+border-bottom:5px solid #FFFFFF;
 `
+const Text = styled.h3`
+font-size: 36px;
+display: flex;
+align-items: center;
+text-align:center;
+justify-content:center;
+color: #FFFFFF;
+padding:6rem;
 
-const Scene = styled.div`
-    width:100px;
-    text-align:center;
 `
-
-const Cast = styled.div`
-    width:100px;
-    text-align:center;
+const Bot = styled.div`
+width:100%;
+height:80%;
+display:flex;
+flex-direction:row;
 `
-
-const Plot = styled.div`
-    width:100px;
-    text-align:center;
+const Box = styled.div`
+width:100%;
+display:flex;
+flex-direction:row;
+border-right:5px solid #FFFFFF;
 `
-
 const StickerBoard = ({
   //props
   children=null,
@@ -54,7 +50,7 @@ const StickerBoard = ({
 }) => {
 	const [{ canDrop, isOver }, drop] = useDrop(() => ({
     // The type (or types) to accept - strings or symbols
-    accept:['notes'], 
+    accept:['sticker'],
     drop:(item, monitor)=>{
       onDropItem(item);
     },
@@ -65,98 +61,26 @@ const StickerBoard = ({
     })
   }))
 
- //-----Image
-
-	//store the data from the dropped files in this state
-	const [src, setSrc] = useState(null);
-
-	const [fname, setFName] = useState('');
-
-	const [op, setOp] = useState(1);
-
-	async function dropHandler(ev) {
-		console.log("dropped", ev.dataTransfer.files, ev.dataTransfer.items);
-		if (ev.dataTransfer.items) {
-
-			var file = null
-			// Use DataTransferItemList interface to access the file(s)
-			for (var i = 0; i < ev.dataTransfer.items.length; i++) {
-			  // If dropped items aren't files, reject them
-			  if (ev.dataTransfer.items[i].kind === 'file') {
-				var file = ev.dataTransfer.items[i].getAsFile();
-				console.log('... file[' + i + '].name = ' + file.name);
-			  }
-			}
-			
-			var reader = new FileReader();
-			if(file.type.includes('image')){
-				reader.readAsDataURL(file);
-			}
-
-			if(file.type.includes('csv')){
-				reader.readAsText(file);
-			}
-
-			reader.onload = ()=>{
-				//console.log("result", reader.result);
-				if(file.type.includes('image')){
-					setSrc(reader.result);
-				}
-
-				if(file.type.includes('csv')){
-					console.log(reader.result.split('\n').map(o=>o.split(',')));
-				}
-			}
-
-			console.log(file);
-			setFName(`You dropped file ${file.name}`);
-			setOp(1);
-		  } 
-		ev.preventDefault();
-	}
-
-
-	function dragOverHandler(ev) {
-		console.log("dragged over")
-		setOp(0.5);
-
-		ev.preventDefault();
-	}
-
-	return <div>
-        <SectionHead>
-            <Ost>
-                <h1>OST</h1>
-            </Ost>
-
-            <Scene>
-                <h1>Scene</h1>
-            </Scene>
-
-            <Cast>
-                <h1>Cast</h1>
-            </Cast>
-
-            <Plot>
-                <h1>Plot</h1>
-            </Plot>
-            </SectionHead>
-
-            <Content></Content>
-            <Image src={whiteboard} width={100} height={100}/>
-
-        <DropCont
-			ref={drop}
-      bg={canDrop && isOver ? '#999' : '#DDD'}
-      onDrop={dropHandler}
-      onDragOver={dragOverHandler}
-      onDragEnd={()=>setOp(1)}
+	return <DropCont
+      ref={drop}
+      bg = {canDrop && isOver ? '#538D95':'#AAD6DC'}
 		>
+    <Cont>
+    <Top>
+      <Text>Ost</Text>
+      <Text>Scene</Text>
+      <Text>Cast</Text>
+      <Text>Plot</Text>
+    </Top>
+    <Bot>
+      <Box/>
+      <Box/>
+      <Box/>
+      <Box style={{borderRight:'none'}}/>
+    </Bot>
+    </Cont>
       {children}
-			{src && <img height ={100} src={src}/> }
 		</DropCont>
-        </div>
-
 }
 
 export default StickerBoard
