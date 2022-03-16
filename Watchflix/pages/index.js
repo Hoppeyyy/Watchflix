@@ -11,15 +11,9 @@ import PosterBox from "@/comps/PosterBox";
 import PageBttn from "@/comps/PageBttn";
 import React from "react";
 import Header from "@/comps/Header/index";
-import {
-  basicColor,
-  whiteblack,
-  shadow,
-  hBttnBkColor,
-  fShadow,
-} from "@/utils/variables";
-import { style } from "@mui/system";
+import Header2 from "@/comps/Header/index2";
 import Footer from "@/comps/Footer";
+import { basicColor, whiteblack, shadow, hBttnBkColor, fShadow,} from "@/utils/variables";
 
 const Cont = styled.div`
   width: 100%;
@@ -90,6 +84,8 @@ export default function Home() {
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
+  const [user, setUser] = useState();
+  const [userName, setUserName] = useState();
   const { fav, setFav } = useFav();
   const [uid, setUid] = useState(uuidv4());
 
@@ -136,15 +132,14 @@ export default function Home() {
     setResult(b_obj);
   };
 
-  // ============== PaginatioWn
-
+// ============== Pagination Starts
   const PageClick = async (p, txt) => {
     var obj = {};
     if (txt) {
       obj.txt = txt;
-      obj.sort_alpha = sba_type;    
+      obj.sort_alpha = sba_type;
       obj.sort_rating = sbr_type;
-    }   
+    }
 
     if (timer) {
       clearTimeout(timer);
@@ -209,48 +204,112 @@ export default function Home() {
   }
 
   butt_arr = butt_arr.slice(cur_page - 2 < 0 ? 0 : cur_page - 2, lastpage);
-
 // ============== Pagination ends
 
-  console.log(data);
+// ============== Authentication
+  useEffect(() => {
+    if (!globalThis.localStorage) {
+      return;
+    }
+    var token = localStorage.getItem("token");
+    var username = localStorage.getItem("user");
+    //console.log(username)
+    var userData = JSON.parse(username);
+    console.log(token);
+    setUser(token);
+    setUserName(userData.name);
+    //LogoutClick(token, forget)
+
+    // do server side stuff
+  }, []);
+
+  console.log(user);
+  console.log(userName);
+  var header_arr = [];
+  {
+    user
+      ? header_arr.push(
+          <Header2
+            onInput={(e) => {
+              //PageClick(1, e.target.value);
+            }}
+            onSearchClick={(searchTerm) => {
+              PageClick(1, searchTerm);
+            }}
+            isView={View}
+            isColor={color}
+            handleView={() => onChangeView()}
+            handleColor={() => onChangeColor()}
+            onAscClick={() => {
+              setSbr(false);
+              setSba(true);
+              setSbrType(null);
+              setSbaType(sba_type === "asc" ? "desc" : "asc");
+            }}
+            onRateClick={() => {
+              setSba(false);
+              setSbr(true);
+              setSbaType(null);
+              setSbrType(sbr_type === "desc" ? "asc" : "desc");
+            }}
+            ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+            ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
+            rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+            rateChildren={
+              sbr_type === "asc" ? "Acending Rate" : "Descending Rate"
+            }
+            user={userName}
+            AuthOutClick={() => {
+              setUser("");
+              localStorage.removeItem("token");
+            }}
+          />
+        )
+      : header_arr.push(
+          <Header
+            onInput={(e) => {
+              //PageClick(1, e.target.value);
+            }}
+            onSearchClick={(searchTerm) => {
+              PageClick(1, searchTerm);
+            }}
+            isView={View}
+            isColor={color}
+            handleView={() => onChangeView()}
+            handleColor={() => onChangeColor()}
+            onAscClick={() => {
+              setSbr(false);
+              setSba(true);
+              setSbrType(null);
+              setSbaType(sba_type === "asc" ? "desc" : "asc");
+            }}
+            onRateClick={() => {
+              setSba(false);
+              setSbr(true);
+              setSbaType(null);
+              setSbrType(sbr_type === "desc" ? "asc" : "desc");
+            }}
+            ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+            ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
+            rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+            rateChildren={
+              sbr_type === "asc" ? "Acending Rate" : "Descending Rate"
+            }
+            AuthSignClick={() => {
+              r.push("/signup");
+            }}
+            AuthLogClick={() => {
+              r.push("/login");
+            }}
+          />
+        );
+  }
+
   return (
     <Cont>
       <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
 {/* ====================== Input and Button area ==================================== */}
-        <Header
-          onInput={(e) => {
-            //PageClick(1, e.target.value);
-          }}
-          onSearchClick={(searchTerm) => {
-            PageClick(1, searchTerm);
-          }}
-          isView={View}
-          isColor={color}
-          handleView={() => onChangeView()}
-          handleColor={() => onChangeColor()}
-          onAscClick={() => {
-            setSbr(false);
-            setSba(true);
-            setSbrType(null)
-            setSbaType(sba_type === "asc" ? "desc" : "asc");
-          }}
-          onRateClick={() => {
-            setSba(false);
-            setSbr(true);
-            setSbaType(null)
-            setSbrType(sbr_type === "desc" ? "asc" : "desc");
-          }}
-          ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-          ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
-          rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-          rateChildren={sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
-          AuthSignClick={() => {
-            r.push("/signup");
-          }}
-          AuthLogClick={() => {
-            r.push("/login");
-          }}
-        />
+        {header_arr}
       </HeadCont>
 
 {/* ====================== Filtering result show below  ==================================== */}
