@@ -52,7 +52,7 @@ const ButCont = styled.div`
   justify-content: flex-end;
   margin-top: 50px;
 `;
-var timer = null;
+
 export default function Result() {
   const r = useRouter();
   const { uuid } = r.query;
@@ -106,7 +106,9 @@ export default function Result() {
           },
         });
         if (res.data !== false) {
-          setResult(res.data);
+
+          //setResult(res.data);
+          setFav(res.data);
           console.log(res.data);
         }
       };
@@ -226,7 +228,7 @@ var header_arr =[];
         <Divider text="Result"></Divider>
 
         <PageCont>
-          {Object.values(fav).map((item, i) => (
+          {Object.values(fav).map((item) => (
             <div>              
               <Detail
                 alt={item.Title}

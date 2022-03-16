@@ -107,8 +107,9 @@ export default function Home() {
     const m_obj = {};
 
     m_obj[item.imdbId] = item;
-
-    console.log("this is my fav", uuid);
+    
+    //console.log("this is my fav", uuid);
+    console.log("this is my fav", item);
     const resp = await ax.post("/api/save", {
       uuid:uid,
       item: m_obj,
