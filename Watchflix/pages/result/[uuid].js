@@ -80,7 +80,7 @@ export default function Result() {
   const { theme, setTheme } = useTheme();
   const [user, setUser] = useState(null)
   const { fav, setFav } = useFav();
-
+  const [userName, setUserName] = useState();
   console.log("value is", Object.values(fav));
 
   const onChangeView = () => {
@@ -128,10 +128,13 @@ useEffect(() => {
     return;
   }
   var token = localStorage.getItem('token');
- 
+  var username = localStorage.getItem('user');
+  //console.log(username)
+  var userData = JSON.parse(username)
+  //console.log(userData.name)
   console.log(token)
   setUser(token)
-
+  setUserName(userData.name)
 
   // do server side stuff
 }, []);
@@ -171,6 +174,7 @@ var header_arr =[];
 
     rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
     rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+    user={userName}
     AuthOutClick = {()=>{
       setUser("")
       localStorage.removeItem('token')

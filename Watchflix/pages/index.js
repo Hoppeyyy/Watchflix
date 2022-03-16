@@ -78,6 +78,7 @@ export default function Home() {
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
   const [user, setUser] = useState();
+  const [userName, setUserName] = useState();
   const { fav, setFav } = useFav();
   const [ uid, setUid] = useState(uuidv4())
  
@@ -211,6 +212,11 @@ useEffect(() => {
     return;
   }
   var token = localStorage.getItem('token');
+  var username = localStorage.getItem('user');
+  //console.log(username)
+  var userData = JSON.parse(username)
+  //console.log(userData.name)
+
   //var forget = localStorage.removeItem('token');
 
   /*
@@ -222,13 +228,14 @@ useEffect(() => {
   */
   console.log(token)
   setUser(token)
-
+  setUserName(userData.name)
 //LogoutClick(token, forget)
 
   // do server side stuff
 }, []);
 
 console.log(user)
+console.log(userName)
 var header_arr =[];
 {user?
   (header_arr.push(<Header2
@@ -264,6 +271,7 @@ var header_arr =[];
 
     rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
     rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+    user={userName}
     AuthOutClick = {()=>{
       setUser("")
       localStorage.removeItem('token')
