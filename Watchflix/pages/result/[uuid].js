@@ -9,13 +9,15 @@ import ReviewSection from "@/comps/ReviewSection";
 import styled from "styled-components";
 import Header from "@/comps/Header/index";
 import Header2 from "@/comps/Header/index2";
-import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
+import { basicColor, whiteblack, shadow, hBttnBkColor, fShadow } from "@/utils/variables";
 // sticker
 import { TouchBackend } from 'react-dnd-touch-backend'
 import { DndProvider } from 'react-dnd'
 import { v4 as uuidv4, v4 } from 'uuid';
 import StickerBoard from '@/comps/StickerBoard';
 import Sticker from '@/comps/Sticker';
+import Footer from "@/comps/Footer";
+
 const Cont = styled.div`
   width: 100%;
   height: 100%;
@@ -63,6 +65,13 @@ const StickerCont = styled.div`
 `
 const Text = styled.h3`
 `
+const FooterCont = styled.div`
+  width: 100%;
+  padding: 0 2rem;
+  background-color: ${(props) => props.colbg};
+  box-shadow: ${(props) => props.shadow};
+`;
+
 export default function Result() {
   const r = useRouter();
   const { uuid } = r.query;
@@ -134,7 +143,7 @@ useEffect(() => {
   //console.log(userData.name)
   console.log(token)
   setUser(token)
-  setUserName(userData.name)
+  // setUserName(userData.name)
 
   // do server side stuff
 }, []);
@@ -335,6 +344,10 @@ var header_arr =[];
 {/*REVIEW SECTION*/}
         <ReviewSection text="Reviews" />
       </BodyCont>
+
+      <FooterCont colbg={whiteblack[theme]} shadow={fShadow[theme]}>
+        <Footer />
+      </FooterCont>
     </Cont>
   );
 }

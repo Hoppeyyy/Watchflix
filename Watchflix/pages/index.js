@@ -64,6 +64,7 @@ const PageCont = styled.div`
 
 const FooterCont = styled.div`
   width: 100%;
+  padding: 0 2rem;
   background-color: ${(props) => props.colbg};
   box-shadow: ${(props) => props.shadow};
 `;
@@ -217,7 +218,7 @@ export default function Home() {
     var userData = JSON.parse(username);
     console.log(token);
     setUser(token);
-    setUserName(userData.name);
+    // setUserName(userData.name);
     //LogoutClick(token, forget)
 
     // do server side stuff
@@ -242,22 +243,22 @@ export default function Home() {
             handleColor={() => onChangeColor()}
             onAscClick={() => {
               setSbr(false);
+              setSbrType("");
               setSba(true);
-              setSbrType(null);
               setSbaType(sba_type === "asc" ? "desc" : "asc");
             }}
             onRateClick={() => {
               setSba(false);
+              setSbaType("");
               setSbr(true);
-              setSbaType(null);
               setSbrType(sbr_type === "desc" ? "asc" : "desc");
-            }}
+            }}            
             ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
             ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
+
             rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-            rateChildren={
-              sbr_type === "asc" ? "Acending Rate" : "Descending Rate"
-            }
+            rateChildren={sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+
             user={userName}
             AuthOutClick={() => {
               setUser("");
@@ -279,22 +280,22 @@ export default function Home() {
             handleColor={() => onChangeColor()}
             onAscClick={() => {
               setSbr(false);
+              setSbrType("");
               setSba(true);
-              setSbrType(null);
               setSbaType(sba_type === "asc" ? "desc" : "asc");
             }}
             onRateClick={() => {
               setSba(false);
+              setSbaType("");
               setSbr(true);
-              setSbaType(null);
               setSbrType(sbr_type === "desc" ? "asc" : "desc");
             }}
             ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
             ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
-            rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-            rateChildren={
-              sbr_type === "asc" ? "Acending Rate" : "Descending Rate"
-            }
+
+            rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme] }
+            rateChildren={sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+
             AuthSignClick={() => {
               r.push("/signup");
             }}

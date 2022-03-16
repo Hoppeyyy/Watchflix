@@ -107,6 +107,11 @@ export const bgpopup = {
 //   dark: '#fff'
 // }
 
+export const basicGColor = {
+  light: "#000000",
+  dark:"#c4c4c4",
+}
+
 export const basicColor = {
   light: "#000000",
   dark:"#FFFFFF",

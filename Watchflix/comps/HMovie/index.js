@@ -12,6 +12,7 @@ import {
   hovBkColor,
   hovPColor,btnColor,
   hBttnBkColor,
+  basicGColor
 } from "@/utils/variables";
 import { movie } from "@/utils/combine";
 
@@ -280,7 +281,7 @@ const HMovie = ({
             </GnereTxt>
           </SubWrap>
         </Top>
-        <Desc color={basicColor[theme]} className="hoverTxt">
+        <Desc color={basicGColor[theme]} className="hoverTxt">
           {text}
         </Desc>
         <BtnCont>

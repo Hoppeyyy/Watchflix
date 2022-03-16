@@ -114,10 +114,10 @@ const Header = ({
   onRateClick = () => {},
   AuthSignClick = () =>{},
   AuthLogClick = () =>{},
-  ascBkColor = null,
-  rateBkColor = null,
-  ascChildren = null,
-  rateChildren = null,
+  ascBkColor,
+  rateBkColor,
+  ascChildren,
+  rateChildren,
 
 }) => {
   // const { theme } = useTheme();
