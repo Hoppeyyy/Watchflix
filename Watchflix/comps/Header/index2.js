@@ -124,6 +124,7 @@ const Text = styled.h3`
 display:flex;
 align-items:center;
 text-align:center;
+color: ${props => props.basicColor};
 `
 
 const Header = ({
@@ -177,7 +178,9 @@ const Header = ({
         />
 
         <AuthBox>
-      <Text>Welcome {user}</Text>
+      <Text
+      basicColor={basicColor[theme]}
+      >Welcome {user}</Text>
       <AuthBtn
       text="Log Out"
       AuthClick={AuthOutClick}

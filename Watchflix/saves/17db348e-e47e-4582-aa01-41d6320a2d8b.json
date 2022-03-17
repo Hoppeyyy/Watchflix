@@ -1,0 +1,13 @@
+{
+  "sticker": {
+    "25a0b9e6-c0c9-4e84-9c85-2cdc78bac1b9": {
+      "id": "25a0b9e6-c0c9-4e84-9c85-2cdc78bac1b9",
+      "src": "/images/dog-mad.png",
+      "pos": {
+        "left": 0,
+        "top": 0,
+        "position": "relative"
+      }
+    }
+  }
+}
