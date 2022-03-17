@@ -15,12 +15,13 @@ const Cont = styled.div`
 
   @media only screen and (min-width: 1px) and (max-width: 950px) {
     flex-direction: column;
+    align-items: center;
   }
 `;
 
 const PostCont = styled.div`
-  width: ${(props) => props.picConWidth};
-  height: ${(props) => props.picConHeight};
+  max-width: ${(props) => props.picConWidth};
+  max-height: ${(props) => props.picConHeight};
   min-width: 424px;
   min-height: 594px;
   display: flex;
@@ -31,23 +32,26 @@ const PostCont = styled.div`
   box-sizing: border-box;
   flex: 1;
 
-  @media only screen and (min-width: 425px) and (max-width: 950px) {
+  @media only screen and (min-width: 561px) and (max-width: 950px) {
     align-items: center;
     margin-bottom: 50px;
     margin-right: 0;
+    min-width: 0;
+    min-height: 0;
   }
 
-  @media only screen and (min-width: 1px) and (max-width: 424px) {
+  @media only screen and (min-width: 1px) and (max-width: 560px) {
     align-items: center;
     margin-bottom: 50px;
-    width: 360px;
-    height: 506px;
+    margin-right: 0;
+    min-width: 0;
+    min-height: 0;
   }
 `;
 
 const Post = styled.img`
   width: auto;
-  height: 100%;
+  height: 594px;
 
   display: block;
   src: ${(props) => props.src};
@@ -57,15 +61,21 @@ const Post = styled.img`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  transition: all 0.3s;
 
-  @media only screen and (min-width: 1px) and (max-width: 950px) {
-    min-width: 360px;
-    min-height: 594px;
+  @media only screen and (min-width: 561px) and (max-width: 950px) {
+    height: 594px;
+    width: auto;
+  }
+
+  @media only screen and (max-width: 560px) {
+    height:400px;
+    width: auto;
   }
 `;
 
 const DetailCont = styled.div`
-  width: ${(props) => props.detConWidth};
+  max-width: ${(props) => props.detConWidth};
   min-height: ${(props) => props.detConHeight};
   padding: 3rem;
   display: flex;
@@ -78,8 +88,10 @@ const DetailCont = styled.div`
   flex: 2;
 
   @media only screen and (min-width: 1px) and (max-width: 950px) {
-    width: ${(props) => props.mdetConWidth};
+    max-width: ${(props) => props.mdetConWidth};
     min-height: 0;
+    align-items: flex-start;
+    padding: 2rem;
   }
 `;
 
@@ -91,7 +103,7 @@ const Detail = ({
   fit = "cover",
   alt = "Undifined",
   detConWidth = "60%",
-  mdetConWidth = "100%",
+  mdetConWidth = "90%",
   title = "undifined",
   director = "undifined",
   genre = "undifined",
@@ -116,14 +128,15 @@ const Detail = ({
         <DetailTit
           title="Director"
           movieTitle=""
-          text={director}
           conAlign="flex-start"
+          text={director}
         />
         <DetailTit
           title="Genre"
           movieTitle=""
-          text={genre}
           conAlign="flex-start"
+          text={genre}
+          clamp = '1'
         />
         <DetailTit
           title="Cast"
@@ -134,8 +147,8 @@ const Detail = ({
         />
         <DetailTit
           title="Synopsys"
-          conAlign="flex-start"
           movieTitle=""
+          conAlign="flex-start"
           text={description}
           clamp = '10'
         />

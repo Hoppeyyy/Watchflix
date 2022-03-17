@@ -244,20 +244,20 @@ export default function Home() {
             onAscClick={() => {
               setSbr(false);
               setSbrType("");
-              setSba(true);
+              setSba(!sba);
               setSbaType(sba_type === "asc" ? "desc" : "asc");
             }}
             onRateClick={() => {
               setSba(false);
               setSbaType("");
-              setSbr(true);
+              setSbr(!sbr);
               setSbrType(sbr_type === "desc" ? "asc" : "desc");
             }}            
-            ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-            ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
+            ascBkColor={sba ? hBttnBkColor[theme]: "white"}
+            ascChildren={sba ? "Sort By A-Z" :"Sort By Z-A"}
 
-            rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-            rateChildren={sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+            rateBkColor={sbr ? hBttnBkColor[theme] :"white"}
+            rateChildren={sbr ? "Acending Rate" : "Descending Rate"}
 
             user={userName}
             AuthOutClick={() => {
@@ -281,20 +281,20 @@ export default function Home() {
             onAscClick={() => {
               setSbr(false);
               setSbrType("");
-              setSba(true);
+              setSba(!sba);
               setSbaType(sba_type === "asc" ? "desc" : "asc");
             }}
             onRateClick={() => {
               setSba(false);
               setSbaType("");
-              setSbr(true);
+              setSbr(!sbr);
               setSbrType(sbr_type === "desc" ? "asc" : "desc");
-            }}
-            ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-            ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
+            }}            
+            ascBkColor={sba ? hBttnBkColor[theme]: "white"}
+            ascChildren={sba ? "Sort By A-Z" :"Sort By Z-A"}
 
-            rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme] }
-            rateChildren={sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+            rateBkColor={sbr ? hBttnBkColor[theme] :"white"}
+            rateChildren={sbr ? "Acending Rate" : "Descending Rate"}
 
             AuthSignClick={() => {
               r.push("/signup");

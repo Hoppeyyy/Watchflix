@@ -130,7 +130,7 @@ const Header = ({
   rowbg = bgpopup,
   colbg = bgpopup,
   width = 30,
-  src = "/images/watchflix_logo.png",
+  src = "/images/watchflix_logo.svg",
   onInput=()=>{},
   onSearchClick = () => {},
   handleView = () => {},

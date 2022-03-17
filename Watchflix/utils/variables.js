@@ -167,5 +167,10 @@ export const cmtColor = {
   dark: '#c4c4c4'
 }
 
+export const barColor = {
+  light: 'url("/images/icon_verBarLight.svg")',
+  dark: 'url("/images/icon_verBarDark.svg")',
+}
+
 
 

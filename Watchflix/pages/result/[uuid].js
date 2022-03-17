@@ -57,6 +57,15 @@ const ButCont = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 50px;
+
+  @media only screen and (min-width: 561px) and (max-width: 950px) {
+    margin-right: 5rem;
+  }
+
+  @media only screen and (max-width: 560px) {
+    justify-content: center;
+    margin-top: 30px;
+  }
 `;
 const StickerCont = styled.div`
   display:flex;
