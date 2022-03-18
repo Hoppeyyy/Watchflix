@@ -29,7 +29,7 @@ const Cont = styled.div`
   flex-direction: column;
   aligh-items: center;
   justify-content: center;
-  margin-bottom: 7rem;
+  margin-bottom: 2rem;
 `;
 
 const HeaderCont = styled.div`
@@ -37,9 +37,9 @@ const HeaderCont = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 2rem 0;
+  padding: 2rem 0 1.5rem;
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const LeftLine = styled.div`
@@ -49,11 +49,19 @@ const LeftLine = styled.div`
   width: 15%;
   height: 20px;
 
-  @media only screen and (min-width: 566px) and (max-width: 700px) {
+  @media only screen and (min-width: 951px) and (max-width: 1200px)  {
     width: 20%;
   }
 
-  @media only screen and (max-width: 565px) {
+  @media only screen and (min-width: 651px) and (max-width: 950px)  {
+    width: 25%;
+  }
+
+  @media only screen and (min-width: 451px) and (max-width: 650px) {
+    width: 30%;
+  }
+
+  @media only screen and (min-width: 1px)  and (max-width: 450px) {
     width: 25%;
   }
 `;
@@ -62,14 +70,22 @@ const RightLine = styled.div`
   background-color: ${props => props.bkcolor};
   border-radius: 10px;
   border: none;
-  width: 60%;
+  width: 70%;
   height: 20px;
 
-  @media only screen and (min-width: 566px) and (max-width: 700px) {
+  @media only screen and (min-width: 951px) and (max-width: 1200px) {
+    width: 65%;
+  }
+
+  @media only screen and (min-width: 651px) and (max-width: 950px) {
     width: 50%;
   }
 
-  @media only screen and (max-width: 565px) {
+  @media only screen and (min-width: 451px) and (max-width: 650px) {
+    width: 30%;
+  }
+
+  @media only screen and (min-width: 1px)  and (max-width: 450px) {
     width: 25%;
   }
 `;
@@ -77,31 +93,39 @@ const RightLine = styled.div`
 const TitleCont = styled.div`
   padding-left: 20px;
   padding-right: 20px;
-  width: 25%;
+  width: 15%;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 
-  @media only screen and (min-width: 566px) and (max-width: 700px) {
-    width: 30%;
+  @media only screen and (min-width: 951px) and (max-width: 1200px) {
+    width: 20%;
+  }
+  
+  @media only screen and (min-width: 651px) and (max-width: 950px) {
+    width: 25%;
   }
 
-  @media only screen and (max-width: 565px) {
+  @media only screen and (min-width: 451px) and (max-width: 650px) {
+    width: 40%;
+  }
+
+  @media only screen and (max-width: 450px) {
     width: 50%;
-    justify-content: space-between;
   }
 `
 
 const Title = styled.h3`  
-  color: ${props => props.color};
+  color: ${props => props.color};  
+  margin-right: 0.5rem;
 
-  @media only screen and (min-width: 566px) and (max-width: 700px) {
+  @media only screen and (min-width: 651px) and (max-width: 700px) {
     font-size: 1.75em;   
   }
 
-  @media only screen and (min-width: 396px)and (max-width: 565px) {
+  @media only screen and (min-width: 396px) and (max-width: 650px) {
     font-size: 1.75em;
     text-align: center;
   }
@@ -114,20 +138,24 @@ const Title = styled.h3`
 
 const Dropdown = styled.div`
   cursor: pointer;
+  display: flex;
+  aligh-items: flex-end;
+  justify-content: flex-end;
 `;
 
 const Image = styled.img`
   width: 33px;
   height:18px;
   display: block;
+  transition: all 0.3s;
 
-  @media only screen and (max-width: 395px) {
-    width: 30px;
-    height: 15px;
+  @media only screen and (max-width: 790px) {
+    width: 28px;
+    height: auto;
   }
 `
 const UserComments = styled.div`
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const CmmtCont = styled.ul`
@@ -263,30 +291,6 @@ const ReviewSection = ({ text = "Reviews" }) => {
   const [open, setOpen] = useState(true);
   const onClick = () => setOpen(!open);
 
-  // const [selected, setSelected] = useState(arrows.down_arrow)
-  // const onArrowClick = () => setSelected(!selected)
-
-  // const [items, setItems] = useState([])
-
-  // const createItems = () => {
-  //     setItems(oldItems => [...oldItems, {
-  //         id:1,
-  //         title:"new item",
-  //         itemId: uuidv4()
-  //     }])
-  // }
-
-  // const [value, setValue] = useState('');
-
-  // const saveValue = e =>{
-  //     setValue(e.target.value)
-  // }
-
-  // const onSubmit = (e) => {
-  //     e.preventDefault();
-
-  // };
-
   //--------------------------New Comment Form Functions-----------------
 
   //---------------------User Input COMMENT--------------------------
@@ -294,14 +298,6 @@ const ReviewSection = ({ text = "Reviews" }) => {
   const [todoList, setTodoList] = useState([]);
 
   const [userNickname, setUserNickname] = useState("");
-
-  //Nickname input
-  // const handleChangeName = (e) => {
-  //     e.preventDefault()
-
-  //     setUserNickname(e.target.value)
-  //     console.log(userNickname)
-  // }
 
   //Comment box input
 
@@ -312,8 +308,6 @@ const ReviewSection = ({ text = "Reviews" }) => {
     setUserInput(e.target.value);
     console.log(userInput);
 
-    //  setUserNickname(e.target.value)
-    //  console.log(userNickname)
   };
   //2 functions and pass in 1 object
 
@@ -329,28 +323,13 @@ const ReviewSection = ({ text = "Reviews" }) => {
     e.preventDefault();
 
     setTodoList([
-      // userInput,
-      // userNickname,
       { comment: userInput, nickname: userNickname, date: todayDate },
       ...todoList,
     ]);
 
-    // setNameList([
-    //     userNickname,
-    //     ...todoList
-    // ])
   };
   //-------------------------End Comment-------------------------------------
 
-  //-------------------------Test Date-----------------------------------
-  //  const [dateTime, setDateTime] = useState(new Date());
-
-  //  useEffect(() => {
-  //      const id = setInterval(() => setDateTime(new Date()), 1000);
-  //      return () => {
-  //          clearInterval(id);
-  //      }
-  //  }, []);
 
   const [todayDate, setTodayDate] = useState();
   const today = new Date().toDateString();
@@ -359,7 +338,6 @@ const ReviewSection = ({ text = "Reviews" }) => {
 
   return (
     <Cont>
-      {/* <h4>{`${dateTime.toLocaleDateString()}`}</h4> */}
       <HeaderCont>
         <LeftLine bkcolor={divcolor[theme]}></LeftLine>
         <TitleCont>
@@ -367,12 +345,12 @@ const ReviewSection = ({ text = "Reviews" }) => {
           <Dropdown>
           {open ? (
             <Image
-              src= "../../images/down-arrow.png"              
+              src= "/images/down-arrow.png"              
               onClick={onClick}
             ></Image>
           ) : (
             <Image
-              src ="../../images/up-arrow.png" 
+              src ="/images/up-arrow.png" 
               onClick={onClick}
             ></Image>
           )}

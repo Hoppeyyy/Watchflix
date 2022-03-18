@@ -4,22 +4,10 @@ import { filtering, sortArr } from "@/utils/combine";
 import { GoToPage } from "@/utils/func";
 import ax from "axios";
 export default async function handler(req, res) {
-  //HELPER FUNCTIONS FOR YOU TO USE!
-  //console.log(req.query, req.body)
-  //await Save("test", json);
-  //const files = await Read();
-
-  //detect if filter/save/read
-  //const lists = [];
-  //res.status(200).json([]);
 
   const { txt, sort_alpha, sba_type, sort_rating, sbr_type, sort_type } = req.query;
   const movies = await ax.get("http://localhost:3001/getmovies")
   var lists = [];
-  //console.log(movies.data)
-  // if(!txt){
-  //   lists = newmovie
-  // }
 
   if (txt) {
     lists = filtering(movies.data, {

@@ -5,49 +5,25 @@ import { useEffect, useState } from "react";
 import { useTheme } from "@/utils/provider";
 import { bkColor, themes } from "@/utils/variables";
 import DetailTit from "@/comps/DetailTit";
+import ClickButton from "@/comps/ClickButton";
 
 const Cont = styled.div`
-  width: ${(props) => props.conWidth};
   display: flex;
-  flex-direction: row;
-  justify-contents: center;
-  align-items: space-between;
+  flex-direction: row;  
+  justify-content: center;
+  align-items: center;
 
   @media only screen and (min-width: 1px) and (max-width: 950px) {
     flex-direction: column;
-  }
-`;
-
-const PostCont = styled.div`
-  width: ${(props) => props.picConWidth};
-  height: ${(props) => props.picConHeight};
-  min-width: 424px;
-  min-height: 594px;
-  display: flex;
-  flex-direction: column;
-  justify-contents: center;
-  align-items: flex-start;
-  margin-right: 2rem;
-  box-sizing: border-box;
-  flex: 1;
-
-  @media only screen and (min-width: 425px) and (max-width: 950px) {
     align-items: center;
-    margin-bottom: 50px;
-    margin-right: 0;
-  }
-
-  @media only screen and (min-width: 1px) and (max-width: 424px) {
-    align-items: center;
-    margin-bottom: 50px;
-    width: 360px;
-    height: 506px;
+    justify-contents: center;
   }
 `;
 
 const Post = styled.img`
   width: auto;
-  height: 100%;
+  height: 594px;
+  margin-right: 3rem;
 
   display: block;
   src: ${(props) => props.src};
@@ -57,15 +33,25 @@ const Post = styled.img`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  transition: all 0.3s;
 
-  @media only screen and (min-width: 1px) and (max-width: 950px) {
-    min-width: 360px;
-    min-height: 594px;
+  @media only screen and (min-width: 561px) and (max-width: 950px) {
+    height: 594px;
+    width: auto;
+    margin-right: 0;
+    margin-bottom: 50px;
+  }
+
+  @media only screen and (max-width: 560px) {
+    height:400px;
+    width: auto;
+    margin-right: 0;
+    margin-bottom: 30px;
   }
 `;
 
 const DetailCont = styled.div`
-  width: ${(props) => props.detConWidth};
+  max-width: ${(props) => props.detConWidth};
   min-height: ${(props) => props.detConHeight};
   padding: 3rem;
   display: flex;
@@ -78,34 +64,33 @@ const DetailCont = styled.div`
   flex: 2;
 
   @media only screen and (min-width: 1px) and (max-width: 950px) {
-    width: ${(props) => props.mdetConWidth};
+    max-width: ${(props) => props.mdetConWidth};
     min-height: 0;
+    align-items: flex-start;
+    padding: 2rem;
   }
 `;
 
 const Detail = ({
   conWidth = "100%",
-  picConWidth = "auto",
   picConHeight = "596px",
   src = "http://placekitten.com/297/397",
   fit = "cover",
   alt = "Undifined",
   detConWidth = "60%",
-  mdetConWidth = "100%",
+  mdetConWidth = "90%",
   title = "undifined",
   director = "undifined",
   genre = "undifined",
   cast = "undifined",
   description = "undifined",
+  bttnSrc,
 }) => {
   const { theme, setTheme } = useTheme();
 
   return (
     <Cont width={conWidth}>
-      <PostCont picConWidth={picConWidth} picConHeight={picConHeight}>
-        <Post src={src} fit={fit} alt={alt} />
-      </PostCont>
-
+      <Post src={src} fit={fit} alt={alt} />
       <DetailCont
         detConWidth={detConWidth}
         detConHeight={picConHeight}
@@ -116,14 +101,15 @@ const Detail = ({
         <DetailTit
           title="Director"
           movieTitle=""
-          text={director}
           conAlign="flex-start"
+          text={director}
         />
         <DetailTit
           title="Genre"
           movieTitle=""
-          text={genre}
           conAlign="flex-start"
+          text={genre}
+          clamp = '1'
         />
         <DetailTit
           title="Cast"
@@ -134,8 +120,8 @@ const Detail = ({
         />
         <DetailTit
           title="Synopsys"
-          conAlign="flex-start"
           movieTitle=""
+          conAlign="flex-start"
           text={description}
           clamp = '10'
         />

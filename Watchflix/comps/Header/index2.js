@@ -130,7 +130,7 @@ const Header = ({
   rowbg = bgpopup,
   colbg = bgpopup,
   width = 30,
-  src = "/images/watchflix_logo.png",
+  src = "/images/watchflix_logo.svg",
   onInput=()=>{},
   onSearchClick = () => {},
   handleView = () => {},
@@ -140,10 +140,10 @@ const Header = ({
   onAscClick = () => {},
   onRateClick = () => {},
   AuthOutClick = () =>{},
-  ascBkColor = null,
-  rateBkColor = null,
-  ascChildren = null,
-  rateChildren = null,
+  ascBkColor,
+  rateBkColor,
+  ascChildren,
+  rateChildren,
   user="",
 }) => {
   // const { theme } = useTheme();
