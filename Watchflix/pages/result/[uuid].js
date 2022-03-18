@@ -57,9 +57,14 @@ const ButCont = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 50px;
+  margin-right: 8%;
 
-  @media only screen and (min-width: 561px) and (max-width: 950px) {
-    margin-right: 5rem;
+  @media only screen and (min-width: 950px) and (max-width: 1444px) {
+    margin-right: 0;
+  }
+
+  @media only screen and (min-width: 561px) and (max-width: 949px) {
+    margin-right: 8%;
   }
 
   @media only screen and (max-width: 560px) {
@@ -158,91 +163,83 @@ useEffect(() => {
 }, []);
 console.log(user)
 var header_arr =[];
-{user?
-  (header_arr.push(<Header2
-    onInput={(e) => {
-      //PageClick(1, e.target.value);
-    }}
-    onSearchClick={(searchTerm)=>{
-      
-        PageClick(1, searchTerm)
-      
-    }}
-    isView={View}
-    isColor={color}
-    handleView={() => onChangeView()}
-    handleColor={() => onChangeColor()}
+{
+  user
+    ? header_arr.push(
+        <Header2
+          onInput={(e) => {
+            //PageClick(1, e.target.value);
+          }}
+          onSearchClick={(searchTerm) => {
+            PageClick(1, searchTerm);
+          }}
+          isView={View}
+          isColor={color}
+          handleView={() => onChangeView()}
+          handleColor={() => onChangeColor()}
+          onAscClick={() => {
+            setSbr(sbr);
+            setSbrType("");
+            setSba(!sba);
+            setSbaType(sba_type === "asc" ? "desc" : "asc");
+          }}
+          onRateClick={() => {
+            setSba(sba);
+            setSbaType("");
+            setSbr(!sbr);
+            setSbrType(sbr_type === "desc" ? "asc" : "desc");
+          }}            
+          ascBkColor={sba ? hBttnBkColor[theme]: "white"}
+          ascChildren={sba ? "Sort By Z-A" : "Sort By A-Z"}
 
-    onAscClick={()=>{
-      setSbr(sbr)
-      setSba(!sba)
-      setSbrType(null)
-      setSbaType(sba_type === "asc" ? "desc" : "asc")}          
-    }
+          rateBkColor={sbr ? hBttnBkColor[theme] :"white"}
+          rateChildren={sbr ? "Descending Rate" : "Acending Rate"}
 
-    onRateClick={()=>{            
-      setSba(sba)
-      setSbr(!sbr)
-      setSbaType(null)
-      setSbrType(sbr_type === "asc" ? "desc" : "asc")}
-    }
+          user={userName}
+          AuthOutClick={() => {
+            setUser("");
+            localStorage.removeItem("token");
+          }}
+        />
+      )
+    : header_arr.push(
+        <Header
+          onInput={(e) => {
+            //PageClick(1, e.target.value);
+          }}
+          onSearchClick={(searchTerm) => {
+            PageClick(1, searchTerm);
+          }}
+          isView={View}
+          isColor={color}
+          handleView={() => onChangeView()}
+          handleColor={() => onChangeColor()}
+          onAscClick={() => {
+            setSbr(sbr);
+            setSbrType("");
+            setSba(!sba);
+            setSbaType(sba_type === "asc" ? "desc" : "asc");
+          }}
+          onRateClick={() => {
+            setSba(sba);
+            setSbaType("");
+            setSbr(!sbr);
+            setSbrType(sbr_type === "desc" ? "asc" : "desc");
+          }}            
+          ascBkColor={sba ? hBttnBkColor[theme]: "white"}
+          ascChildren={sba ? "Sort By Z-A" : "Sort By A-Z"}
 
-    ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-    ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
+          rateBkColor={sbr ? hBttnBkColor[theme] :"white"}
+          rateChildren={sbr ? "Descending Rate" : "Acending Rate"}
 
-    rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-    rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
-    user={userName}
-    AuthOutClick = {()=>{
-      setUser("")
-      localStorage.removeItem('token')
-    
-    }
-    }
-  />)):(
-    header_arr.push(<Header
-      onInput={(e) => {
-        //PageClick(1, e.target.value);
-      }}
-      onSearchClick={(searchTerm)=>{
-        
-          PageClick(1, searchTerm)
-        
-      }}
-  
-  
-      isView={View}
-      isColor={color}
-      handleView={() => onChangeView()}
-      handleColor={() => onChangeColor()}
-  
-      onAscClick={()=>{
-        setSbr(sbr)
-        setSba(!sba)
-        setSbrType(null)
-        setSbaType(sba_type === "asc" ? "desc" : "asc")}          
-      }
-  
-      onRateClick={()=>{            
-        setSba(sba)
-        setSbr(!sbr)
-        setSbaType(null)
-        setSbrType(sbr_type === "asc" ? "desc" : "asc")}
-      }
-  
-      ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-      ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
-  
-      rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-      rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
-      AuthSignClick={() =>{
-        r.push("/signup");
-      }}
-     AuthLogClick={()=>{
-      r.push("/login");
-     }}
-    />)
-  )
+          AuthSignClick={() => {
+            r.push("/signup");
+          }}
+          AuthLogClick={() => {
+            r.push("/login");
+          }}
+        />
+      );
 }
  //---------------Moodboard------------------------
 
@@ -280,7 +277,7 @@ var header_arr =[];
 
         <PageCont>
           {Object.values(fav).map((item, i) => (
-            <div>              
+            // <div>              
               <Detail
                 alt={item.Title}
                 title={item.Title}
@@ -290,8 +287,9 @@ var header_arr =[];
                 description={item.description}
                 rate={item["IMDB Score"]}
                 src={item.Poster}
+                bttnSrc={uuid}
               />
-            </div>
+            // </div>
           ))}
           <ButCont>
             <ClickButton src={uuid} cwidth='' />

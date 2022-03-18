@@ -242,22 +242,22 @@ export default function Home() {
             handleView={() => onChangeView()}
             handleColor={() => onChangeColor()}
             onAscClick={() => {
-              setSbr(false);
+              setSbr(sbr);
               setSbrType("");
               setSba(!sba);
               setSbaType(sba_type === "asc" ? "desc" : "asc");
             }}
             onRateClick={() => {
-              setSba(false);
+              setSba(sba);
               setSbaType("");
               setSbr(!sbr);
               setSbrType(sbr_type === "desc" ? "asc" : "desc");
             }}            
             ascBkColor={sba ? hBttnBkColor[theme]: "white"}
-            ascChildren={sba ? "Sort By A-Z" :"Sort By Z-A"}
+            ascChildren={sba ? "Sort By Z-A" : "Sort By A-Z"}
 
             rateBkColor={sbr ? hBttnBkColor[theme] :"white"}
-            rateChildren={sbr ? "Acending Rate" : "Descending Rate"}
+            rateChildren={sbr ? "Descending Rate" : "Acending Rate"}
 
             user={userName}
             AuthOutClick={() => {
@@ -279,22 +279,22 @@ export default function Home() {
             handleView={() => onChangeView()}
             handleColor={() => onChangeColor()}
             onAscClick={() => {
-              setSbr(false);
+              setSbr(sbr);
               setSbrType("");
               setSba(!sba);
               setSbaType(sba_type === "asc" ? "desc" : "asc");
             }}
             onRateClick={() => {
-              setSba(false);
+              setSba(sba);
               setSbaType("");
               setSbr(!sbr);
               setSbrType(sbr_type === "desc" ? "asc" : "desc");
             }}            
             ascBkColor={sba ? hBttnBkColor[theme]: "white"}
-            ascChildren={sba ? "Sort By A-Z" :"Sort By Z-A"}
+            ascChildren={sba ? "Sort By Z-A" : "Sort By A-Z"}
 
             rateBkColor={sbr ? hBttnBkColor[theme] :"white"}
-            rateChildren={sbr ? "Acending Rate" : "Descending Rate"}
+            rateChildren={sbr ? "Descending Rate" : "Acending Rate"}
 
             AuthSignClick={() => {
               r.push("/signup");

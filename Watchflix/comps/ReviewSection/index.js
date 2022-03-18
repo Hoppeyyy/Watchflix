@@ -29,7 +29,7 @@ const Cont = styled.div`
   flex-direction: column;
   aligh-items: center;
   justify-content: center;
-  margin-bottom: 7rem;
+  margin-bottom: 2rem;
 `;
 
 const HeaderCont = styled.div`
@@ -263,30 +263,6 @@ const ReviewSection = ({ text = "Reviews" }) => {
   const [open, setOpen] = useState(true);
   const onClick = () => setOpen(!open);
 
-  // const [selected, setSelected] = useState(arrows.down_arrow)
-  // const onArrowClick = () => setSelected(!selected)
-
-  // const [items, setItems] = useState([])
-
-  // const createItems = () => {
-  //     setItems(oldItems => [...oldItems, {
-  //         id:1,
-  //         title:"new item",
-  //         itemId: uuidv4()
-  //     }])
-  // }
-
-  // const [value, setValue] = useState('');
-
-  // const saveValue = e =>{
-  //     setValue(e.target.value)
-  // }
-
-  // const onSubmit = (e) => {
-  //     e.preventDefault();
-
-  // };
-
   //--------------------------New Comment Form Functions-----------------
 
   //---------------------User Input COMMENT--------------------------
@@ -294,14 +270,6 @@ const ReviewSection = ({ text = "Reviews" }) => {
   const [todoList, setTodoList] = useState([]);
 
   const [userNickname, setUserNickname] = useState("");
-
-  //Nickname input
-  // const handleChangeName = (e) => {
-  //     e.preventDefault()
-
-  //     setUserNickname(e.target.value)
-  //     console.log(userNickname)
-  // }
 
   //Comment box input
 
@@ -312,8 +280,6 @@ const ReviewSection = ({ text = "Reviews" }) => {
     setUserInput(e.target.value);
     console.log(userInput);
 
-    //  setUserNickname(e.target.value)
-    //  console.log(userNickname)
   };
   //2 functions and pass in 1 object
 
@@ -329,28 +295,13 @@ const ReviewSection = ({ text = "Reviews" }) => {
     e.preventDefault();
 
     setTodoList([
-      // userInput,
-      // userNickname,
       { comment: userInput, nickname: userNickname, date: todayDate },
       ...todoList,
     ]);
 
-    // setNameList([
-    //     userNickname,
-    //     ...todoList
-    // ])
   };
   //-------------------------End Comment-------------------------------------
 
-  //-------------------------Test Date-----------------------------------
-  //  const [dateTime, setDateTime] = useState(new Date());
-
-  //  useEffect(() => {
-  //      const id = setInterval(() => setDateTime(new Date()), 1000);
-  //      return () => {
-  //          clearInterval(id);
-  //      }
-  //  }, []);
 
   const [todayDate, setTodayDate] = useState();
   const today = new Date().toDateString();
@@ -359,7 +310,6 @@ const ReviewSection = ({ text = "Reviews" }) => {
 
   return (
     <Cont>
-      {/* <h4>{`${dateTime.toLocaleDateString()}`}</h4> */}
       <HeaderCont>
         <LeftLine bkcolor={divcolor[theme]}></LeftLine>
         <TitleCont>

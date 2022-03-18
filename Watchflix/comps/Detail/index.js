@@ -5,53 +5,25 @@ import { useEffect, useState } from "react";
 import { useTheme } from "@/utils/provider";
 import { bkColor, themes } from "@/utils/variables";
 import DetailTit from "@/comps/DetailTit";
+import ClickButton from "@/comps/ClickButton";
 
 const Cont = styled.div`
-  width: ${(props) => props.conWidth};
   display: flex;
-  flex-direction: row;
-  justify-contents: center;
-  align-items: space-between;
+  flex-direction: row;  
+  justify-content: center;
+  align-items: center;
 
   @media only screen and (min-width: 1px) and (max-width: 950px) {
     flex-direction: column;
     align-items: center;
-  }
-`;
-
-const PostCont = styled.div`
-  max-width: ${(props) => props.picConWidth};
-  max-height: ${(props) => props.picConHeight};
-  min-width: 424px;
-  min-height: 594px;
-  display: flex;
-  flex-direction: column;
-  justify-contents: center;
-  align-items: flex-start;
-  margin-right: 2rem;
-  box-sizing: border-box;
-  flex: 1;
-
-  @media only screen and (min-width: 561px) and (max-width: 950px) {
-    align-items: center;
-    margin-bottom: 50px;
-    margin-right: 0;
-    min-width: 0;
-    min-height: 0;
-  }
-
-  @media only screen and (min-width: 1px) and (max-width: 560px) {
-    align-items: center;
-    margin-bottom: 50px;
-    margin-right: 0;
-    min-width: 0;
-    min-height: 0;
+    justify-contents: center;
   }
 `;
 
 const Post = styled.img`
   width: auto;
   height: 594px;
+  margin-right: 3rem;
 
   display: block;
   src: ${(props) => props.src};
@@ -66,11 +38,15 @@ const Post = styled.img`
   @media only screen and (min-width: 561px) and (max-width: 950px) {
     height: 594px;
     width: auto;
+    margin-right: 0;
+    margin-bottom: 50px;
   }
 
   @media only screen and (max-width: 560px) {
     height:400px;
     width: auto;
+    margin-right: 0;
+    margin-bottom: 30px;
   }
 `;
 
@@ -97,7 +73,6 @@ const DetailCont = styled.div`
 
 const Detail = ({
   conWidth = "100%",
-  picConWidth = "auto",
   picConHeight = "596px",
   src = "http://placekitten.com/297/397",
   fit = "cover",
@@ -109,15 +84,13 @@ const Detail = ({
   genre = "undifined",
   cast = "undifined",
   description = "undifined",
+  bttnSrc,
 }) => {
   const { theme, setTheme } = useTheme();
 
   return (
     <Cont width={conWidth}>
-      <PostCont picConWidth={picConWidth} picConHeight={picConHeight}>
-        <Post src={src} fit={fit} alt={alt} />
-      </PostCont>
-
+      <Post src={src} fit={fit} alt={alt} />
       <DetailCont
         detConWidth={detConWidth}
         detConHeight={picConHeight}
