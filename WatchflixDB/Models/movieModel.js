@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const MovieSchema = {
+const MovieSchema = new Schema({
   "FIELD1":String,
   "Genre":String,
   "IMDB Score":Number,
@@ -23,8 +23,11 @@ const MovieSchema = {
   "show_id":String,
   "title":String,
   "type":String,
-  "year_added":Number
-}
+  "year_added":Number,
+  "stickers":[{type:mongoose.Schema.ObjectId, ref:"Uuid"}],
+  "reviews":[{type:mongoose.Schema.ObjectId, ref:"Uuid"}]
+})
+
 
 const Movie = mongoose.model("Movie", MovieSchema);
 

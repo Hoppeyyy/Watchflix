@@ -8,8 +8,8 @@ const postUuid = (req, res)=>{
   newuuid.reviews = req.body.reviews
   newuuid.save((err, done)=>{
   console.log(err)
-  if(err) return res.status(500).send("cannot post uuid info")
-  res.status(201).send("uuid posted successfully")
+  if(err) return res.status(500).send("cannot post id, stickers, and reviews")
+  res.status(201).send("posted successfully")
 
 })
 }

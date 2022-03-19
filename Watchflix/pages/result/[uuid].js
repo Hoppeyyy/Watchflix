@@ -105,12 +105,12 @@ export default function Result() {
     console.log("query", r.query.uuid)
     if (uuid) {
       const GetUuid = async () => {
-        const res = await ax.get("/api/save",{
+        const res = await ax.get("/api/findmovie",{
           params:{uuid:r.query.uuid}
         });
-        console.log("res",res)
-        console.log("item", res.data)
-        console.log("fav",fav);
+        //console.log("res",res)
+        //console.log("item", res.data)
+        //console.log("fav",fav);
       
         if (res.data !== false) {
           setFav(res.data)

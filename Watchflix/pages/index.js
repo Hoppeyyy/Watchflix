@@ -112,10 +112,10 @@ export default function Home() {
     //console.log("itemId",item._id)
     //console.log("uuid",{uuid:item._id})
     const resp = await ax.post("/api/save", {
-      //uuid,
+      uuid,
       //item
       //item: m_obj,
-      uuid:item._id,
+      //item:item._id,
     });
   };
 
