@@ -1,18 +1,17 @@
 import styled from "styled-components";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { useTheme, useResult, useFav } from "@/utils/provider";
+import { useTheme, useFav } from "@/utils/provider";
 import { useRouter, Router } from "next/router";
 import ax from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { setRequestMeta } from "next/dist/server/request-meta";
 import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
 import PageBttn from "@/comps/PageBttn";
 import React from "react";
 import Header from "@/comps/Header/index";
 import Header2 from "@/comps/Header/index2";
-import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
+import {whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
 
 const Cont = styled.div`
   width: 100%;
@@ -73,7 +72,6 @@ export default function Home() {
   const [sba_type, setSbaType] = useState("asc");
   const [sbr_type, setSbrType] = useState("desc");
   const [inptxt, setInpTxt] = useState("");
-  const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
@@ -105,26 +103,30 @@ export default function Home() {
   const { uuid } = r.query;
 
   const HandleSave = async (item) => {
-    const m_obj = {};
+    //const m_obj = {};
 
-    m_obj[item.imdbId] = item;
+    //m_obj[item.imdbId] = item;
     
     //console.log("this is my fav", uuid);
-    console.log("this is my fav", item);
+    //console.log("this is my fav", item);
+    //console.log("itemId",item._id)
+    //console.log("uuid",{uuid:item._id})
     const resp = await ax.post("/api/save", {
-      uuid:uid,
-      item: m_obj,
+      //uuid,
+      //item
+      //item: m_obj,
+      uuid:item._id,
     });
   };
 
  
-  const StoreResult = (item) => {
+  const StoreFav = (item) => {
     console.log(item);
     console.log("clicked");
 
     const b_obj = {};
     b_obj[item.imdbId] = item;
-    setResult(b_obj);
+    setFav(b_obj);
   };
 
 // ============== PaginatioWn
@@ -164,9 +166,23 @@ export default function Home() {
       }, 1000);
     }
   };
+
   useEffect(() => {
     PageClick(1, r.query.search || "");
-    
+
+  if ( !globalThis.localStorage ) {
+    return;
+  }
+  var token = localStorage.getItem('token');
+  var username = localStorage.getItem('user');
+  //console.log(username)
+  var userData = JSON.parse(username)
+  //console.log(userData.name)
+
+  //console.log(token)
+  setUser(token)
+  setUserName(userData.name)
+
   }, []);
 
   var butt_arr = [];
@@ -202,48 +218,14 @@ export default function Home() {
 // ============== Pagination ends
 
 // ============== Authentication
-/*const LogoutClick =(a,b)=>{
-  if(!user){
-    setUser(a)
-  }else if(user){
-    setUser(b)
-  }
-}*/
-useEffect(() => {
-  if ( !globalThis.localStorage ) {
-    return;
-  }
-  var token = localStorage.getItem('token');
-  var username = localStorage.getItem('user');
-  //console.log(username)
-  var userData = JSON.parse(username)
-  //console.log(userData.name)
 
-  //var forget = localStorage.removeItem('token');
 
-  /*
-  if(token == true){
-    setUser(forget)
-  }else if (token == false){
-    setUser(token)
-  }
-  */
-  console.log(token)
-  setUser(token)
-  setUserName(userData.name)
-//LogoutClick(token, forget)
-
-  // do server side stuff
-}, []);
-
-console.log(user)
-console.log(userName)
+//console.log(user)
+//console.log(userName)
 var header_arr =[];
 {user?
   (header_arr.push(<Header2
-    onInput={(e) => {
-      //PageClick(1, e.target.value);
-    }}
+   
     onSearchClick={(searchTerm)=>{
       
         PageClick(1, searchTerm)
@@ -281,9 +263,7 @@ var header_arr =[];
     }
   />)):(
     header_arr.push(<Header
-      onInput={(e) => {
-        //PageClick(1, e.target.value);
-      }}
+    
       onSearchClick={(searchTerm)=>{
         
           PageClick(1, searchTerm)
@@ -354,15 +334,15 @@ var header_arr =[];
                   genre={item.Genre}
                   rate={item["IMDB Score"]}
                   director={item.director}
-                  clicked={
-                    result[item.imdbId] != undefined &&
-                    result[item.imdbId] !== null
-                  }
+                  /*clicked={
+                    fav[item.imdbId] != undefined &&
+                    fav[item.imdbId] !== null
+                  }*/
                   onClick={(e) => {
                     // let uid = uuidv4()
-                    StoreResult(item);
+                    StoreFav(item);
                     HandleSave(item);
-                    r.push(`/result/${uid}`);
+                    r.push(`/result/${item._id}`);
                   }}
                 />
               ))
@@ -379,9 +359,9 @@ var header_arr =[];
                   genre={item.Genre}
                   rate={item["IMDB Score"]}
                   onClick={() => {
-                    StoreResult(item);
+                    StoreFav(item);
                     HandleSave(item);
-                    r.push(`/result/${uid}`);
+                    r.push(`/result/${item._id}`);
                   }}
                 />
               ))}
@@ -405,14 +385,14 @@ var header_arr =[];
                   genre={item.Genre}
                   rate={item["IMDB Score"]}
                   text={item.description}
-                  clicked={
-                    result[item.imdbId] != undefined &&
-                    result[item.imdbId] !== null
-                  }
+                  /*clicked={
+                    //fav[item.imdbId] != undefined &&
+                    //fav[item.imdbId] !== null
+                  }*/
                   onClick={() => {
-                    StoreResult(item);
+                    StoreFav(item);
                     HandleSave(item);
-                    r.push(`/result/${uid}`);
+                    r.push(`/result/${item._id}`);
                   }}
                 />
               ))
@@ -429,9 +409,9 @@ var header_arr =[];
                   rate={item["IMDB Score"]}
                   text={item.description}
                   onClick={() => {
-                    StoreResult(item);
+                    StoreFav(item);
                     HandleSave(item);
-                    r.push(`/result/${uid}`);
+                    r.push(`/result/${item._id}`);
                   }}
                 />
               ))}

@@ -9,9 +9,7 @@ import down_arrow from "@/public/images/down-arrow.png";
 import up_arrow from "@/public/images/up-arrow.png";
 import CommentForm from "../CommentForm";
 import { v4 as uuidv4 } from "uuid";
-
 import NewCommentForm from "../NewCommentForm";
-
 import {
   bkColor,
   nameColor,

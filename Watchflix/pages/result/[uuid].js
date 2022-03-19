@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState, useRef } from "react";
-import { useTheme, useResult, useFav } from "@/utils/provider";
+import { useTheme,useFav } from "@/utils/provider";
 import ax from "axios";
 import ClickButton from "@/comps/ClickButton";
 import Detail from "@/comps/Detail";
@@ -30,8 +30,8 @@ const HeadCont = styled.div`
   align-items: center;
   // margin-bottom: 80px;
   padding: 0 2rem;
-  background-color: ${(props) => props.colbg};
-  box-shadow: ${(props) => props.shadow};
+  background-color: ${props => props.colbg};
+  box-shadow: ${props=> props.shadow};
 `;
 
 const BodyCont = styled.div`
@@ -67,19 +67,19 @@ color: ${props => props.basicColor};
 export default function Result() {
   const r = useRouter();
   const { uuid } = r.query;
-  //const { result, setResult } = useResult();
-  //const [data, setData] = useState([]);
   const [View, setView] = useState(true);
   const [color, setColor] = useState(true);
   const [sbr, setSbr] = useState(false);
   const [sba, setSba] = useState(false);
   const [sba_type, setSbaType] = useState("asc");
   const [sbr_type, setSbrType] = useState("desc");
-  const { theme, setTheme } = useTheme();
   const [user, setUser] = useState(null)
-  const { fav, setFav } = useFav({});
   const [userName, setUserName] = useState();
   const [sticker, setSticker] = useState({})
+  const { theme, setTheme } = useTheme();
+  const { fav, setFav } = useFav();
+  const [data, setData] = useState()
+
   //console.log("value is", Object.values(fav));
 
   const onChangeView = () => {
@@ -100,58 +100,44 @@ export default function Result() {
       setColor(false);
     }
   };
-
-
-
+  
   useEffect(() => {
+    console.log("query", r.query.uuid)
     if (uuid) {
       const GetUuid = async () => {
-        const res = await ax.get("/api/save", {
-          params: {
-            uuid
-          },
+        const res = await ax.get("/api/save",{
+          params:{uuid:r.query.uuid}
         });
+        console.log("res",res)
+        console.log("item", res.data)
+        console.log("fav",fav);
+      
         if (res.data !== false) {
-
-          //setResult(res.data);
-          setFav(res.data);
-          //setSticker(res.data.sticker);
-          //console.log(res.data);
+          setFav(res.data)
+          setData(res.data)
+          console.log("data",res.data);
+          //setSticker(res.data.stickers)
+         
         }
+     
       };
       GetUuid();
     }
+    if ( !globalThis.localStorage ) {
+      return;
+    }
+    var token = localStorage.getItem('token');
+    var username = localStorage.getItem('user');
+    //console.log(username)
+    var userData = JSON.parse(username)
+    //console.log(userData.name)
+   //console.log(token)
+    setUser(token)
+    setUserName(userData.name)
   }, [uuid]);
 
-  useEffect(()=>{
-    if(uuid){
-      const GetInfo = async()=>{
-        const res = await ax.get('/api/load',{
-          params:{uuid}
-        });
-        if(res.data !== false){    
-          //setFav(res.data.item);
-          setSticker(res.data.sticker)
-        }
-      }
-      GetInfo();
-    }
-  },[uuid]);
 
   // ============== Authentication
-useEffect(() => {
-  if ( !globalThis.localStorage ) {
-    return;
-  }
-  var token = localStorage.getItem('token');
-  var username = localStorage.getItem('user');
-  //console.log(username)
-  var userData = JSON.parse(username)
-  //console.log(userData.name)
- //console.log(token)
-  setUser(token)
-  setUserName(userData.name)
-}, []);
 
 //console.log(user)
 var header_arr =[];
@@ -246,23 +232,31 @@ var header_arr =[];
 
  
  const HandleUpdateSticker = (id,data) =>{
+  sticker[id]={
+    ...sticker[id],
+    ...data
+  }
   setSticker({
-    ...sticker,
-    id:{
-      data
-    }
+    ...sticker
   })
 }
 
 const HandleSave = async () =>{
-  
-  const res = await ax.post('/api/save',{
+  console.log("Generate everything",{
     uuid,
-    item:{...fav,sticker},
-   
+    stickers:[{...sticker}],
+    reviews:[{}]
   })
-  console.log("sticker",sticker)
-}
+  const res = await ax.patch('/api/save',{
+    uuid,
+    stickers:[{...sticker}],
+    reviews:[{}]
+  })
+
+  //console.log("sticker",stickers)
+
+} 
+
 
   return (
     <Cont>
@@ -276,7 +270,7 @@ const HandleSave = async () =>{
         <Divider text="Result"></Divider>
 
         <PageCont>
-          {fav&& Object.values(fav).map((item) => (
+          {data && Object.values(data).map(item => (
             <div>              
               <Detail
                 alt={item.Title}
@@ -294,6 +288,7 @@ const HandleSave = async () =>{
             <ClickButton src={uuid} cwidth='' />
           </ButCont>
         </PageCont>
+
    {/*STICKER SECTION*/}
 
    <Divider text="Moodboard"></Divider>
@@ -312,11 +307,12 @@ const HandleSave = async () =>{
             ...prev,
             [n_id]:{id:n_id, src:item.src}
           }))
-        }
+        } 
+        
         }}
         >
      
-      {Object.values(sticker || {}).map(o=>{
+      {Object.values(sticker).map(o=>{
       return <Sticker 
       type='boardsticker' 
       key={o.id}
@@ -324,8 +320,8 @@ const HandleSave = async () =>{
       stickerpos={o.pos}
       src={o.src}
       onUpdateSticker={
-        (obj)=>HandleUpdateSticker(o.id,obj),
-        HandleSave
+        (obj)=>HandleUpdateSticker(o.id,obj)
+       
       }
       >
        
@@ -344,6 +340,7 @@ const HandleSave = async () =>{
         <Sticker src="/images/clown.png"></Sticker>
         <Sticker src="/images/angry.png"></Sticker>
       </StickerCont>
+      <button onClick={HandleSave}>Save</button>
       </DndProvider>
 
 {/*REVIEW SECTION*/}
