@@ -242,13 +242,13 @@ export default function Home() {
             handleView={() => onChangeView()}
             handleColor={() => onChangeColor()}
             onAscClick={() => {
-              setSbr(sbr);
+              setSbr(false);
               setSbrType("");
               setSba(!sba);
-              setSbaType(sba_type === "asc" ? "desc" : "asc");
+              setSbaType(sba_type === "desc" ? "asc" : "desc");
             }}
             onRateClick={() => {
-              setSba(sba);
+              setSba(false);
               setSbaType("");
               setSbr(!sbr);
               setSbrType(sbr_type === "desc" ? "asc" : "desc");
@@ -279,13 +279,13 @@ export default function Home() {
             handleView={() => onChangeView()}
             handleColor={() => onChangeColor()}
             onAscClick={() => {
-              setSbr(sbr);
+              setSbr(false);
               setSbrType("");
               setSba(!sba);
-              setSbaType(sba_type === "asc" ? "desc" : "asc");
+              setSbaType(sba_type === "desc" ? "asc" : "desc");
             }}
             onRateClick={() => {
-              setSba(sba);
+              setSba(false);
               setSbaType("");
               setSbr(!sbr);
               setSbrType(sbr_type === "desc" ? "asc" : "desc");
