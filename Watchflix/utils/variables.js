@@ -172,5 +172,10 @@ export const barColor = {
   dark: 'url("/images/icon_verBarDark.svg")',
 }
 
+export const inputFocus = {
+  light: 'rgba(249, 231, 231, 0.2)',
+  dark: '#fff',
+}
+
 
 
