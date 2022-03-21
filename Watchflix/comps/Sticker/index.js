@@ -13,6 +13,8 @@ position:${position};
 `
 const Img = styled.img`
 width:60px;
+height:60px;
+margin:1rem;
 `
 
 const Sticker = ({

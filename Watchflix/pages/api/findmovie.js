@@ -2,7 +2,7 @@ import ax from "axios";
 export default async function handler(req, res) {
 
   const { uuid } = req.query;
-  console.log("this is uuid",uuid);
+  //console.log("this is uuid",uuid);
 
   const movie = await ax.get("http://localhost:3001/findmovie?id=" + uuid)
   //var thismovie = {}; 

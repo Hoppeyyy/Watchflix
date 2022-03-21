@@ -323,9 +323,8 @@ const ReviewSection = ({ text = "Reviews" }) => {
     console.log(userNickname);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();  
     setTodoList([
       // userInput,
       // userNickname,
@@ -333,11 +332,18 @@ const ReviewSection = ({ text = "Reviews" }) => {
       ...todoList,
     ]);
 
+    console.log("reviews handle save",{
+      reviews:[{...todoList}],
+    })
+    const res = await ax.patch('/api/save',{
+      reviews:[{...todoList}],
+    })
     // setNameList([
     //     userNickname,
     //     ...todoList
     // ])
   };
+
   //-------------------------End Comment-------------------------------------
 
   //-------------------------Test Date-----------------------------------
@@ -383,7 +389,7 @@ const ReviewSection = ({ text = "Reviews" }) => {
       <UserComments>
         {open ? (
           <CmmtCont>
-            {todoList.length >= 1 ? (
+            {todoList.length > 0  ? (
               todoList.map((o, i) => {
                 return (
                   <CommentCont key={i}>

@@ -60,6 +60,8 @@ const StickerCont = styled.div`
   display:flex;
   justify-content: center;
   width:100%;
+  padding:2rem;
+  background:#C4C4C4;
 `
 const Text = styled.h3`
 color: ${props => props.basicColor};
@@ -75,7 +77,7 @@ export default function Result() {
   const [sbr_type, setSbrType] = useState("desc");
   const [user, setUser] = useState(null)
   const [userName, setUserName] = useState();
-  const [sticker, setSticker] = useState({})
+  const [sticker, setSticker] = useState()
   const { theme, setTheme } = useTheme();
   const { fav, setFav } = useFav();
   const [data, setData] = useState()
@@ -113,15 +115,29 @@ export default function Result() {
         //console.log("fav",fav);
       
         if (res.data !== false) {
-          setFav(res.data)
-          setData(res.data)
-          console.log("data",res.data);
+          //setFav(res.data)
+          setData([res.data])
+          //console.log("data",res.data);
           //setSticker(res.data.stickers)
          
         }
-     
+        console.log("data",data)
       };
       GetUuid();
+
+      const UpdateUuid = async () =>{
+        const res = await ax.get("/api/save",{
+          params:{uuid:r.query.uuid}
+        });
+       
+        if(res.data !== false){
+          setSticker(res.data.stickers)
+        }
+        console.log("res",res.data)
+        console.log("sticker",res.data.stickers)
+      };
+
+      UpdateUuid();
     }
     if ( !globalThis.localStorage ) {
       return;
@@ -241,12 +257,11 @@ var header_arr =[];
   })
 }
 
-const HandleSave = async () =>{
-  console.log("Generate everything",{
-    uuid,
-    stickers:[{...sticker}],
-    reviews:[{}]
+const HandleStickerSave = async () =>{
+  console.log("sticker handle save",{
+    stickers:{...sticker},
   })
+  //console.log("sticker",sticker)
   const res = await ax.patch('/api/save',{
     uuid,
     stickers:[{...sticker}],
@@ -301,7 +316,6 @@ const HandleSave = async () =>{
       }}>
         <StickerBoard onDropItem={(item)=>{
           const n_id = uuidv4();  
-
         if(item.type === 'sticker'){
           setSticker((prev)=>({
             ...prev,
@@ -312,8 +326,8 @@ const HandleSave = async () =>{
         }}
         >
      
-      {Object.values(sticker).map(o=>{
-      return <Sticker 
+      {sticker && Object.values(sticker).map(o=>(
+      <Sticker 
       type='boardsticker' 
       key={o.id}
       dragImg={o.img}
@@ -321,11 +335,11 @@ const HandleSave = async () =>{
       src={o.src}
       onUpdateSticker={
         (obj)=>HandleUpdateSticker(o.id,obj)
-       
       }
+      
       >
        
-      </Sticker>})}
+      </Sticker>))}
         </StickerBoard>
 
 {/* Sticker images here */}
@@ -340,7 +354,7 @@ const HandleSave = async () =>{
         <Sticker src="/images/clown.png"></Sticker>
         <Sticker src="/images/angry.png"></Sticker>
       </StickerCont>
-      <button onClick={HandleSave}>Save</button>
+      <button onClick={HandleStickerSave}>Save</button>
       </DndProvider>
 
 {/*REVIEW SECTION*/}

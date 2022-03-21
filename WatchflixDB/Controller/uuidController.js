@@ -1,9 +1,11 @@
 const Uuid = require('../Models/uuidModel')
 
+
+/*
 const postUuid = (req, res)=>{
-  console.log("uuid",req.body)
+  console.log("uuid", req.body)
   const newuuid = new Uuid()
-  newuuid.item = req.body.uuid
+  newuuid.uuid = req.body.uuid
   newuuid.stickers= req.body.stickers
   newuuid.reviews = req.body.reviews
   newuuid.save((err, done)=>{
@@ -12,24 +14,48 @@ const postUuid = (req, res)=>{
   res.status(201).send("posted successfully")
 
 })
+}*/
+
+const putUuid = (req,res)=>{
+  console.log("put uuid", {uuid:req.body.uuid})
+Uuid.findOne({uuid:req.body.uuid}, function(err, newuuid){
+  if(!err){
+    if(!newuuid){
+      newuuid = new Uuid();
+      newuuid.uuid = req.body.uuid;
+    }
+    newuuid.status = req.status;
+    newuuid.save(function(err){
+     console.log(err)
+     if(err) return res.status(500).send("cannot put uuid")
+     res.status(201).send("new uuid created")
+    });
+  }
+});
 }
 
-const getUuid = (req,res)=>{
-  console.log("uuid",req.body)
-  Uuid.findOne({item:req.query.uuid},(err,newuuid)=>{
-    console.log(newuuid)
+const getUuid = (req, res)=>{
+  //console.log("uuid",{uuid:req.query.uuid})
+  Uuid.findOne({uuid:req.query.uuid})
+  .populate("uuid")
+  .exec((err,newuuid)=>{
+   //console.log(newuuid)
     res.json(newuuid) 
-  }).populate("item")
-
-}
-const updateUuid = (req,res)=>{
-  Uuid.findByIdAndUpdate(req.body.id,req.body,(err,newuuid)=>{
-      if(err) return res.status(400).send("item not found")
-      res.json(newuuid)
   })
 }
+
+const updateUuid = (req,res)=>{
+  console.log("update uuid",{uuid:req.body.uuid})
+  console.log("uuid",req.body)
+  Uuid.findByIdAndUpdate(req.body.uuid,req.body,(err,updates)=>{
+    if(err) return res.status(400).send("not found")
+      res.json(updates)
+      console.log(updates)
+});
+}
 module.exports = {
-  postUuid,
+  putUuid,
   getUuid,
-  updateUuid
+  updateUuid,
+
 }

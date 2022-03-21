@@ -1,12 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const { postUuid, getUuid, updateUuid } = require('../Controller/uuidController')
+const { putUuid, getUuid, updateUuid} = require('../Controller/uuidController')
 
 
-router.post('/postuuid', postUuid)
+router.put('/putuuid', putUuid)
+
+//router.post('/postuuid', postUuid)
 
 router.get('/getuuid', getUuid)
 
-router.patch('/updateuuid', updateUuid )
+router.patch('/updateuuid', updateUuid)
 
 module.exports = router

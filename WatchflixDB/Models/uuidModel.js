@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const UuidSchema = new Schema({
- item:{type:mongoose.Types.ObjectId, ref:"Movie"}
+ uuid:{type:mongoose.Schema.ObjectId, ref:"Movie", required: true, index: true}
 ,
- stickers:[{}]
+ stickers:[]
 ,
- reviews:[{}]
+ reviews:[]
 });
 
 
