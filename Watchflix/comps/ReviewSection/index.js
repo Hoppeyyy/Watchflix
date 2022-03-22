@@ -198,7 +198,9 @@ const CommentBox = styled.textarea`
   display: flex;
   padding: 1rem;
   justify-content: flex-start;
+  margin-top: 1rem;
   margin-bottom: 2rem;
+  margin-left:3px;
 `;
 
 const RevTxt = styled.p`
@@ -255,13 +257,16 @@ const SubmitBtn = styled.button`
 
 //--------------------------------------------------------
 
-const ReviewSection = ({ text = "Reviews" }) => {
+const ReviewSection = ({
+   text = "Reviews",
+  
+  }) => {
 
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(true);
   const onClick = () => setOpen(!open);
-  //const r = useRouter();
-  //const { uuid } = r.query;
+  const r = useRouter();
+  const { uuid } = r.query;
   const [userInput, setUserInput] = useState("");
   const [reviews, setReviews] = useState([]);
   const [userNickname, setUserNickname] = useState("");
@@ -309,7 +314,7 @@ const ReviewSection = ({ text = "Reviews" }) => {
     e.preventDefault();
 
     setUserInput(e.target.value);
-    console.log(userInput);
+    //console.log(userInput);
 
     //  setUserNickname(e.target.value)
     //  console.log(userNickname)
@@ -321,30 +326,43 @@ const ReviewSection = ({ text = "Reviews" }) => {
     e.preventDefault();
 
     setUserNickname(e.target.value);
-    console.log(userNickname);
+    //console.log(userNickname);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();  
-    setReviews([
-      // userInput,
-      // userNickname,
-      { comment: userInput, nickname: userNickname, date: todayDate },
-      ...reviews,
-    ]);
 
-    console.log("reviews handle save",{
-      reviews
-    })
-    const res = await ax.patch('/api/save',{
-      reviews,
-    })
+    const review = { comment: userInput, nickname: userNickname, date: todayDate }
+      setReviews((prev)=>([...prev,review]));
+  
+      console.log("reviews handle save",reviews)
+      
+      const res = await ax.patch('/api/save',{
+        uuid,
+        reviews,
+      })
+
+
+
     // setNameList([
     //     userNickname,
     //     ...todoList
     // ])
   };
-
+  useEffect(()=>{
+    if(uuid){
+      const UpdateReviews = async() =>{
+        const res = await ax.get('/api/save',{
+          params: { uuid: r.query.uuid }
+        });
+        if (res.data !== false) {
+          setReviews(res.data.reviews)
+        }
+        console.log("reviews from db", res.data.reviews)
+        }
+      UpdateReviews();
+    }
+  },[uuid]) 
   //-------------------------End Comment-------------------------------------
 
   //-------------------------Test Date-----------------------------------
@@ -398,7 +416,7 @@ const ReviewSection = ({ text = "Reviews" }) => {
                       comment={o.comment}
                       username={o.nickname}
                       date={o.date}
-                    ></Comment>
+                    />
                   </CommentCont>
                 );
               })

@@ -77,7 +77,8 @@ export default function Result() {
   const [sbr_type, setSbrType] = useState("desc");
   const [user, setUser] = useState(null)
   const [userName, setUserName] = useState();
-  const [stickers, setStickers] = useState();
+  const [stickers, setStickers] = useState([]);
+  const [reviews, setReviews] = useState([]);
   //const [reviews, setReviews] = useState()
   const { theme, setTheme } = useTheme();
   const { fav, setFav } = useFav();
@@ -107,7 +108,7 @@ export default function Result() {
   useEffect(() => {
     console.log("query", r.query.uuid)
     if (uuid) {
-      const GetUuid = async () => {
+      const FindMovie = async () => {
         const res = await ax.get("/api/findmovie", {
           params: { uuid: r.query.uuid }
         });
@@ -118,13 +119,13 @@ export default function Result() {
         if (res.data !== false) {
           //setFav(res.data)
           setData([res.data])
+          //console.log("data", data)
           //console.log("data",res.data);
           //setSticker(res.data.stickers)
-
         }
-        console.log("data", data)
+       
       };
-      GetUuid();
+      FindMovie();
 
       const UpdateUuid = async () => {
         const res = await ax.get("/api/save", {
@@ -134,8 +135,10 @@ export default function Result() {
         if (res.data !== false) {
           setStickers(res.data.stickers)
           //setReviews(res.data.reviews)
+          //setReviews(res.data.reviews)
         }
         console.log("res", res.data)
+        //console.log("reviews", res.data.reviews)
         //console.log("sticker",res.data.stickers[0])
         //console.log("stickers",stickers)
         //console.log(...stickers[id])
@@ -390,7 +393,11 @@ export default function Result() {
         </DndProvider>
 
         {/*REVIEW SECTION*/}
-        <ReviewSection text="Reviews" />
+       
+        <ReviewSection 
+        text="Reviews"
+        
+        />
       </BodyCont>
     </Cont>
   );

@@ -3,12 +3,11 @@ import ax from 'axios';
 export default async function handler(req, res) {
 
   if (req.method === "PUT") {
-    const { uuid, stickers, reviews} = req.body;
-    console.log(uuid, stickers, reviews);
+    const {uuid} = req.body;
+    console.log(uuid);
     const newuuid = {
       uuid,
-      stickers,
-      reviews
+      
   }
     //console.log(newuuid)
     const put = await ax.put("http://localhost:3001/putuuid",newuuid)
@@ -17,13 +16,6 @@ export default async function handler(req, res) {
    // res.status(200).json({ name: "John Doe" });
   }
 
-  if(req.method === "POST"){
-    const { uuid, stickers, reviews} = req.body;
-    console.log(uuid, stickers, reviews);
-
-  const post = await ax.post("http://localhost:3001/postuuid")
-  res.status(200).json({ name: 'John Doe' })
-  }
 if(req.method === "PATCH"){
   const { uuid, stickers, reviews} = req.body;
   //console.log(uuid, stickers, reviews);
