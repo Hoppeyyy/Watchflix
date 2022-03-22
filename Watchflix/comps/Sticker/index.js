@@ -19,6 +19,7 @@ margin:1rem;
 
 const Sticker = ({
   //props
+  id,
   type='sticker',
   children=null,
   stickerpos=null,
@@ -45,6 +46,7 @@ useEffect(()=>{
     pos,
     img,
     src,
+    id,
     })
   }
 },[pos,img])

@@ -29,14 +29,19 @@ const getUuid = (req, res)=>{
 }
 
 const updateUuid = (req,res)=>{
-  console.log("update uuid",{uuid:req.body.uuid})
-  console.log("uuid",req.body.uuid)
+  console.log(req.body)
   Uuid.findOneAndUpdate(req.body.uuid,req.body,(err,updates)=>{
     if(err) return res.status(400).send("not found")
       res.json(updates)
       console.log("updates",updates)
 });
+// Uuid.findOne({uuid: req.body.uuid},(err,uuid)=>{
+//   uuid.reviews.push(req.body.review)
+//   uuid.save()
+// })
 }
+
+
 module.exports = {
   putUuid,
   getUuid,

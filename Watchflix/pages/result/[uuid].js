@@ -365,6 +365,7 @@ export default function Result() {
               <Sticker
                 type='boardsticker'
                 key={o?.id}
+                id={o?.id}
                 dragImg={o?.img}
                 stickerpos={o?.pos}
                 src={o?.src}

@@ -270,30 +270,22 @@ const ReviewSection = ({
   const [userInput, setUserInput] = useState("");
   const [reviews, setReviews] = useState([]);
   const [userNickname, setUserNickname] = useState("");
-  // const [selected, setSelected] = useState(arrows.down_arrow)
-  // const onArrowClick = () => setSelected(!selected)
+  const [todayDate, setTodayDate] = useState(new Date().toDateString());
 
-  // const [items, setItems] = useState([])
-
-  // const createItems = () => {
-  //     setItems(oldItems => [...oldItems, {
-  //         id:1,
-  //         title:"new item",
-  //         itemId: uuidv4()
-  //     }])
-  // }
-
-  // const [value, setValue] = useState('');
-
-  // const saveValue = e =>{
-  //     setValue(e.target.value)
-  // }
-
-  // const onSubmit = (e) => {
-  //     e.preventDefault();
-
-  // };
-
+  useEffect(()=>{
+    if(uuid){
+      const UpdateReviews = async() =>{
+        const res = await ax.get('/api/save',{
+          params: { uuid: r.query.uuid }
+        });
+        if (res.data !== false) {
+          setReviews(res.data.reviews)
+        }
+        console.log("reviews from db", res.data.reviews)
+        }
+      UpdateReviews();
+    }
+  },[uuid]) 
   //--------------------------New Comment Form Functions-----------------
 
   //---------------------User Input COMMENT--------------------------
@@ -333,8 +325,8 @@ const ReviewSection = ({
     e.preventDefault();  
 
     const review = { comment: userInput, nickname: userNickname, date: todayDate }
-      setReviews((prev)=>([...prev,review]));
-  
+      //setReviews((prev)=>([...prev,review]));
+      setReviews([...reviews,review])
       console.log("reviews handle save",reviews)
       
       const res = await ax.patch('/api/save',{
@@ -349,20 +341,7 @@ const ReviewSection = ({
     //     ...todoList
     // ])
   };
-  useEffect(()=>{
-    if(uuid){
-      const UpdateReviews = async() =>{
-        const res = await ax.get('/api/save',{
-          params: { uuid: r.query.uuid }
-        });
-        if (res.data !== false) {
-          setReviews(res.data.reviews)
-        }
-        console.log("reviews from db", res.data.reviews)
-        }
-      UpdateReviews();
-    }
-  },[uuid]) 
+
   //-------------------------End Comment-------------------------------------
 
   //-------------------------Test Date-----------------------------------
@@ -375,8 +354,7 @@ const ReviewSection = ({
   //      }
   //  }, []);
 
-  const [todayDate, setTodayDate] = useState();
-  const today = new Date().toDateString();
+
 
   //----------------------------------------------------------------------
 
@@ -413,9 +391,9 @@ const ReviewSection = ({
                 return (
                   <CommentCont key={i}>
                     <Comment
-                      comment={o.comment}
-                      username={o.nickname}
-                      date={o.date}
+                      comment={o?.comment}
+                      username={o?.nickname}
+                      date={o?.date}
                     />
                   </CommentCont>
                 );
