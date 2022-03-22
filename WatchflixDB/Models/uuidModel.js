@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 const UuidSchema = new Schema({
  uuid:{type:mongoose.Schema.ObjectId, ref:"Movie", required: true, index: true}
 ,
- stickers:[]
+ stickers:[{}]
 ,
- reviews:[]
+ reviews:[{}]
 });
 
 

@@ -1,21 +1,5 @@
 const Uuid = require('../Models/uuidModel')
 
-
-/*
-const postUuid = (req, res)=>{
-  console.log("uuid", req.body)
-  const newuuid = new Uuid()
-  newuuid.uuid = req.body.uuid
-  newuuid.stickers= req.body.stickers
-  newuuid.reviews = req.body.reviews
-  newuuid.save((err, done)=>{
-  console.log(err)
-  if(err) return res.status(500).send("cannot post id, stickers, and reviews")
-  res.status(201).send("posted successfully")
-
-})
-}*/
-
 const putUuid = (req,res)=>{
   console.log("put uuid", {uuid:req.body.uuid})
 Uuid.findOne({uuid:req.body.uuid}, function(err, newuuid){
@@ -46,11 +30,11 @@ const getUuid = (req, res)=>{
 
 const updateUuid = (req,res)=>{
   console.log("update uuid",{uuid:req.body.uuid})
-  console.log("uuid",req.body)
-  Uuid.findByIdAndUpdate(req.body.uuid,req.body,(err,updates)=>{
+  console.log("uuid",req.body.uuid)
+  Uuid.findOneAndUpdate(req.body.uuid,req.body,(err,updates)=>{
     if(err) return res.status(400).send("not found")
       res.json(updates)
-      console.log(updates)
+      console.log("updates",updates)
 });
 }
 module.exports = {

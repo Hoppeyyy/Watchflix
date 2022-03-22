@@ -36,6 +36,7 @@ const Sticker = ({
   });
 //const [content, setContent] = useState(notecontent || `Add Sticker ${children || ''}`)
 const [img, setImg] = useState(dragImg ||`${children||src}`)
+
 // each time position changes remember the position
 useEffect(()=>{
   if(type ==='boardsticker')
@@ -43,7 +44,7 @@ useEffect(()=>{
   onUpdateSticker({
     pos,
     img,
- 
+    src,
     })
   }
 },[pos,img])
@@ -51,7 +52,7 @@ useEffect(()=>{
 const [{ isDragging,coords }, drag, dragPreview] = useDrag(() => ({
 		// "type" is required. It is used by the "accept" specification of drop targets.
     type,
-    item: {src, type},
+    item: {src,type,img,pos},
     end:(item,monitor)=>{
       if(type ==='boardsticker'){
         setPos({

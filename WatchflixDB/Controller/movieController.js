@@ -13,6 +13,7 @@ const findMovie = (req, res)=>{
   Movie.findOne({_id:req.query.id},(err,movie)=>{
     if(err) return res.status(400).send("Requested movie not found")
       res.json(movie) 
+      //console.log("returned movie", movie)
   })
 }
 

@@ -22,6 +22,7 @@ export default async function handler(req, res) {
     console.log(uuid, stickers, reviews);
 
   const post = await ax.post("http://localhost:3001/postuuid")
+  res.status(200).json({ name: 'John Doe' })
   }
 if(req.method === "PATCH"){
   const { uuid, stickers, reviews} = req.body;
@@ -33,7 +34,7 @@ if(req.method === "PATCH"){
     reviews
 }
 //console.log(newuuid)
-const patch = await ax.patch("http://localhost:3001/updateuuid?uuid=" + uuid, updates)
+const patch = await ax.patch("http://localhost:3001/updateuuid", updates)
 }
 
   if (req.method === "GET") {

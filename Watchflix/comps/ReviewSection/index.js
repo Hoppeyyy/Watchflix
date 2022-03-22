@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ax from "axios";
-import { useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useTheme, useResult } from "@/utils/provider";
 import Comment from "../Comment";
@@ -256,11 +256,15 @@ const SubmitBtn = styled.button`
 //--------------------------------------------------------
 
 const ReviewSection = ({ text = "Reviews" }) => {
-  const { theme, setTheme } = useTheme();
 
+  const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(true);
   const onClick = () => setOpen(!open);
-
+  //const r = useRouter();
+  //const { uuid } = r.query;
+  const [userInput, setUserInput] = useState("");
+  const [reviews, setReviews] = useState([]);
+  const [userNickname, setUserNickname] = useState("");
   // const [selected, setSelected] = useState(arrows.down_arrow)
   // const onArrowClick = () => setSelected(!selected)
 
@@ -288,10 +292,7 @@ const ReviewSection = ({ text = "Reviews" }) => {
   //--------------------------New Comment Form Functions-----------------
 
   //---------------------User Input COMMENT--------------------------
-  const [userInput, setUserInput] = useState("");
-  const [todoList, setTodoList] = useState([]);
-
-  const [userNickname, setUserNickname] = useState("");
+ 
 
   //Nickname input
   // const handleChangeName = (e) => {
@@ -325,18 +326,18 @@ const ReviewSection = ({ text = "Reviews" }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();  
-    setTodoList([
+    setReviews([
       // userInput,
       // userNickname,
       { comment: userInput, nickname: userNickname, date: todayDate },
-      ...todoList,
+      ...reviews,
     ]);
 
     console.log("reviews handle save",{
-      reviews:[{...todoList}],
+      reviews
     })
     const res = await ax.patch('/api/save',{
-      reviews:[{...todoList}],
+      reviews,
     })
     // setNameList([
     //     userNickname,
@@ -389,8 +390,8 @@ const ReviewSection = ({ text = "Reviews" }) => {
       <UserComments>
         {open ? (
           <CmmtCont>
-            {todoList.length > 0  ? (
-              todoList.map((o, i) => {
+            {reviews.length >= 1  ? (
+              reviews.map((o, i) => {
                 return (
                   <CommentCont key={i}>
                     <Comment
