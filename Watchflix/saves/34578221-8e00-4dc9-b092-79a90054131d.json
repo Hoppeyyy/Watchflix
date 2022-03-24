@@ -1,0 +1,13 @@
+{
+  "sticker": {
+    "d61bbeb1-374a-41d2-854d-58fed5ba0b7e": {
+      "id": "d61bbeb1-374a-41d2-854d-58fed5ba0b7e",
+      "src": "/images/sad.png",
+      "pos": {
+        "left": 0,
+        "top": 0,
+        "position": "relative"
+      }
+    }
+  }
+}

@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { useTheme, useResult, useFav } from "@/utils/provider";
+import { useTheme, useFav } from "@/utils/provider";
 import { useRouter, Router } from "next/router";
 import ax from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { setRequestMeta } from "next/dist/server/request-meta";
 import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
 import PageBttn from "@/comps/PageBttn";
@@ -13,7 +12,13 @@ import React from "react";
 import Header from "@/comps/Header/index";
 import Header2 from "@/comps/Header/index2";
 import Footer from "@/comps/Footer";
-import { basicColor, whiteblack, shadow, hBttnBkColor, fShadow,} from "@/utils/variables";
+import {
+  basicColor,
+  whiteblack,
+  shadow,
+  hBttnBkColor,
+  fShadow,
+} from "@/utils/variables";
 
 const Cont = styled.div`
   width: 100%;
@@ -81,7 +86,6 @@ export default function Home() {
   const [sba_type, setSbaType] = useState("asc");
   const [sbr_type, setSbrType] = useState("desc");
   const [inptxt, setInpTxt] = useState("");
-  const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
@@ -113,27 +117,22 @@ export default function Home() {
   const { uuid } = r.query;
 
   const HandleSave = async (item) => {
-    const m_obj = {};
-
-    m_obj[item.imdbId] = item;
-
-    console.log("this is my fav", uuid);
-    const resp = await ax.post("/api/save", {
-      uuid: uid,
-      item: m_obj,
+    const resp = await ax.put("/api/save", {
+      uuid: item._id,
     });
   };
 
-  const StoreResult = (item) => {
+  const StoreFav = (item) => {
     console.log(item);
     console.log("clicked");
 
     const b_obj = {};
     b_obj[item.imdbId] = item;
-    setResult(b_obj);
+    setFav(b_obj);
   };
 
-// ============== Pagination Starts
+// ============== PaginatioWn
+
   const PageClick = async (p, txt) => {
     var obj = {};
     if (txt) {
@@ -141,7 +140,6 @@ export default function Home() {
       obj.sort_alpha = sba_type;
       obj.sort_rating = sbr_type;
     }
-
     if (timer) {
       clearTimeout(timer);
       timer = null;
@@ -154,7 +152,6 @@ export default function Home() {
           params: {
             page: p,
             num: 10,
-            // sort_rating:sbr_type,
             ...obj,
           },
         });
@@ -174,6 +171,19 @@ export default function Home() {
 
   useEffect(() => {
     PageClick(1, r.query.search || "");
+
+    if (!globalThis.localStorage) {
+      return;
+    }
+    var token = localStorage.getItem("token");
+    var username = localStorage.getItem("user");
+    //console.log(username)
+    var userData = JSON.parse(username);
+    //console.log(userData.name)
+
+    //console.log(token)
+    setUser(token);
+    // setUserName(userData.name);
   }, []);
 
   var butt_arr = [];
@@ -208,32 +218,14 @@ export default function Home() {
 // ============== Pagination ends
 
 // ============== Authentication
-  useEffect(() => {
-    if (!globalThis.localStorage) {
-      return;
-    }
-    var token = localStorage.getItem("token");
-    var username = localStorage.getItem("user");
-    //console.log(username)
-    var userData = JSON.parse(username);
-    console.log(token);
-    setUser(token);
-    // setUserName(userData.name);
-    //LogoutClick(token, forget)
 
-    // do server side stuff
-  }, []);
-
-  console.log(user);
-  console.log(userName);
+  //console.log(user)
+  //console.log(userName)
   var header_arr = [];
   {
     user
       ? header_arr.push(
           <Header2
-            onInput={(e) => {
-              //PageClick(1, e.target.value);
-            }}
             onSearchClick={(searchTerm) => {
               PageClick(1, searchTerm);
             }}
@@ -242,7 +234,7 @@ export default function Home() {
             handleView={() => onChangeView()}
             handleColor={() => onChangeColor()}
             onAscClick={() => {
-              setSbr(false);
+              setSbr(sbr);
               setSbrType("");
               setSba(!sba);
               setSbaType(sba_type === "desc" ? "asc" : "desc");
@@ -252,13 +244,11 @@ export default function Home() {
               setSbaType("");
               setSbr(!sbr);
               setSbrType(sbr_type === "desc" ? "asc" : "desc");
-            }}            
-            ascBkColor={sba ? hBttnBkColor[theme]: "white"}
+            }}
+            ascBkColor={sba ? hBttnBkColor[theme] : "white"}
             ascChildren={sba ? "Sort By Z-A" : "Sort By A-Z"}
-
-            rateBkColor={sbr ? hBttnBkColor[theme] :"white"}
+            rateBkColor={sbr ? hBttnBkColor[theme] : "white"}
             rateChildren={sbr ? "Descending Rate" : "Acending Rate"}
-
             user={userName}
             AuthOutClick={() => {
               setUser("");
@@ -268,9 +258,6 @@ export default function Home() {
         )
       : header_arr.push(
           <Header
-            onInput={(e) => {
-              //PageClick(1, e.target.value);
-            }}
             onSearchClick={(searchTerm) => {
               PageClick(1, searchTerm);
             }}
@@ -279,7 +266,7 @@ export default function Home() {
             handleView={() => onChangeView()}
             handleColor={() => onChangeColor()}
             onAscClick={() => {
-              setSbr(false);
+              setSbr(sbr);
               setSbrType("");
               setSba(!sba);
               setSbaType(sba_type === "desc" ? "asc" : "desc");
@@ -289,13 +276,11 @@ export default function Home() {
               setSbaType("");
               setSbr(!sbr);
               setSbrType(sbr_type === "desc" ? "asc" : "desc");
-            }}            
-            ascBkColor={sba ? hBttnBkColor[theme]: "white"}
+            }}
+            ascBkColor={sba ? hBttnBkColor[theme] : "white"}
             ascChildren={sba ? "Sort By Z-A" : "Sort By A-Z"}
-
-            rateBkColor={sbr ? hBttnBkColor[theme] :"white"}
+            rateBkColor={sbr ? hBttnBkColor[theme] : "white"}
             rateChildren={sbr ? "Descending Rate" : "Acending Rate"}
-
             AuthSignClick={() => {
               r.push("/signup");
             }}
@@ -331,15 +316,15 @@ export default function Home() {
                   genre={item.Genre}
                   rate={item["IMDB Score"]}
                   director={item.director}
-                  clicked={
-                    result[item.imdbId] != undefined &&
-                    result[item.imdbId] !== null
-                  }
+                  /*clicked={
+                    fav[item.imdbId] != undefined &&
+                    fav[item.imdbId] !== null
+                  }*/
                   onClick={(e) => {
                     // let uid = uuidv4()
-                    StoreResult(item);
+                    StoreFav(item);
                     HandleSave(item);
-                    r.push(`/result/${uid}`);
+                    r.push(`/result/${item._id}`);
                   }}
                 />
               ))}
@@ -364,21 +349,21 @@ export default function Home() {
                   genre={item.Genre}
                   rate={item["IMDB Score"]}
                   text={item.description}
-                  clicked={
-                    result[item.imdbId] != undefined &&
-                    result[item.imdbId] !== null
-                  }
+                  /*clicked={
+                    //fav[item.imdbId] != undefined &&
+                    //fav[item.imdbId] !== null
+                  }*/
                   onClick={() => {
-                    StoreResult(item);
+                    StoreFav(item);
                     HandleSave(item);
-                    r.push(`/result/${uid}`);
+                    r.push(`/result/${item._id}`);
                   }}
                 />
               ))}
           </Wrap>
           {/* <Pagination /> */}
           <PageCont>{butt_arr}</PageCont>
-        </PagCont>
+        </PagCont>        
       )}
 
       <FooterCont colbg={whiteblack[theme]} shadow={fShadow[theme]}>

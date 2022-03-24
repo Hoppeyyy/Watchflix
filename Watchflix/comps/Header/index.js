@@ -1,8 +1,24 @@
 import styled from "styled-components";
 import ax from "axios";
 import { useState } from "react";
+import {
+  Switch,
+  InputLabel,
+  Select,
+  MenuItem,
+  Checkbox,
+  ListItemText,
+  OutlinedInput,
+  Box,
+  Slider,
+  FormControl,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 import { bgpopup, popuptext } from "@/utils/variables";
 import { useTheme } from "@/utils/provider";
+
+// import SearchIcon from '@mui/icons-material/Search';
 import { Search, Radio, Button, Icon } from "semantic-ui-react";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { basicColor, whiteblack } from "@/utils/variables";
@@ -11,6 +27,8 @@ import ToggleSlide from '@/comps/ToggleSlide';
 import FilterBttn from '@/comps/FilterBttn';
 import SearchBar from '@/comps/SearchBar';
 import AuthBtn from '@/comps/AuthBtn';
+
+
 
 
 const FlexCol = styled.div`
@@ -103,7 +121,7 @@ const Header = ({
   rowbg = bgpopup,
   colbg = bgpopup,
   width = 30,
-  src = "/images/watchflix_logo.svg",
+  src = "/images/watchflix_logo.png",
   onInput=()=>{},
   onSearchClick = () => {},
   handleView = () => {},
@@ -114,10 +132,10 @@ const Header = ({
   onRateClick = () => {},
   AuthSignClick = () =>{},
   AuthLogClick = () =>{},
-  ascBkColor,
-  rateBkColor,
-  ascChildren,
-  rateChildren,
+  ascBkColor = null,
+  rateBkColor = null,
+  ascChildren = null,
+  rateChildren = null,
 
 }) => {
   // const { theme } = useTheme();

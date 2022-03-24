@@ -14,7 +14,6 @@ UserSchema.pre('save', function (next){
 
   bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(user.password, salt, function(err, hash) {
-        // Store hash in your password DB.
         user.password = hash
         next()
     });

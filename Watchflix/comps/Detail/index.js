@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useTheme } from "@/utils/provider";
 import { bkColor, themes } from "@/utils/variables";
 import DetailTit from "@/comps/DetailTit";
-import ClickButton from "@/comps/ClickButton";
 
 const Cont = styled.div`
   display: flex;
@@ -53,7 +52,7 @@ const Post = styled.img`
 const DetailCont = styled.div`
   max-width: ${(props) => props.detConWidth};
   min-height: ${(props) => props.detConHeight};
-  padding: 3rem;
+  padding: 2.5rem;
   display: flex;
   flex-direction: column;
   justify-contents: center;
@@ -81,6 +80,9 @@ const Detail = ({
   mdetConWidth = "90%",
   title = "undifined",
   director = "undifined",
+  year = "undifined",
+  country = "undifined",
+  rate = "undifined",
   genre = "undifined",
   cast = "undifined",
   description = "undifined",
@@ -90,7 +92,7 @@ const Detail = ({
 
   return (
     <Cont width={conWidth}>
-      <Post src={src} fit={fit} alt={alt} />
+      <Post src={src} fit={fit} alt={alt} />      
       <DetailCont
         detConWidth={detConWidth}
         detConHeight={picConHeight}
@@ -101,15 +103,37 @@ const Detail = ({
         <DetailTit
           title="Director"
           movieTitle=""
-          conAlign="flex-start"
           text={director}
+          conAlign="flex-start"
+          conHeight = '2em'
+        />
+        <DetailTit
+          title="Year"
+          movieTitle=""
+          text={year}
+          conAlign="flex-start"
+          conHeight = '2em'
+        />
+        <DetailTit
+          title="Country"
+          movieTitle=""
+          text={country}
+          conAlign="flex-start"
+          conHeight = '2em'
+        />
+        <DetailTit
+          title="Rate"
+          movieTitle=""
+          text={rate}
+          conAlign="flex-start"
+          conHeight = '2em'
         />
         <DetailTit
           title="Genre"
           movieTitle=""
-          conAlign="flex-start"
           text={genre}
-          clamp = '1'
+          conAlign="flex-start"
+          conHeight = '3em'
         />
         <DetailTit
           title="Cast"
@@ -120,10 +144,11 @@ const Detail = ({
         />
         <DetailTit
           title="Synopsys"
-          movieTitle=""
           conAlign="flex-start"
+          movieTitle=""
           text={description}
           clamp = '10'
+          conHeight = '3em'
         />
       </DetailCont>
     </Cont>

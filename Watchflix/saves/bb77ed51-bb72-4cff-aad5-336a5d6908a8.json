@@ -1,0 +1,22 @@
+{
+  "sticker": {
+    "93f91bc8-de98-42d5-936b-4fd31f261f92": {
+      "id": "93f91bc8-de98-42d5-936b-4fd31f261f92",
+      "src": "/images/love.png",
+      "pos": {
+        "left": 0,
+        "top": 0,
+        "position": "relative"
+      }
+    },
+    "7a8eff07-b806-4e9a-9654-8310053381dd": {
+      "id": "7a8eff07-b806-4e9a-9654-8310053381dd",
+      "src": "/images/angry.png",
+      "pos": {
+        "left": 0,
+        "top": 0,
+        "position": "relative"
+      }
+    }
+  }
+}

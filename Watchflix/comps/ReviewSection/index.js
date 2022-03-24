@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ax from "axios";
-import { useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useTheme, useResult } from "@/utils/provider";
 import Comment from "../Comment";
@@ -9,9 +9,7 @@ import down_arrow from "@/public/images/down-arrow.png";
 import up_arrow from "@/public/images/up-arrow.png";
 import CommentForm from "../CommentForm";
 import { v4 as uuidv4 } from "uuid";
-
 import NewCommentForm from "../NewCommentForm";
-
 import {
   bkColor,
   nameColor,
@@ -37,9 +35,9 @@ const HeaderCont = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 2rem 0 1.5rem;
+  padding: 2rem 0;
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 `;
 
 const LeftLine = styled.div`
@@ -155,7 +153,7 @@ const Image = styled.img`
   }
 `
 const UserComments = styled.div`
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 `;
 
 const CmmtCont = styled.ul`
@@ -285,19 +283,47 @@ const SubmitBtn = styled.button`
 
 //--------------------------------------------------------
 
-const ReviewSection = ({ text = "Reviews" }) => {
-  const { theme, setTheme } = useTheme();
+const ReviewSection = ({
+   text = "Reviews",
+  
+  }) => {
 
+  const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(true);
   const onClick = () => setOpen(!open);
+  const r = useRouter();
+  const { uuid } = r.query;
+  const [userInput, setUserInput] = useState("");
+  const [reviews, setReviews] = useState([]);
+  const [userNickname, setUserNickname] = useState("");
+  const [todayDate, setTodayDate] = useState(new Date().toDateString());
 
+  useEffect(()=>{
+    if(uuid){
+      const UpdateReviews = async() =>{
+        const res = await ax.get('/api/save',{
+          params: { uuid: r.query.uuid }
+        });
+        if (res.data !== false) {
+          setReviews(res.data.reviews)
+        }
+        console.log("reviews from db", res.data.reviews)
+        }
+      UpdateReviews();
+    }
+  },[uuid]) 
   //--------------------------New Comment Form Functions-----------------
 
   //---------------------User Input COMMENT--------------------------
-  const [userInput, setUserInput] = useState("");
-  const [todoList, setTodoList] = useState([]);
+ 
 
-  const [userNickname, setUserNickname] = useState("");
+  //Nickname input
+  // const handleChangeName = (e) => {
+  //     e.preventDefault()
+
+  //     setUserNickname(e.target.value)
+  //     console.log(userNickname)
+  // }
 
   //Comment box input
 
@@ -306,8 +332,10 @@ const ReviewSection = ({ text = "Reviews" }) => {
     e.preventDefault();
 
     setUserInput(e.target.value);
-    console.log(userInput);
+    //console.log(userInput);
 
+    //  setUserNickname(e.target.value)
+    //  console.log(userNickname)
   };
   //2 functions and pass in 1 object
 
@@ -316,28 +344,49 @@ const ReviewSection = ({ text = "Reviews" }) => {
     e.preventDefault();
 
     setUserNickname(e.target.value);
-    console.log(userNickname);
+    //console.log(userNickname);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();  
 
-    setTodoList([
-      { comment: userInput, nickname: userNickname, date: todayDate },
-      ...todoList,
-    ]);
+    const review = { comment: userInput, nickname: userNickname, date: todayDate }
+      //setReviews((prev)=>([...prev,review]));
+      setReviews([...reviews,review])
+      console.log("reviews handle save",reviews)
+      
+      const res = await ax.patch('/api/save',{
+        uuid,
+        reviews,
+      })
 
+
+
+    // setNameList([
+    //     userNickname,
+    //     ...todoList
+    // ])
   };
+
   //-------------------------End Comment-------------------------------------
 
+  //-------------------------Test Date-----------------------------------
+  //  const [dateTime, setDateTime] = useState(new Date());
 
-  const [todayDate, setTodayDate] = useState();
-  const today = new Date().toDateString();
+  //  useEffect(() => {
+  //      const id = setInterval(() => setDateTime(new Date()), 1000);
+  //      return () => {
+  //          clearInterval(id);
+  //      }
+  //  }, []);
+
+
 
   //----------------------------------------------------------------------
 
   return (
     <Cont>
+      {/* <h4>{`${dateTime.toLocaleDateString()}`}</h4> */}
       <HeaderCont>
         <LeftLine bkcolor={divcolor[theme]}></LeftLine>
         <TitleCont>
@@ -345,12 +394,12 @@ const ReviewSection = ({ text = "Reviews" }) => {
           <Dropdown>
           {open ? (
             <Image
-              src= "/images/down-arrow.png"              
+              src= "../../images/down-arrow.png"              
               onClick={onClick}
             ></Image>
           ) : (
             <Image
-              src ="/images/up-arrow.png" 
+              src ="../../images/up-arrow.png" 
               onClick={onClick}
             ></Image>
           )}
@@ -363,15 +412,15 @@ const ReviewSection = ({ text = "Reviews" }) => {
       <UserComments>
         {open ? (
           <CmmtCont>
-            {todoList.length >= 1 ? (
-              todoList.map((o, i) => {
+            {reviews.length >= 1  ? (
+              reviews.map((o, i) => {
                 return (
                   <CommentCont key={i}>
                     <Comment
-                      comment={o.comment}
-                      username={o.nickname}
-                      date={o.date}
-                    ></Comment>
+                      comment={o?.comment}
+                      username={o?.nickname}
+                      date={o?.date}
+                    />
                   </CommentCont>
                 );
               })

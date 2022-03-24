@@ -1,0 +1,66 @@
+{
+  "112346": {
+    "_id": "6222ad41c8a01a77fcfa405e",
+    "imdbId": 112346,
+    "Imdb Link": "http://www.imdb.com/title/tt112346",
+    "Title": "The American President",
+    "IMDB Score": 6.8,
+    "Genre": "Comedy|Drama|Romance",
+    "Poster": "https://images-na.ssl-images-amazon.com/images/M/MV5BMTI5NDU2NDYzOF5BMl5BanBnXkFtZTYwNDk5MDI5._V1_UY268_CR4,0,182,268_AL_.jpg",
+    "FIELD1": 8187,
+    "show_id": "s8188",
+    "type": "Movie",
+    "title": "The American President",
+    "director": "Rob Reiner",
+    "cast": "Michael Douglas, Annette Bening, Martin Sheen, Michael J. Fox, David Paymer, Samantha Mathis, John Mahoney, Anna Deavere Smith, Nina Siemaszko, Wendie Malick, Shawna Waldron, Richard Dreyfuss, Joshua Malina",
+    "country": "United States",
+    "date_added": "2021-01-01",
+    "release_year": 1995,
+    "rating": "PG-13",
+    "duration": "113",
+    "listed_in": "Comedies, Dramas, Romantic Movies",
+    "description": "The widowed president strikes up a romance with a beautiful Washington lobbyist – but can the couple keep their private and political lives separate?",
+    "year_added": 2021,
+    "month_added": 1,
+    "season_count": 0
+  },
+  "sticker": {
+    "a6546c1a-bc61-4c38-9a88-2e18fab42b57": {
+      "id": "a6546c1a-bc61-4c38-9a88-2e18fab42b57",
+      "src": "/images/dog-happy.png"
+    }
+  },
+  "default": {
+    "112346": {
+      "_id": "6222ad41c8a01a77fcfa405e",
+      "imdbId": 112346,
+      "Imdb Link": "http://www.imdb.com/title/tt112346",
+      "Title": "The American President",
+      "IMDB Score": 6.8,
+      "Genre": "Comedy|Drama|Romance",
+      "Poster": "https://images-na.ssl-images-amazon.com/images/M/MV5BMTI5NDU2NDYzOF5BMl5BanBnXkFtZTYwNDk5MDI5._V1_UY268_CR4,0,182,268_AL_.jpg",
+      "FIELD1": 8187,
+      "show_id": "s8188",
+      "type": "Movie",
+      "title": "The American President",
+      "director": "Rob Reiner",
+      "cast": "Michael Douglas, Annette Bening, Martin Sheen, Michael J. Fox, David Paymer, Samantha Mathis, John Mahoney, Anna Deavere Smith, Nina Siemaszko, Wendie Malick, Shawna Waldron, Richard Dreyfuss, Joshua Malina",
+      "country": "United States",
+      "date_added": "2021-01-01",
+      "release_year": 1995,
+      "rating": "PG-13",
+      "duration": "113",
+      "listed_in": "Comedies, Dramas, Romantic Movies",
+      "description": "The widowed president strikes up a romance with a beautiful Washington lobbyist – but can the couple keep their private and political lives separate?",
+      "year_added": 2021,
+      "month_added": 1,
+      "season_count": 0
+    },
+    "sticker": {
+      "a6546c1a-bc61-4c38-9a88-2e18fab42b57": {
+        "id": "a6546c1a-bc61-4c38-9a88-2e18fab42b57",
+        "src": "/images/dog-happy.png"
+      }
+    }
+  }
+}
