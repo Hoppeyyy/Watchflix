@@ -20,6 +20,7 @@ display:flex;
 flex-direction:row;
 justify-content:space-between;
 border-bottom:5px solid #FFFFFF;
+align-items:center;
 `
 const Text = styled.h3`
 font-size: 36px;

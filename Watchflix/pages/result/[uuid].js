@@ -23,6 +23,9 @@ import { v4 as uuidv4, v4 } from "uuid";
 import StickerBoard from "@/comps/StickerBoard";
 import Sticker from "@/comps/Sticker";
 import Footer from "@/comps/Footer";
+//Socket
+import { io } from "socket.io-client";
+import AnimImage from "@/comps/AnimImage";
 
 const Cont = styled.div`
   width: 100%;
@@ -83,6 +86,11 @@ const StickerCont = styled.div`
   justify-content: center;
   width: 100%;
 `;
+
+const ReactCont = styled.div``
+
+
+
 const Text = styled.h3``;
 const FooterCont = styled.div`
   width: 100%;
@@ -262,6 +270,70 @@ export default function Result() {
   })*/
   };
 
+  //-----------------------Socket----------------------------
+  const [mySoc, setMySoc] = useState(null);
+  const [msgs, setMsgs] = useState([]);
+  const [inputTxt, setInputTxt] = useState("");
+  const [mousePos, setMousePos] = useState({
+    left:0,
+    top:0
+  })
+
+  
+  const [users, setUsers] = useState({});
+
+  useEffect(()=>{
+    // const socket = io("ws://example.com/my-namespace", {
+    //   reconnectionDelayMax: 10000,
+    //   auth: {
+    //     token: "123"
+    //   },
+    //   query: {
+    //     "my-key": "my-value"
+    //   }
+    // });
+    const socket = io("http://localhost:8888");
+
+    socket.on("user_connected", (users)=>{
+      setUsers(users);
+    })
+
+    socket.on("change", (id, txt)=>{
+      // alert(`${id}has connected"`);
+      setMsgs((prev)=>[
+        ...prev,
+        `${id} says ${txt}`
+      ])
+    });
+
+    setMySoc(socket);
+  }, []);
+
+  const SendToIO = async () =>{
+    mySoc.emit("alert_all", inputTxt)
+  }
+
+  const MouseMoveUpdate = async (x, y) =>{
+    console.log(x,y)
+    mySoc.emit("mouse_moved", x, y)
+  }
+
+  const colors = ["green", "yellow", "blue", "red", "purple"];
+
+  const [isImageActive, setIsImageActive] = useState(false);
+  // function clickEventHandler() {
+  //   setIsImageActive(true);
+  // }
+  const clickEventHandler = async () => {
+   setIsImageActive(!isImageActive)
+  }
+  // setIsImageActive(!isImageActive);
+
+  const clickHeart = async () => {
+    setIsImageActive(!isImageActive)
+   }
+
+  
   return (
     <Cont>
       <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
@@ -293,9 +365,40 @@ export default function Result() {
           </ButCont>
         </PageCont>
 
+        {/*----------------------Watch Party Section----------------------------*/}
+        <Divider text="What's Up?"></Divider>
+        <Text>Tell others how you feel about the movie</Text>
+
+            <div onMouseMove={(e)=>MouseMoveUpdate(e.clientX, e.clientY)}>
+            {/* {Object.values(users).map((o,i)=><div style={{
+                background:colors[i%5],
+                position:"relative",
+                width:10,
+                height:10,
+                left:o.left,
+                top:o.top 
+              }} />
+            )} */}
+            <input type='text' onChange={(e)=>setInputTxt(e.target.value)} />
+            <button onClick={SendToIO}>Alert Everyone!</button>
+            {msgs.map((o,i)=><AnimImage src="/images/likes.gif">
+              {o}
+              </AnimImage>)}      
+                        {isImageActive && (
+            <AnimImage src="/images/likes.gif"></AnimImage>
+          )}    
+          {isImageActive && (
+            <AnimImage src="/images/hearts.gif"></AnimImage>
+          )}
+          
+            <button onClick={clickEventHandler}>Like</button>
+            <button onClick={clickHeart}>Heart</button>
+
+          </div>
+
         {/*STICKER SECTION*/}
         <Divider text="Moodboard"></Divider>
-        <Text>Tell others how you feel about the movie</Text>
+        <Text>Rate the differenet elements movie with emoji</Text>
         <DndProvider
           backend={TouchBackend}
           options={{
