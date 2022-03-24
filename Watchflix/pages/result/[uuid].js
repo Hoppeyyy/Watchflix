@@ -279,6 +279,8 @@ export default function Result() {
     top:0
   })
 
+  const [isImageActive, setIsImageActive] = useState(false);
+
   
   const [users, setUsers] = useState({});
 
@@ -310,20 +312,19 @@ export default function Result() {
   }, []);
 
   const SendToIO = async () =>{
-    mySoc.emit("alert_all", inputTxt)
+    mySoc.emit("alert_all", isImageActive)
+    setIsImageActive(!isImageActive)
   }
 
   const MouseMoveUpdate = async (x, y) =>{
-    console.log(x,y)
+   // console.log(x,y)
     mySoc.emit("mouse_moved", x, y)
   }
 
   const colors = ["green", "yellow", "blue", "red", "purple"];
 
-  const [isImageActive, setIsImageActive] = useState(false);
-  // function clickEventHandler() {
-  //   setIsImageActive(true);
-  // }
+  
+
   const clickEventHandler = async () => {
    setIsImageActive(!isImageActive)
   }
@@ -379,20 +380,20 @@ export default function Result() {
                 top:o.top 
               }} />
             )} */}
-            <input type='text' onChange={(e)=>setInputTxt(e.target.value)} />
-            <button onClick={SendToIO}>Alert Everyone!</button>
+            {/* <input type='text' onChange={(e)=>setInputTxt(e.target.value)} /> */}
+            <button onClick={SendToIO}>Like</button>
             {msgs.map((o,i)=><AnimImage src="/images/likes.gif">
               {o}
               </AnimImage>)}      
                         {isImageActive && (
             <AnimImage src="/images/likes.gif"></AnimImage>
           )}    
-          {isImageActive && (
+          {/* {isImageActive && (
             <AnimImage src="/images/hearts.gif"></AnimImage>
-          )}
+          )} */}
           
-            <button onClick={clickEventHandler}>Like</button>
-            <button onClick={clickHeart}>Heart</button>
+            {/* <button onClick={clickEventHandler}>Like</button>
+            <button onClick={clickHeart}>Heart</button> */}
 
           </div>
 
