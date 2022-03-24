@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import { useDrag, useDrop } from 'react-dnd'
+import { useDrag, useDrop } from 'react-dnd';
 import styled from 'styled-components';
 
 const Drag = styled.div`

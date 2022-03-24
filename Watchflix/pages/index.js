@@ -177,13 +177,9 @@ export default function Home() {
     }
     var token = localStorage.getItem("token");
     var username = localStorage.getItem("user");
-    //console.log(username)
     var userData = JSON.parse(username);
-    //console.log(userData.name)
-
-    //console.log(token)
     setUser(token);
-    // setUserName(userData.name);
+    setUserName(userData.name);
   }, []);
 
   var butt_arr = [];
@@ -218,9 +214,6 @@ export default function Home() {
 // ============== Pagination ends
 
 // ============== Authentication
-
-  //console.log(user)
-  //console.log(userName)
   var header_arr = [];
   {
     user
@@ -316,12 +309,7 @@ export default function Home() {
                   genre={item.Genre}
                   rate={item["IMDB Score"]}
                   director={item.director}
-                  /*clicked={
-                    fav[item.imdbId] != undefined &&
-                    fav[item.imdbId] !== null
-                  }*/
                   onClick={(e) => {
-                    // let uid = uuidv4()
                     StoreFav(item);
                     HandleSave(item);
                     r.push(`/result/${item._id}`);
@@ -349,10 +337,6 @@ export default function Home() {
                   genre={item.Genre}
                   rate={item["IMDB Score"]}
                   text={item.description}
-                  /*clicked={
-                    //fav[item.imdbId] != undefined &&
-                    //fav[item.imdbId] !== null
-                  }*/
                   onClick={() => {
                     StoreFav(item);
                     HandleSave(item);

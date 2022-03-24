@@ -1,5 +1,4 @@
 import React, {useState,useEffect} from 'react';
-import { useDrag, useDrop } from 'react-dnd'
 import styled from 'styled-components';
 
 const Img = styled.img`

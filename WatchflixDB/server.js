@@ -33,14 +33,13 @@ io.on('connection', (socket) => {
   users[socket.id] = {left:0, top:0};
   io.emit("user_connected", users);
 
-  //io.emit("change");
+
   socket.on("alert_all", (txt)=>{
     io.emit("change", socket.id, txt);
   })
 
   socket.on("mouse_moved", (x, y)=>{
-    //socket.broadcast.emit - tell everybody but myself
-    //io.emit - tell everybody including myself
+
     socket.broadcast.emit("update_mouse", x, y, socket.id);
   })
 
@@ -54,7 +53,7 @@ server.listen(PORT, () => {
   console.log(`listening on *:${PORT}`);
 });
 
-//-----------------------------------------------
+// mongodb database -----------------------------------------------
 
 app.use(cors());
 app.use(express.json())
@@ -69,6 +68,6 @@ mongoose.connect(config.MONGODB_URL, (err)=>{
 app.use(movieRouter);
 app.use(userRouter);
 app.use(uuidRouter);
-//app.use(todoRouter)
+
 
 app.listen(3001, ()=> console.log('express server is running on 3001'))

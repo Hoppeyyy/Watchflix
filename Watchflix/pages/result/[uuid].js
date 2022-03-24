@@ -123,12 +123,10 @@ export default function Result() {
   const [userName, setUserName] = useState();
   const [stickers, setStickers] = useState([]);
   const [reviews, setReviews] = useState([]);
-  //const [reviews, setReviews] = useState()
   const { theme, setTheme } = useTheme();
   const { fav, setFav } = useFav();
   const [data, setData] = useState()
 
-  //console.log("value is", Object.values(fav));
 
   const onChangeView = () => {
     if (View === false) {
@@ -156,16 +154,12 @@ export default function Result() {
         const res = await ax.get("/api/findmovie", {
           params: { uuid: r.query.uuid }
         });
-        //console.log("res",res)
-        //console.log("item", res.data)
-        //console.log("fav",fav);
+
 
         if (res.data !== false) {
-          //setFav(res.data)
+
           setData([res.data])
-          //console.log("data", data)
-          //console.log("data",res.data);
-          //setSticker(res.data.stickers)
+
         }
        
       };
@@ -178,14 +172,9 @@ export default function Result() {
 
         if (res.data !== false) {
           setStickers(res.data.stickers)
-          //setReviews(res.data.reviews)
-          //setReviews(res.data.reviews)
         }
         console.log("res", res.data)
-        //console.log("reviews", res.data.reviews)
-        //console.log("sticker",res.data.stickers[0])
-        //console.log("stickers",stickers)
-        //console.log(...stickers[id])
+   
       };
 
       UpdateUuid();
@@ -195,24 +184,21 @@ export default function Result() {
     }
     var token = localStorage.getItem('token');
     var username = localStorage.getItem('user');
-    //console.log(username)
     var userData = JSON.parse(username)
-    //console.log(userData.name)
-    //console.log(token)
     setUser(token)
-    // setUserName(userData.name)
+    setUserName(userData.name)
   }, [uuid]);
 
 
   // ============== Authentication
 
-  //console.log(user)
+ 
   var header_arr = [];
   {
     user ?
       (header_arr.push(<Header2
         onInput={(e) => {
-          //PageClick(1, e.target.value);
+        
         }}
         onSearchClick={(searchTerm) => {
 
@@ -251,7 +237,7 @@ export default function Result() {
       />)) : (
         header_arr.push(<Header
           onInput={(e) => {
-            //PageClick(1, e.target.value);
+       
           }}
           onSearchClick={(searchTerm) => {
 
@@ -300,39 +286,15 @@ export default function Result() {
     })
 
     setStickers(tempStickers)
-    console.log("this is temp",tempStickers)
-    console.log("sticky:",stickers)
-    //setStickers([...stickers, {data} ])
- 
-    // let sticker ={
-    //   ...stickers[id],
-    //   ...data
-    // }
-    // setStickers([
-    //   {...sticker}
-    // ])
-    // stickers[id]={
-    //   ...stickers[id],
-    //   ...data
-    // }
-    // setStickers({
-    //   ...stickers
-    // })
-    //console.log("sticky:",stickers)
+    
   }
   const HandleStickerSave = async () => {
-    console.log("sticker handle save", {
-      uuid,
-      stickers,
-
-    })
-    //console.log("sticker",sticker)
     const res = await ax.patch('/api/save', {
       uuid,
       stickers,
     })
 
-    //console.log("sticker",stickers)
+
 
   }
 
@@ -353,7 +315,7 @@ export default function Result() {
     })
 
     socket.on("change", ()=>{
-      // alert(`${id}has connected"`);
+     
       setMsgs((prev)=>[
         ...prev,
         LikesImg,
@@ -368,19 +330,7 @@ export default function Result() {
     setIsImageActive(!isImageActive)
   }
 
-  // const MouseMoveUpdate = async (x, y) =>{
-  //  // console.log(x,y)
-  //   mySoc.emit("mouse_moved", x, y)
-  // }
 
-  // const clickEventHandler = async () => {
-  //  setIsImageActive(!isImageActive)
-  // }
-  // // setIsImageActive(!isImageActive);
-
-  // const clickHeart = async () => {
-  //   setIsImageActive(!isImageActive)
-  //  }
 
   return (
     <Cont>
@@ -445,13 +395,9 @@ export default function Result() {
             const n_id = uuidv4();
             console.log("ondrop", n_id)
             if(item.type === 'sticker'){
-            //const newS = [...stickers, ...[{ id: n_id, ...item }]]
-            //  setStickers(newS)
+        
           setStickers((prev)=>([...prev, {id:n_id, item, src:item.src, img:item.img, pos:item.pos}]))
-          // setStickers((prev)=>({
-          //   ...prev,
-          //   [n_id]:{id:n_id, src:item.src, img:item.img, pos:item.pos}
-          // }))
+         
           console.log("stickerboard sticker", stickers)
             }
 
