@@ -68,7 +68,7 @@ const ButCont = styled.div`
   }
 
   @media only screen and (max-width: 560px) {
-    sjustify-content: center;
+    justify-content: center;
     margin-top: 30px;
   }
 `;
@@ -82,7 +82,8 @@ const StickerCont = styled.div`
   z-index: 1;
 `
 const Text = styled.h3`
-color: ${props => props.basicColor};
+  color: ${props => props.basicColor};
+  margin-bottom: 1rem;
 `
 
 const SubmitBtn = styled.button`
