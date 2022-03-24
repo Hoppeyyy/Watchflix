@@ -17,6 +17,10 @@ import { v4 as uuidv4 } from 'uuid';
 import StickerBoard from '@/comps/StickerBoard';
 import Sticker from '@/comps/Sticker';
 import Footer from "@/comps/Footer";
+//Socket
+import { io } from "socket.io-client";
+import AnimImage from "@/comps/AnimImage";
+import LikesImg from '../../public/images/likes.gif';
 
 const Cont = styled.div`
   width: 100%;
@@ -72,6 +76,7 @@ const ButCont = styled.div`
     margin-top: 30px;
   }
 `;
+
 const StickerCont = styled.div`
   display:flex;
   justify-content: center;
@@ -87,6 +92,22 @@ const FooterCont = styled.div`
   padding: 0 2rem;
   background-color: ${(props) => props.colbg};
   box-shadow: ${(props) => props.shadow};
+`;
+
+const ReactCont = styled.div`
+  
+`;
+
+const LikesCont = styled.div`
+  display:flex;
+`;
+
+const LikesBtn = styled.button`
+  border-radius:20px;
+  border:none;
+  background-color:#F9E7E7;
+  width:100px;
+  height:50px;
 `;
 
 export default function Result() {
@@ -179,7 +200,7 @@ export default function Result() {
     //console.log(userData.name)
     //console.log(token)
     setUser(token)
-    setUserName(userData.name)
+    // setUserName(userData.name)
   }, [uuid]);
 
 
@@ -316,6 +337,51 @@ export default function Result() {
   }
 
 
+  //-----------------------Socket----------------------------
+  const [mySoc, setMySoc] = useState(null);
+  const [msgs, setMsgs] = useState([]);
+
+  const [isImageActive, setIsImageActive] = useState(false);
+
+  const [users, setUsers] = useState({});
+
+  useEffect(()=>{
+    const socket = io("http://localhost:8888");
+
+    socket.on("user_connected", (users)=>{
+      setUsers(users);
+    })
+
+    socket.on("change", ()=>{
+      // alert(`${id}has connected"`);
+      setMsgs((prev)=>[
+        ...prev,
+        LikesImg,
+      ])
+    });
+
+    setMySoc(socket);
+  }, []);
+
+  const SendToIO = async () =>{
+    mySoc.emit("alert_all", isImageActive)
+    setIsImageActive(!isImageActive)
+  }
+
+  // const MouseMoveUpdate = async (x, y) =>{
+  //  // console.log(x,y)
+  //   mySoc.emit("mouse_moved", x, y)
+  // }
+
+  // const clickEventHandler = async () => {
+  //  setIsImageActive(!isImageActive)
+  // }
+  // // setIsImageActive(!isImageActive);
+
+  // const clickHeart = async () => {
+  //   setIsImageActive(!isImageActive)
+  //  }
+
   return (
     <Cont>
 
@@ -348,6 +414,22 @@ export default function Result() {
             <ClickButton src={uuid} cwidth='' />
           </ButCont>
         </PageCont>
+
+        {/*----------------------Watch Party Section----------------------------*/}
+        <Divider text="What's Up?"></Divider>
+        <Text>Tell others how you feel about the movie</Text>
+
+            <ReactCont>
+              <LikesCont>
+              {msgs.map((o,i)=><AnimImage src="/images/likes.gif">
+              {o.LikesImg}
+              </AnimImage>)}  
+              </LikesCont>
+
+            <LikesBtn onClick={SendToIO}>Like</LikesBtn>
+    
+
+          </ReactCont>
 
         {/*STICKER SECTION*/}
 

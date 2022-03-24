@@ -183,7 +183,7 @@ export default function Home() {
 
     //console.log(token)
     setUser(token);
-    setUserName(userData.name);
+    // setUserName(userData.name);
   }, []);
 
   var butt_arr = [];
