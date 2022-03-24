@@ -26,6 +26,7 @@ import Footer from "@/comps/Footer";
 //Socket
 import { io } from "socket.io-client";
 import AnimImage from "@/comps/AnimImage";
+import LikesImg from '../../public/images/likes.gif';
 
 const Cont = styled.div`
   width: 100%;
@@ -88,7 +89,6 @@ const StickerCont = styled.div`
 `;
 
 const ReactCont = styled.div``
-
 
 
 const Text = styled.h3``;
@@ -273,38 +273,23 @@ export default function Result() {
   //-----------------------Socket----------------------------
   const [mySoc, setMySoc] = useState(null);
   const [msgs, setMsgs] = useState([]);
-  const [inputTxt, setInputTxt] = useState("");
-  const [mousePos, setMousePos] = useState({
-    left:0,
-    top:0
-  })
 
   const [isImageActive, setIsImageActive] = useState(false);
 
-  
   const [users, setUsers] = useState({});
 
   useEffect(()=>{
-    // const socket = io("ws://example.com/my-namespace", {
-    //   reconnectionDelayMax: 10000,
-    //   auth: {
-    //     token: "123"
-    //   },
-    //   query: {
-    //     "my-key": "my-value"
-    //   }
-    // });
     const socket = io("http://localhost:8888");
 
     socket.on("user_connected", (users)=>{
       setUsers(users);
     })
 
-    socket.on("change", (id, txt)=>{
+    socket.on("change", ()=>{
       // alert(`${id}has connected"`);
       setMsgs((prev)=>[
         ...prev,
-        `${id} says ${txt}`
+        LikesImg,
       ])
     });
 
@@ -321,20 +306,15 @@ export default function Result() {
     mySoc.emit("mouse_moved", x, y)
   }
 
-  const colors = ["green", "yellow", "blue", "red", "purple"];
+  // const clickEventHandler = async () => {
+  //  setIsImageActive(!isImageActive)
+  // }
+  // // setIsImageActive(!isImageActive);
 
-  
+  // const clickHeart = async () => {
+  //   setIsImageActive(!isImageActive)
+  //  }
 
-  const clickEventHandler = async () => {
-   setIsImageActive(!isImageActive)
-  }
-  // setIsImageActive(!isImageActive);
-
-  const clickHeart = async () => {
-    setIsImageActive(!isImageActive)
-   }
-
-  
   return (
     <Cont>
       <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
@@ -370,30 +350,12 @@ export default function Result() {
         <Divider text="What's Up?"></Divider>
         <Text>Tell others how you feel about the movie</Text>
 
-            <div onMouseMove={(e)=>MouseMoveUpdate(e.clientX, e.clientY)}>
-            {/* {Object.values(users).map((o,i)=><div style={{
-                background:colors[i%5],
-                position:"relative",
-                width:10,
-                height:10,
-                left:o.left,
-                top:o.top 
-              }} />
-            )} */}
-            {/* <input type='text' onChange={(e)=>setInputTxt(e.target.value)} /> */}
+            <div>
+
             <button onClick={SendToIO}>Like</button>
             {msgs.map((o,i)=><AnimImage src="/images/likes.gif">
-              {o}
+              {o.LikesImg}
               </AnimImage>)}      
-                        {isImageActive && (
-            <AnimImage src="/images/likes.gif"></AnimImage>
-          )}    
-          {/* {isImageActive && (
-            <AnimImage src="/images/hearts.gif"></AnimImage>
-          )} */}
-          
-            {/* <button onClick={clickEventHandler}>Like</button>
-            <button onClick={clickHeart}>Heart</button> */}
 
           </div>
 
