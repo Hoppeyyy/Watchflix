@@ -143,13 +143,7 @@ const LikesCont = styled.div`
   display:flex;
 `;
 
-const LikesBtn = styled.button`
-  border-radius:20px;
-  border:none;
-  background-color:#F9E7E7;
-  width:100px;
-  height:50px;
-`;
+
 
 export default function Result() {
   const r = useRouter();
@@ -416,8 +410,13 @@ export default function Result() {
               {o.LikesImg}
               </AnimImage>)}  
               </LikesCont>
-
-            <LikesBtn onClick={SendToIO}>Like</LikesBtn>
+            <ButCont marginT = '20'>
+            <SubmitBtn 
+            onClick={SendToIO}
+            bgcolor={bkColor[theme]}
+            hovpopbg={hovBkDColor[theme]}
+            >Like</SubmitBtn>
+            </ButCont>
     
 
           </ReactCont>
