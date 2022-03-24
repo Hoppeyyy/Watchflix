@@ -406,7 +406,7 @@ export default function Result() {
 
             <ReactCont>
               <LikesCont>
-              {msgs.map((o,i)=><AnimImage src="/images/likes.gif">
+              {msgs.map((o,i)=><AnimImage src="https://media.giphy.com/media/xThtayC2XaYiQMybss/giphy.gif">
               {o.LikesImg}
               </AnimImage>)}  
               </LikesCont>
