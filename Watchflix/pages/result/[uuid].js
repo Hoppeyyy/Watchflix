@@ -9,13 +9,15 @@ import ReviewSection from "@/comps/ReviewSection";
 import styled from "styled-components";
 import Header from "@/comps/Header/index";
 import Header2 from "@/comps/Header/index2";
-import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
+import { basicColor, whiteblack, shadow, hBttnBkColor, fShadow, } from "@/utils/variables";
 // sticker
 import { TouchBackend } from 'react-dnd-touch-backend'
 import { DndProvider } from 'react-dnd'
 import { v4 as uuidv4 } from 'uuid';
 import StickerBoard from '@/comps/StickerBoard';
 import Sticker from '@/comps/Sticker';
+import Footer from "@/comps/Footer";
+
 const Cont = styled.div`
   width: 100%;
   height: 100%;
@@ -30,8 +32,8 @@ const HeadCont = styled.div`
   align-items: center;
   // margin-bottom: 80px;
   padding: 0 2rem;
-  background-color: ${props => props.colbg};
-  box-shadow: ${props => props.shadow};
+  background-color: ${(props) => props.colbg};
+  box-shadow: ${(props) => props.shadow};
 `;
 
 const BodyCont = styled.div`
@@ -55,6 +57,20 @@ const ButCont = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 50px;
+  margin-right: 8%;
+
+  @media only screen and (min-width: 950px) and (max-width: 1444px) {
+    margin-right: 0;
+  }
+
+  @media only screen and (min-width: 561px) and (max-width: 949px) {
+    margin-right: 8%;
+  }
+
+  @media only screen and (max-width: 560px) {
+    justify-content: center;
+    margin-top: 30px;
+  }
 `;
 const StickerCont = styled.div`
   display:flex;
@@ -66,6 +82,13 @@ const StickerCont = styled.div`
 const Text = styled.h3`
 color: ${props => props.basicColor};
 `
+const FooterCont = styled.div`
+  width: 100%;
+  padding: 0 2rem;
+  background-color: ${(props) => props.colbg};
+  box-shadow: ${(props) => props.shadow};
+`;
+
 export default function Result() {
   const r = useRouter();
   const { uuid } = r.query;
@@ -181,26 +204,22 @@ export default function Result() {
         handleColor={() => onChangeColor()}
 
         onAscClick={() => {
-          setSbr(sbr)
-          setSba(!sba)
-          setSbrType(null)
-          setSbaType(sba_type === "asc" ? "desc" : "asc")
-        }
-        }
-
+          setSbr(sbr);
+          setSbrType("");
+          setSba(!sba);
+          setSbaType(sba_type === "asc" ? "desc" : "asc");
+        }}
         onRateClick={() => {
-          setSba(sba)
-          setSbr(!sbr)
-          setSbaType(null)
-          setSbrType(sbr_type === "asc" ? "desc" : "asc")
-        }
-        }
+          setSba(sba);
+          setSbaType("");
+          setSbr(!sbr);
+          setSbrType(sbr_type === "desc" ? "asc" : "desc");
+        }}
+        ascBkColor={sba ? hBttnBkColor[theme] : "white"}
+        ascChildren={sba ? "Sort By Z-A" : "Sort By A-Z"}
+        rateBkColor={sbr ? hBttnBkColor[theme] : "white"}
+        rateChildren={sbr ? "Descending Rate" : "Acending Rate"}
 
-        ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-        ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
-
-        rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-        rateChildren={sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
         user={userName}
         AuthOutClick={() => {
           setUser("")
@@ -226,26 +245,22 @@ export default function Result() {
           handleColor={() => onChangeColor()}
 
           onAscClick={() => {
-            setSbr(sbr)
-            setSba(!sba)
-            setSbrType(null)
-            setSbaType(sba_type === "asc" ? "desc" : "asc")
-          }
-          }
+              setSbr(sbr);
+              setSbrType("");
+              setSba(!sba);
+              setSbaType(sba_type === "asc" ? "desc" : "asc");
+            }}
+            onRateClick={() => {
+              setSba(sba);
+              setSbaType("");
+              setSbr(!sbr);
+              setSbrType(sbr_type === "desc" ? "asc" : "desc");
+            }}
+            ascBkColor={sba ? hBttnBkColor[theme] : "white"}
+            ascChildren={sba ? "Sort By Z-A" : "Sort By A-Z"}
+            rateBkColor={sbr ? hBttnBkColor[theme] : "white"}
+            rateChildren={sbr ? "Descending Rate" : "Acending Rate"}
 
-          onRateClick={() => {
-            setSba(sba)
-            setSbr(!sbr)
-            setSbaType(null)
-            setSbrType(sbr_type === "asc" ? "desc" : "asc")
-          }
-          }
-
-          ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
-          ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
-
-          rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
-          rateChildren={sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
           AuthSignClick={() => {
             r.push("/signup");
           }}
@@ -256,8 +271,6 @@ export default function Result() {
       )
   }
   //---------------Moodboard------------------------
-
-
 
   const HandleUpdateSticker = (id, data) => {
     let tempStickers = stickers.map((i) => {
@@ -310,7 +323,7 @@ export default function Result() {
         {header_arr}
       </HeadCont>
 
-      {/* ====================== Body area ==================================== */}
+{/* ====================== Body area ==================================== */}
       <BodyCont>
         <Divider text="Result"></Divider>
 
@@ -396,10 +409,14 @@ export default function Result() {
         {/*REVIEW SECTION*/}
        
         <ReviewSection 
-        text="Reviews"
-        
+        text="Reviews"        
         />
       </BodyCont>
+
+{/* ====================== Footer area ==================================== */}
+      <FooterCont colbg={whiteblack[theme]} shadow={fShadow[theme]}>
+        <Footer />
+      </FooterCont>
     </Cont>
   );
 }
