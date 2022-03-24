@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState, useRef } from "react";
-import { useTheme, useResult, useFav } from "@/utils/provider";
+import { useTheme, useFav } from "@/utils/provider";
 import ax from "axios";
 import ClickButton from "@/comps/ClickButton";
 import Detail from "@/comps/Detail";
@@ -9,21 +9,13 @@ import ReviewSection from "@/comps/ReviewSection";
 import styled from "styled-components";
 import Header from "@/comps/Header/index";
 import Header2 from "@/comps/Header/index2";
-import {
-  basicColor,
-  whiteblack,
-  shadow,
-  hBttnBkColor,
-  fShadow,
-} from "@/utils/variables";
+import { basicColor, whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
 // sticker
-import { TouchBackend } from "react-dnd-touch-backend";
-import { DndProvider } from "react-dnd";
-import { v4 as uuidv4, v4 } from "uuid";
-import StickerBoard from "@/comps/StickerBoard";
-import Sticker from "@/comps/Sticker";
-import Footer from "@/comps/Footer";
-
+import { TouchBackend } from 'react-dnd-touch-backend'
+import { DndProvider } from 'react-dnd'
+import { v4 as uuidv4 } from 'uuid';
+import StickerBoard from '@/comps/StickerBoard';
+import Sticker from '@/comps/Sticker';
 const Cont = styled.div`
   width: 100%;
   height: 100%;
@@ -38,8 +30,8 @@ const HeadCont = styled.div`
   align-items: center;
   // margin-bottom: 80px;
   padding: 0 2rem;
-  background-color: ${(props) => props.colbg};
-  box-shadow: ${(props) => props.shadow};
+  background-color: ${props => props.colbg};
+  box-shadow: ${props => props.shadow};
 `;
 
 const BodyCont = styled.div`
@@ -63,53 +55,36 @@ const ButCont = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 50px;
-  margin-right: 8%;
-
-  @media only screen and (min-width: 950px) and (max-width: 1444px) {
-    margin-right: 0;
-  }
-
-  @media only screen and (min-width: 561px) and (max-width: 949px) {
-    margin-right: 8%;
-  }
-
-  @media only screen and (max-width: 560px) {
-    justify-content: center;
-    margin-top: 30px;
-  }
 `;
 const StickerCont = styled.div`
-  display: flex;
+  display:flex;
   justify-content: center;
-  width: 100%;
-`;
-const Text = styled.h3``;
-const FooterCont = styled.div`
-  width: 100%;
-  padding: 0 2rem;
-  background-color: ${(props) => props.colbg};
-  box-shadow: ${(props) => props.shadow};
-`;
-
+  width:100%;
+  padding:2rem;
+  background:#C4C4C4;
+`
+const Text = styled.h3`
+color: ${props => props.basicColor};
+`
 export default function Result() {
   const r = useRouter();
   const { uuid } = r.query;
-  const { result, setResult } = useResult();
-  const [data, setData] = useState([]);
   const [View, setView] = useState(true);
   const [color, setColor] = useState(true);
   const [sbr, setSbr] = useState(false);
   const [sba, setSba] = useState(false);
   const [sba_type, setSbaType] = useState("asc");
   const [sbr_type, setSbrType] = useState("desc");
-  const [inptxt, setInpTxt] = useState("");
-  const [cur_page, setCurPage] = useState([]);
-  const [movie_num, setMovie_num] = useState();
-  const { theme, setTheme } = useTheme();
-  const [user, setUser] = useState(null);
-  const { fav, setFav } = useFav();
+  const [user, setUser] = useState(null)
   const [userName, setUserName] = useState();
-  console.log("value is", Object.values(fav));
+  const [stickers, setStickers] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  //const [reviews, setReviews] = useState()
+  const { theme, setTheme } = useTheme();
+  const { fav, setFav } = useFav();
+  const [data, setData] = useState()
+
+  //console.log("value is", Object.values(fav));
 
   const onChangeView = () => {
     if (View === false) {
@@ -120,7 +95,6 @@ export default function Result() {
       console.log("set to posterbox");
     }
   };
-
   const onChangeColor = () => {
     if (color === false) {
       setTheme(theme === "dark" ? "light" : "dark");
@@ -132,205 +106,278 @@ export default function Result() {
   };
 
   useEffect(() => {
+    console.log("query", r.query.uuid)
     if (uuid) {
-      const GetUuid = async () => {
-        const res = await ax.get("/api/save", {
-          params: {
-            uuid,
-          },
+      const FindMovie = async () => {
+        const res = await ax.get("/api/findmovie", {
+          params: { uuid: r.query.uuid }
         });
-        if (res.data !== false) {
-          setResult(res.data);
-          console.log(res.data);
-        }
-      };
-      GetUuid();
-    }
-  }, [uuid]);
+        //console.log("res",res)
+        //console.log("item", res.data)
+        //console.log("fav",fav);
 
-  // ============== Authentication
-  useEffect(() => {
+        if (res.data !== false) {
+          //setFav(res.data)
+          setData([res.data])
+          //console.log("data", data)
+          //console.log("data",res.data);
+          //setSticker(res.data.stickers)
+        }
+       
+      };
+      FindMovie();
+
+      const UpdateUuid = async () => {
+        const res = await ax.get("/api/save", {
+          params: { uuid: r.query.uuid }
+        });
+
+        if (res.data !== false) {
+          setStickers(res.data.stickers)
+          //setReviews(res.data.reviews)
+          //setReviews(res.data.reviews)
+        }
+        console.log("res", res.data)
+        //console.log("reviews", res.data.reviews)
+        //console.log("sticker",res.data.stickers[0])
+        //console.log("stickers",stickers)
+        //console.log(...stickers[id])
+      };
+
+      UpdateUuid();
+    }
     if (!globalThis.localStorage) {
       return;
     }
-    var token = localStorage.getItem("token");
-    var username = localStorage.getItem("user");
+    var token = localStorage.getItem('token');
+    var username = localStorage.getItem('user');
     //console.log(username)
-    var userData = JSON.parse(username);
+    var userData = JSON.parse(username)
     //console.log(userData.name)
-    console.log(token);
-    setUser(token);
-    // setUserName(userData.name)
+    //console.log(token)
+    setUser(token)
+    setUserName(userData.name)
+  }, [uuid]);
 
-    // do server side stuff
-  }, []);
-  console.log(user);
+
+  // ============== Authentication
+
+  //console.log(user)
   var header_arr = [];
   {
-    user
-      ? header_arr.push(
-          <Header2
-            onInput={(e) => {
-              //PageClick(1, e.target.value);
-            }}
-            onSearchClick={(searchTerm) => {
-              PageClick(1, searchTerm);
-            }}
-            isView={View}
-            isColor={color}
-            handleView={() => onChangeView()}
-            handleColor={() => onChangeColor()}
-            onAscClick={() => {
-              setSbr(sbr);
-              setSbrType("");
-              setSba(!sba);
-              setSbaType(sba_type === "asc" ? "desc" : "asc");
-            }}
-            onRateClick={() => {
-              setSba(sba);
-              setSbaType("");
-              setSbr(!sbr);
-              setSbrType(sbr_type === "desc" ? "asc" : "desc");
-            }}
-            ascBkColor={sba ? hBttnBkColor[theme] : "white"}
-            ascChildren={sba ? "Sort By Z-A" : "Sort By A-Z"}
-            rateBkColor={sbr ? hBttnBkColor[theme] : "white"}
-            rateChildren={sbr ? "Descending Rate" : "Acending Rate"}
-            user={userName}
-            AuthOutClick={() => {
-              setUser("");
-              localStorage.removeItem("token");
-            }}
-          />
-        )
-      : header_arr.push(
-          <Header
-            onInput={(e) => {
-              //PageClick(1, e.target.value);
-            }}
-            onSearchClick={(searchTerm) => {
-              PageClick(1, searchTerm);
-            }}
-            isView={View}
-            isColor={color}
-            handleView={() => onChangeView()}
-            handleColor={() => onChangeColor()}
-            onAscClick={() => {
-              setSbr(sbr);
-              setSbrType("");
-              setSba(!sba);
-              setSbaType(sba_type === "asc" ? "desc" : "asc");
-            }}
-            onRateClick={() => {
-              setSba(sba);
-              setSbaType("");
-              setSbr(!sbr);
-              setSbrType(sbr_type === "desc" ? "asc" : "desc");
-            }}
-            ascBkColor={sba ? hBttnBkColor[theme] : "white"}
-            ascChildren={sba ? "Sort By Z-A" : "Sort By A-Z"}
-            rateBkColor={sbr ? hBttnBkColor[theme] : "white"}
-            rateChildren={sbr ? "Descending Rate" : "Acending Rate"}
-            AuthSignClick={() => {
-              r.push("/signup");
-            }}
-            AuthLogClick={() => {
-              r.push("/login");
-            }}
-          />
-        );
+    user ?
+      (header_arr.push(<Header2
+        onInput={(e) => {
+          //PageClick(1, e.target.value);
+        }}
+        onSearchClick={(searchTerm) => {
+
+          PageClick(1, searchTerm)
+
+        }}
+        isView={View}
+        isColor={color}
+        handleView={() => onChangeView()}
+        handleColor={() => onChangeColor()}
+
+        onAscClick={() => {
+          setSbr(sbr)
+          setSba(!sba)
+          setSbrType(null)
+          setSbaType(sba_type === "asc" ? "desc" : "asc")
+        }
+        }
+
+        onRateClick={() => {
+          setSba(sba)
+          setSbr(!sbr)
+          setSbaType(null)
+          setSbrType(sbr_type === "asc" ? "desc" : "asc")
+        }
+        }
+
+        ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+        ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
+
+        rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+        rateChildren={sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+        user={userName}
+        AuthOutClick={() => {
+          setUser("")
+          localStorage.removeItem('token')
+
+        }
+        }
+      />)) : (
+        header_arr.push(<Header
+          onInput={(e) => {
+            //PageClick(1, e.target.value);
+          }}
+          onSearchClick={(searchTerm) => {
+
+            PageClick(1, searchTerm)
+
+          }}
+
+
+          isView={View}
+          isColor={color}
+          handleView={() => onChangeView()}
+          handleColor={() => onChangeColor()}
+
+          onAscClick={() => {
+            setSbr(sbr)
+            setSba(!sba)
+            setSbrType(null)
+            setSbaType(sba_type === "asc" ? "desc" : "asc")
+          }
+          }
+
+          onRateClick={() => {
+            setSba(sba)
+            setSbr(!sbr)
+            setSbaType(null)
+            setSbrType(sbr_type === "asc" ? "desc" : "asc")
+          }
+          }
+
+          ascBkColor={sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+          ascChildren={sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A"}
+
+          rateBkColor={sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+          rateChildren={sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+          AuthSignClick={() => {
+            r.push("/signup");
+          }}
+          AuthLogClick={() => {
+            r.push("/login");
+          }}
+        />)
+      )
   }
   //---------------Moodboard------------------------
 
-  const [sticker, setSticker] = useState({});
-  const [img, setImg] = useState(false);
-  console.log(sticker);
+
 
   const HandleUpdateSticker = (id, data) => {
-    sticker[id] = {
-      ...sticker[id],
-      ...data,
-    };
-    setSticker({
-      ...sticker,
-    });
-    /*setSticker({
-    ...sticker,
-    id:{
-      data
-    }
-  })*/
-  };
+    let tempStickers = stickers.map((i) => {
+      if (i.id == id) return data
+      return i
+    })
+
+    setStickers(tempStickers)
+    console.log("this is temp",tempStickers)
+    console.log("sticky:",stickers)
+    //setStickers([...stickers, {data} ])
+ 
+    // let sticker ={
+    //   ...stickers[id],
+    //   ...data
+    // }
+    // setStickers([
+    //   {...sticker}
+    // ])
+    // stickers[id]={
+    //   ...stickers[id],
+    //   ...data
+    // }
+    // setStickers({
+    //   ...stickers
+    // })
+    //console.log("sticky:",stickers)
+  }
+  const HandleStickerSave = async () => {
+    console.log("sticker handle save", {
+      uuid,
+      stickers,
+
+    })
+    //console.log("sticker",sticker)
+    const res = await ax.patch('/api/save', {
+      uuid,
+      stickers,
+    })
+
+    //console.log("sticker",stickers)
+
+  }
+
 
   return (
     <Cont>
+
       <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
         {header_arr}
       </HeadCont>
 
-{/* ====================== Body area ==================================== */}
+      {/* ====================== Body area ==================================== */}
       <BodyCont>
         <Divider text="Result"></Divider>
 
         <PageCont>
-          {Object.values(fav).map((item, i) => (
-            // <div>
-            <Detail
-              alt={item.Title}
-              title={item.Title}
-              director={item.director}
-              genre={item.Genre}
-              cast={item.cast}
-              description={item.description}
-              rate={item["IMDB Score"]}
-              src={item.Poster}
-              bttnSrc={uuid}
-            />
-            // </div>
+          {data && Object.values(data).map(item => (
+            <div>
+              <Detail
+                alt={item.Title}
+                title={item.Title}
+                director={item.director}
+                genre={item.Genre}
+                cast={item.cast}
+                description={item.description}
+                rate={item["IMDB Score"]}
+                src={item.Poster}
+              />
+            </div>
           ))}
           <ButCont>
-            <ClickButton src={uuid} cwidth="" />
+            <ClickButton src={uuid} cwidth='' />
           </ButCont>
         </PageCont>
 
         {/*STICKER SECTION*/}
+
         <Divider text="Moodboard"></Divider>
-        <Text>Tell others how you feel about the movie</Text>
-        <DndProvider
-          backend={TouchBackend}
-          options={{
-            enableTouchEvents: false,
-            enableMouseEvents: true,
+        <Text
+          basicColor={basicColor[theme]}
+        >Tell others how you feel about the movie</Text>
+        <DndProvider backend={TouchBackend} options={{
+          enableTouchEvents: false,
+          enableMouseEvents: true
+        }}>
+          <StickerBoard onDropItem={(item) => {
+            const n_id = uuidv4();
+            console.log("ondrop", n_id)
+            if(item.type === 'sticker'){
+            //const newS = [...stickers, ...[{ id: n_id, ...item }]]
+            //  setStickers(newS)
+          setStickers((prev)=>([...prev, {id:n_id, item, src:item.src, img:item.img, pos:item.pos}]))
+          // setStickers((prev)=>({
+          //   ...prev,
+          //   [n_id]:{id:n_id, src:item.src, img:item.img, pos:item.pos}
+          // }))
+          console.log("stickerboard sticker", stickers)
+            }
+
           }}
-        >
-          <StickerBoard
-            onDropItem={(item) => {
-              //console.log(ns);
-              const n_id = uuidv4();
-              // ns[n_id] = {
-              //   id:n_id
-              // };
-              if (item.type === "sticker") {
-                setSticker((prev) => ({
-                  ...prev,
-                  [n_id]: { id: n_id, src: item.src },
-                }));
-              }
-            }}
           >
-            {Object.values(sticker).map((o) => {
-              return (
-                <Sticker
-                  type="boardsticker"
-                  key={o.id}
-                  dragImg={o.img}
-                  stickerpos={o.pos}
-                  src={o.src}
-                  onUpdateSticker={(obj) => HandleUpdateSticker(o.id, obj)}
-                ></Sticker>
-              );
-            })}
+
+            {stickers && Object.values(stickers).map(o => (
+              <Sticker
+                type='boardsticker'
+                key={o?.id}
+                id={o?.id}
+                dragImg={o?.img}
+                stickerpos={o?.pos}
+                src={o?.src}
+                onUpdateSticker={
+                  (obj) => HandleUpdateSticker(o?.id, obj)
+                }
+
+              >
+
+              </Sticker>))}
           </StickerBoard>
+
           {/* Sticker images here */}
           <StickerCont>
             <Sticker src="/images/laughing.png"></Sticker>
@@ -343,16 +390,16 @@ export default function Result() {
             <Sticker src="/images/clown.png"></Sticker>
             <Sticker src="/images/angry.png"></Sticker>
           </StickerCont>
+          <button onClick={HandleStickerSave}>Save</button>
         </DndProvider>
 
         {/*REVIEW SECTION*/}
-        <ReviewSection text="Reviews" />
+       
+        <ReviewSection 
+        text="Reviews"
+        
+        />
       </BodyCont>
-
-{/* ====================== Footer area ==================================== */}
-      <FooterCont colbg={whiteblack[theme]} shadow={fShadow[theme]}>
-        <Footer />
-      </FooterCont>
     </Cont>
   );
 }

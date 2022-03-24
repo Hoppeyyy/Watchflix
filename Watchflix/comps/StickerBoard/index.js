@@ -15,11 +15,16 @@ flex-direction:column;
 `
 const Top = styled.div`
 width:100%;
-height:20%;
+height:10%;
 display:flex;
 flex-direction:row;
 justify-content:space-between;
 border-bottom:5px solid #FFFFFF;
+padding:4rem;
+`
+const Drop = styled.div`
+width:100%;
+height:10%;
 `
 const Text = styled.h3`
 font-size: 36px;
@@ -28,8 +33,6 @@ align-items: center;
 text-align:center;
 justify-content:center;
 color: #FFFFFF;
-padding:6rem;
-
 `
 const Bot = styled.div`
 width:100%;
@@ -43,6 +46,7 @@ display:flex;
 flex-direction:row;
 border-right:5px solid #FFFFFF;
 `
+
 const StickerBoard = ({
   //props
   children=null,
@@ -66,6 +70,9 @@ const StickerBoard = ({
       bg = {canDrop && isOver ? '#538D95':'#AAD6DC'}
 		>
     <Cont>
+    <Drop>
+    {children}
+    </Drop>
     <Top>
       <Text>Ost</Text>
       <Text>Scene</Text>
@@ -78,8 +85,7 @@ const StickerBoard = ({
       <Box/>
       <Box style={{borderRight:'none'}}/>
     </Bot>
-    </Cont>
-      {children}
+      </Cont>
 		</DropCont>
 }
 

@@ -124,13 +124,14 @@ const Text = styled.h3`
 display:flex;
 align-items:center;
 text-align:center;
+color: ${props => props.basicColor};
 `
 
 const Header = ({
   rowbg = bgpopup,
   colbg = bgpopup,
   width = 30,
-  src = "/images/watchflix_logo.svg",
+  src = "/images/watchflix_logo.png",
   onInput=()=>{},
   onSearchClick = () => {},
   handleView = () => {},
@@ -140,10 +141,10 @@ const Header = ({
   onAscClick = () => {},
   onRateClick = () => {},
   AuthOutClick = () =>{},
-  ascBkColor,
-  rateBkColor,
-  ascChildren,
-  rateChildren,
+  ascBkColor = null,
+  rateBkColor = null,
+  ascChildren = null,
+  rateChildren = null,
   user="",
 }) => {
   // const { theme } = useTheme();
@@ -177,7 +178,9 @@ const Header = ({
         />
 
         <AuthBox>
-      <Text>Welcome {user}</Text>
+      <Text
+      basicColor={basicColor[theme]}
+      >Welcome {user}</Text>
       <AuthBtn
       text="Log Out"
       AuthClick={AuthOutClick}

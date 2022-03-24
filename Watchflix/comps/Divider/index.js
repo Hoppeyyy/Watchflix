@@ -22,21 +22,12 @@ const LeftLine = styled.div`
   border: none;
   width: 15%;
   height: 20px;
-  transition: all 0.3s;
 
-  @media only screen and (min-width: 951px) and (max-width: 1200px)  {
+  @media only screen and (min-width: 566px) and (max-width: 700px) {
     width: 20%;
   }
 
-  @media only screen and (min-width: 651px) and (max-width: 950px)  {
-    width: 25%;
-  }
-
-  @media only screen and (min-width: 451px) and (max-width: 650px) {
-    width: 30%;
-  }
-
-  @media only screen and (min-width: 1px)  and (max-width: 450px) {
+  @media only screen and (max-width: 565px) {
     width: 25%;
   }
 `;
@@ -45,23 +36,14 @@ const RightLine = styled.div`
   background-color: ${props => props.bkcolor};
   border-radius: 10px;
   border: none;
-  width: 70%;
+  width: 60%;
   height: 20px;
-  transition: all 0.3s;
 
-  @media only screen and (min-width: 951px) and (max-width: 1200px) {
-    width: 65%;
-  }
-
-  @media only screen and (min-width: 651px) and (max-width: 950px) {
+  @media only screen and (min-width: 566px) and (max-width: 700px) {
     width: 50%;
   }
 
-  @media only screen and (min-width: 451px) and (max-width: 650px) {
-    width: 30%;
-  }
-
-  @media only screen and (min-width: 1px)  and (max-width: 450px) {
+  @media only screen and (max-width: 565px) {
     width: 25%;
   }
 `;
@@ -69,23 +51,14 @@ const RightLine = styled.div`
 const TitleCont = styled.div`
   padding-left: 20px;
   padding-right: 20px;
-  width: 15%;
+  width: 25%;
   box-sizing: border-box;
-  transition: all 0.3s;
-
-  @media only screen and (min-width: 951px) and (max-width: 1200px) {
-    width: 20%;
-  }
   
-  @media only screen and (min-width: 651px) and (max-width: 950px) {
-    width: 25%;
+  @media only screen and (min-width: 566px) and (max-width: 700px) {
+    width: 30%;
   }
 
-  @media only screen and (min-width: 451px) and (max-width: 650px) {
-    width: 40%;
-  }
-
-  @media only screen and (max-width: 450px) {
+  @media only screen and (max-width: 565px) {
     width: 50%;
   }
 `
@@ -93,18 +66,17 @@ const TitleCont = styled.div`
 const Title = styled.h3`  
   color: ${props => props.color};
   
-  @media only screen and (min-width: 651px) and (max-width: 700px) {
+  @media only screen and (min-width: 566px) and (max-width: 700px) {
     font-size: 1.75em;   
   }
 
-  @media only screen and (min-width: 396px) and (max-width: 650px) {
+  @media only screen and (min-width: 396px) and (max-width: 565px) {
     font-size: 1.75em;
     text-align: center;
   }
 
   @media only screen and (max-width: 395px) {
     font-size: 1.25em;
-    text-align: center;
   }
 `;
 

@@ -13,10 +13,13 @@ position:${position};
 `
 const Img = styled.img`
 width:60px;
+height:60px;
+margin:1rem;
 `
 
 const Sticker = ({
   //props
+  id,
   type='sticker',
   children=null,
   stickerpos=null,
@@ -34,6 +37,7 @@ const Sticker = ({
   });
 //const [content, setContent] = useState(notecontent || `Add Sticker ${children || ''}`)
 const [img, setImg] = useState(dragImg ||`${children||src}`)
+
 // each time position changes remember the position
 useEffect(()=>{
   if(type ==='boardsticker')
@@ -41,7 +45,8 @@ useEffect(()=>{
   onUpdateSticker({
     pos,
     img,
- 
+    src,
+    id,
     })
   }
 },[pos,img])
@@ -49,7 +54,7 @@ useEffect(()=>{
 const [{ isDragging,coords }, drag, dragPreview] = useDrag(() => ({
 		// "type" is required. It is used by the "accept" specification of drop targets.
     type,
-    item: {src, type},
+    item: {src,type,img,pos},
     end:(item,monitor)=>{
       if(type ==='boardsticker'){
         setPos({

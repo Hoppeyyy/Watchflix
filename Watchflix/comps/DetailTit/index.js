@@ -3,7 +3,6 @@ import ax from 'axios';
 import { useState, useEffect } from "react";
 import { useTheme } from "@/utils/provider";
 import styled from 'styled-components';
-import { bkColor, themes, barColor } from "@/utils/variables";
 
 const Cont = styled.div`
   width: ${props => props.conWidth};
@@ -17,48 +16,29 @@ const Cont = styled.div`
 `
 
 const Title = styled.h4`
-  padding-left: 1.25rem;
+  padding-left: 1em;
   min-width: ${props => props.minWidth};
-  max-width: 50%;
-  background-image: ${props => props.barUrl};
-  background-size: 5px 28px;
+  background: url(${props => props.barUrl});
+  // background: url(${props => props.barUrl === 'light' ? `url('./images/icon_verBar.svg)` : `url('./images/icon_verBar.svg)`});
+  background-size: auto;
   background-repeat: no-repeat;
   background-position: left center; 
   
-  @media only screen and (max-width: 560px) {
-    font-size: 1.125em;
-    min-width: 8rem;
+  @media only screen and (min-width: 1001px) and (max-width: 1100px) {
+    padding-left: 0;
   } 
 `
 
-const Movie = styled.h3`
-  text-align: left;
-
-  @media only screen and (max-width: 480px) {
-    font-size: 1.5em;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-`
+const Movie = styled.h3``
 
 const Text  = styled.p`
   white-space: wrap;
-  
-  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: ${props => props.clamp};
   -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
   margin-bottom: ${props => props.marginB}rem;
-
-  @media only screen and (max-width: 560px) {
-    font-size: 0.875em;
-    word-break: break-word;
-  }
 `
 
 const DetailTit = ({
@@ -66,7 +46,7 @@ const DetailTit = ({
   conHeight = "4.5em",
   conAlign = "center",
   marginB = "2em",
-  minWidth = "8em",
+  minWidth = "8.75em",
   title = "Title",
   movieTitle = "Alive",
   text = "",
@@ -88,7 +68,10 @@ const DetailTit = ({
       {/* <Rect /> */}
       <Title
         minWidth = {minWidth}
-        barUrl =  {barColor[theme]}
+        style = {{
+          background: theme ? "url(../images/icon_verBarLight.svg)" : "url(../images/icon_verBarDark.svg)",
+          backgroundRepeat: "no-repeat"
+        }}
         // barUrl = {barUrl}
       >
         {title}

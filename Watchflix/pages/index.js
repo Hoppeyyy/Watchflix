@@ -1,19 +1,17 @@
 import styled from "styled-components";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { useTheme, useResult, useFav } from "@/utils/provider";
+import { useTheme, useFav } from "@/utils/provider";
 import { useRouter, Router } from "next/router";
 import ax from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { setRequestMeta } from "next/dist/server/request-meta";
 import HMovie from "@/comps/HMovie";
 import PosterBox from "@/comps/PosterBox";
 import PageBttn from "@/comps/PageBttn";
 import React from "react";
 import Header from "@/comps/Header/index";
 import Header2 from "@/comps/Header/index2";
-import Footer from "@/comps/Footer";
-import { basicColor, whiteblack, shadow, hBttnBkColor, fShadow,} from "@/utils/variables";
+import {whiteblack, shadow, hBttnBkColor } from "@/utils/variables";
 
 const Cont = styled.div`
   width: 100%;
@@ -36,9 +34,9 @@ const PagCont = styled.div`
   dislplay: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 50px;
   flex-wrap: wrap;
   padding: 2rem 1rem;
-  margin-bottom: 2rem;
 `;
 
 const Wrap = styled.div`
@@ -62,13 +60,6 @@ const PageCont = styled.div`
   align-items: center;
 `;
 
-const FooterCont = styled.div`
-  width: 100%;
-  padding: 0 2rem;
-  background-color: ${(props) => props.colbg};
-  box-shadow: ${(props) => props.shadow};
-`;
-
 var timer = null;
 
 export default function Home() {
@@ -81,15 +72,14 @@ export default function Home() {
   const [sba_type, setSbaType] = useState("asc");
   const [sbr_type, setSbrType] = useState("desc");
   const [inptxt, setInpTxt] = useState("");
-  const { result, setResult } = useResult();
   const [cur_page, setCurPage] = useState([]);
   const [movie_num, setMovie_num] = useState();
   const { theme, setTheme } = useTheme();
   const [user, setUser] = useState();
   const [userName, setUserName] = useState();
   const { fav, setFav } = useFav();
-  const [uid, setUid] = useState(uuidv4());
-
+  const [ uid, setUid] = useState(uuidv4())
+ 
   const onChangeView = () => {
     if (View === false) {
       setView(true);
@@ -113,27 +103,34 @@ export default function Home() {
   const { uuid } = r.query;
 
   const HandleSave = async (item) => {
-    const m_obj = {};
+    //const m_obj = {};
 
-    m_obj[item.imdbId] = item;
-
-    console.log("this is my fav", uuid);
-    const resp = await ax.post("/api/save", {
-      uuid: uid,
-      item: m_obj,
+    //m_obj[item.imdbId] = item;
+    
+    //console.log("this is my fav", uuid);
+    //console.log("this is my fav", item);
+    //console.log("itemId",item._id)
+    //console.log("uuid",{item:item._id})
+    const resp = await ax.put("/api/save", {
+      //uuid,
+      //item
+      //item: m_obj,
+      uuid:item._id,
     });
   };
 
-  const StoreResult = (item) => {
+ 
+  const StoreFav = (item) => {
     console.log(item);
     console.log("clicked");
 
     const b_obj = {};
     b_obj[item.imdbId] = item;
-    setResult(b_obj);
+    setFav(b_obj);
   };
 
-// ============== Pagination Starts
+// ============== PaginatioWn
+
   const PageClick = async (p, txt) => {
     var obj = {};
     if (txt) {
@@ -141,7 +138,6 @@ export default function Home() {
       obj.sort_alpha = sba_type;
       obj.sort_rating = sbr_type;
     }
-
     if (timer) {
       clearTimeout(timer);
       timer = null;
@@ -154,7 +150,6 @@ export default function Home() {
           params: {
             page: p,
             num: 10,
-            // sort_rating:sbr_type,
             ...obj,
           },
         });
@@ -174,6 +169,20 @@ export default function Home() {
 
   useEffect(() => {
     PageClick(1, r.query.search || "");
+
+  if ( !globalThis.localStorage ) {
+    return;
+  }
+  var token = localStorage.getItem('token');
+  var username = localStorage.getItem('user');
+  //console.log(username)
+  var userData = JSON.parse(username)
+  //console.log(userData.name)
+
+  //console.log(token)
+  setUser(token)
+  setUserName(userData.name)
+
   }, []);
 
   var butt_arr = [];
@@ -205,123 +214,117 @@ export default function Home() {
   }
 
   butt_arr = butt_arr.slice(cur_page - 2 < 0 ? 0 : cur_page - 2, lastpage);
+
 // ============== Pagination ends
 
 // ============== Authentication
-  useEffect(() => {
-    if (!globalThis.localStorage) {
-      return;
+
+
+//console.log(user)
+//console.log(userName)
+var header_arr =[];
+{user?
+  (header_arr.push(<Header2
+   
+    onSearchClick={(searchTerm)=>{
+      
+        PageClick(1, searchTerm)
+      
+    }}
+    isView={View}
+    isColor={color}
+    handleView={() => onChangeView()}
+    handleColor={() => onChangeColor()}
+
+    onAscClick={()=>{
+      setSbr(sbr)
+      setSba(!sba)
+      setSbrType(null)
+      setSbaType(sba_type === "asc" ? "desc" : "asc")}          
     }
-    var token = localStorage.getItem("token");
-    var username = localStorage.getItem("user");
-    //console.log(username)
-    var userData = JSON.parse(username);
-    console.log(token);
-    setUser(token);
-    // setUserName(userData.name);
-    //LogoutClick(token, forget)
 
-    // do server side stuff
-  }, []);
+    onRateClick={()=>{            
+      setSba(sba)
+      setSbr(!sbr)
+      setSbaType(null)
+      setSbrType(sbr_type === "asc" ? "desc" : "asc")}
+    }
 
-  console.log(user);
-  console.log(userName);
-  var header_arr = [];
-  {
-    user
-      ? header_arr.push(
-          <Header2
-            onInput={(e) => {
-              //PageClick(1, e.target.value);
-            }}
-            onSearchClick={(searchTerm) => {
-              PageClick(1, searchTerm);
-            }}
-            isView={View}
-            isColor={color}
-            handleView={() => onChangeView()}
-            handleColor={() => onChangeColor()}
-            onAscClick={() => {
-              setSbr(false);
-              setSbrType("");
-              setSba(!sba);
-              setSbaType(sba_type === "desc" ? "asc" : "desc");
-            }}
-            onRateClick={() => {
-              setSba(false);
-              setSbaType("");
-              setSbr(!sbr);
-              setSbrType(sbr_type === "desc" ? "asc" : "desc");
-            }}            
-            ascBkColor={sba ? hBttnBkColor[theme]: "white"}
-            ascChildren={sba ? "Sort By Z-A" : "Sort By A-Z"}
+    ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+    ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
 
-            rateBkColor={sbr ? hBttnBkColor[theme] :"white"}
-            rateChildren={sbr ? "Descending Rate" : "Acending Rate"}
+    rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+    rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+    user={userName}
+    AuthOutClick = {()=>{
+      setUser("")
+      localStorage.removeItem('token')
+    }
+    }
+  />)):(
+    header_arr.push(<Header
+    
+      onSearchClick={(searchTerm)=>{
+        
+          PageClick(1, searchTerm)
+        
+      }}
+  
+  
+      isView={View}
+      isColor={color}
+      handleView={() => onChangeView()}
+      handleColor={() => onChangeColor()}
+  
+      onAscClick={()=>{
+        setSbr(sbr)
+        setSba(!sba)
+        setSbrType(null)
+        setSbaType(sba_type === "asc" ? "desc" : "asc")}          
+      }
+  
+      onRateClick={()=>{            
+        setSba(sba)
+        setSbr(!sbr)
+        setSbaType(null)
+        setSbrType(sbr_type === "asc" ? "desc" : "asc")}
+      }
+  
+      ascBkColor = {sba_type === "desc" ? hBttnBkColor[theme] : "white"}
+      ascChildren = {sba_type === "asc" ? "Sort By A-Z" : "Sort By Z-A" }
+  
+      rateBkColor = {sbr_type === "desc" ? "white" : hBttnBkColor[theme]}
+      rateChildren = {sbr_type === "asc" ? "Acending Rate" : "Descending Rate"}
+      AuthSignClick={() =>{
+        r.push("/signup");
+      }}
+     AuthLogClick={()=>{
+      r.push("/login");
+     }}
+    />)
+  )
+}
 
-            user={userName}
-            AuthOutClick={() => {
-              setUser("");
-              localStorage.removeItem("token");
-            }}
-          />
-        )
-      : header_arr.push(
-          <Header
-            onInput={(e) => {
-              //PageClick(1, e.target.value);
-            }}
-            onSearchClick={(searchTerm) => {
-              PageClick(1, searchTerm);
-            }}
-            isView={View}
-            isColor={color}
-            handleView={() => onChangeView()}
-            handleColor={() => onChangeColor()}
-            onAscClick={() => {
-              setSbr(false);
-              setSbrType("");
-              setSba(!sba);
-              setSbaType(sba_type === "desc" ? "asc" : "desc");
-            }}
-            onRateClick={() => {
-              setSba(false);
-              setSbaType("");
-              setSbr(!sbr);
-              setSbrType(sbr_type === "desc" ? "asc" : "desc");
-            }}            
-            ascBkColor={sba ? hBttnBkColor[theme]: "white"}
-            ascChildren={sba ? "Sort By Z-A" : "Sort By A-Z"}
+  
 
-            rateBkColor={sbr ? hBttnBkColor[theme] :"white"}
-            rateChildren={sbr ? "Descending Rate" : "Acending Rate"}
 
-            AuthSignClick={() => {
-              r.push("/signup");
-            }}
-            AuthLogClick={() => {
-              r.push("/login");
-            }}
-          />
-        );
-  }
+    
 
   return (
     <Cont>
       <HeadCont colbg={whiteblack[theme]} shadow={shadow[theme]}>
 {/* ====================== Input and Button area ==================================== */}
-        {header_arr}
-      </HeadCont>
+    {header_arr}
+    </HeadCont>
 
 {/* ====================== Filtering result show below  ==================================== */}
-      {View ? (
-        <PagCont>
-          <Wrap>
-            {data &&
-              data.length > 0 &&
-              data.map((item, i) => (
+    {View ? (
+      <PagCont>
+        <Wrap>
+          {data && data.length > 0
+            ? data.map((item) => (
                 <HMovie
-                  key={item.imdbId + "ind" + i}
+                  key={item.imdbId}
                   title={item.Title}
                   alt={item.Title}
                   year={item.release_year}
@@ -331,30 +334,48 @@ export default function Home() {
                   genre={item.Genre}
                   rate={item["IMDB Score"]}
                   director={item.director}
-                  clicked={
-                    result[item.imdbId] != undefined &&
-                    result[item.imdbId] !== null
-                  }
+                  /*clicked={
+                    fav[item.imdbId] != undefined &&
+                    fav[item.imdbId] !== null
+                  }*/
                   onClick={(e) => {
                     // let uid = uuidv4()
-                    StoreResult(item);
+                    StoreFav(item);
                     HandleSave(item);
-                    r.push(`/result/${uid}`);
+                    r.push(`/result/${item._id}`);
+                  }}
+                />
+              ))
+            : data.slice(0, 10).map((item) => (
+                <HMovie
+                  key={item.imdbId}
+                  title={item.Title}
+                  alt={item.Title}
+                  year={item.release_year}
+                  src={item.Poster}
+                  place={item.country}
+                  director={item.director}
+                  text={item.description}
+                  genre={item.Genre}
+                  rate={item["IMDB Score"]}
+                  onClick={() => {
+                    StoreFav(item);
+                    HandleSave(item);
+                    r.push(`/result/${item._id}`);
                   }}
                 />
               ))}
-          </Wrap>
-          {/* <Pagination /> */}
-          <PageCont>{butt_arr}</PageCont>
-        </PagCont>
-      ) : (
-        <PagCont>
-          <Wrap>
-            {data &&
-              data.length > 0 &&
-              data.map((item, i) => (
+        </Wrap>
+        {/* <Pagination /> */}
+        <PageCont>{butt_arr}</PageCont>
+      </PagCont>
+    ) : (
+      <PagCont>
+        <Wrap>
+          {data && data.length > 0
+            ? data.map((item) => (
                 <PosterBox
-                  key={item.imdbId + "ind" + i}
+                  key={item.imdbId}
                   title={item.Title}
                   alt={item.Title}
                   year={item.release_year}
@@ -364,26 +385,41 @@ export default function Home() {
                   genre={item.Genre}
                   rate={item["IMDB Score"]}
                   text={item.description}
-                  clicked={
-                    result[item.imdbId] != undefined &&
-                    result[item.imdbId] !== null
-                  }
+                  /*clicked={
+                    //fav[item.imdbId] != undefined &&
+                    //fav[item.imdbId] !== null
+                  }*/
                   onClick={() => {
-                    StoreResult(item);
+                    StoreFav(item);
                     HandleSave(item);
-                    r.push(`/result/${uid}`);
+                    r.push(`/result/${item._id}`);
+                  }}
+                />
+              ))
+            : data.slice(0, 10).map((item) => (
+                <PosterBox
+                  key={item.imdbId}
+                  title={item.Title}
+                  alt={item.Title}
+                  year={item.release_year}
+                  src={item.Poster}
+                  place={item.country}
+                  director={item.director}
+                  genre={item.Genre}
+                  rate={item["IMDB Score"]}
+                  text={item.description}
+                  onClick={() => {
+                    StoreFav(item);
+                    HandleSave(item);
+                    r.push(`/result/${item._id}`);
                   }}
                 />
               ))}
-          </Wrap>
-          {/* <Pagination /> */}
-          <PageCont>{butt_arr}</PageCont>
-        </PagCont>
-      )}
-
-      <FooterCont colbg={whiteblack[theme]} shadow={fShadow[theme]}>
-        <Footer />
-      </FooterCont>
-    </Cont>
-  );
+        </Wrap>
+        {/* <Pagination /> */}
+        <PageCont>{butt_arr}</PageCont>
+      </PagCont>
+    )}
+  </Cont>
+);
 }

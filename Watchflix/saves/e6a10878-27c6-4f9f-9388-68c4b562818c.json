@@ -1,0 +1,13 @@
+{
+  "sticker": {
+    "c226328f-0309-4f34-93ec-e0f01ed31d4d": {
+      "id": "c226328f-0309-4f34-93ec-e0f01ed31d4d",
+      "src": "/images/smile.png",
+      "pos": {
+        "left": 0,
+        "top": 0,
+        "position": "relative"
+      }
+    }
+  }
+}

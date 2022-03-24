@@ -1,10 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useTheme } from "@/utils/provider";
 import Link from "next/link";
-import { inputFocus} from "@/utils/variables";
-
 
 const Cont = styled.div`
   width: 40%;
@@ -28,15 +25,13 @@ const SearchInput = styled.input`
   border: solid 1px #b08584;
   border-radius: 30px;
   padding: 1rem 1.5rem;
-  background: #fff;
+  background-color: #fff;
   position: relative;
+  margin-right: 2rem;
   box-sizing: border-box;
 
-  : focus {
-    background-color: ${props => props.inFocus} ;
-  }
-
   @media only screen and (min-width: 1px) and (max-width: 870px) {
+    // width: 80%;
     margin: 1rem;
   }
 `;
@@ -45,7 +40,7 @@ const Bttn = styled.button`
   width: 24px; height: 24px;
   position: absolute;
   top: 50%;
-  right: 2rem;
+  right: 52px;
   margin-top: -12px;
   border: none;
   cursor: pointer;
@@ -61,7 +56,6 @@ const Bttn = styled.button`
 const SearchBar = ({ onClick = () => {} }) => {
   const r = useRouter();
   const [search, setSearch] = useState();
-  const { theme, setTheme } = useTheme();
 
   return (
     <Cont action="/?searh=movie" method="get">
@@ -75,7 +69,6 @@ const SearchBar = ({ onClick = () => {} }) => {
         id="header-search"
         placeholder="Search for a Movie Title or Genre..."
         name="s"
-        inFocus = {inputFocus[theme]}
         onChange={(e) => {
           setSearch(e.target.value);
         }}

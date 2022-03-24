@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const movieRouter = require('./Routes/movieRoute')
 const config = require('./config')
 const userRouter = require('./Routes/userRoute')
+const uuidRouter = require('./Routes/uuidRoute')
 
 app.use(cors());
 app.use(express.json())
@@ -18,6 +19,7 @@ mongoose.connect(config.MONGODB_URL, (err)=>{
 
 app.use(movieRouter);
 app.use(userRouter);
+app.use(uuidRouter);
 //app.use(todoRouter)
 
 app.listen(3001, ()=> console.log('express server is running on 3001'))

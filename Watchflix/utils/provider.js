@@ -5,8 +5,6 @@ import { themes } from "./variables";
 const initialStates = {
   theme: "light",
   setTheme: () => {},
-  result: {},
-  setResult: () => {},
   fav: {},
   setFav: () => {},
 };
@@ -15,15 +13,11 @@ const MyContext = createContext(initialStates);
 
 export default function AppProvider({ children }) {
   const [theme, setTheme] = useState(initialStates.theme);
-
-  const [result, setResult] = useState({});
-  //console.log("Result",result);
-
   const [fav, setFav] = useState({});
 
   return (
     <MyContext.Provider
-      value={{ theme, setTheme, result, setResult, fav, setFav }}
+      value={{ theme, setTheme, fav, setFav }}
     >
       <style jsx global>
         {`
@@ -42,12 +36,6 @@ export default function AppProvider({ children }) {
 export function useTheme() {
   const { theme, setTheme } = useContext(MyContext);
   return { theme, setTheme };
-}
-
-//use the Context to create Hooks like useTheme
-export function useResult() {
-  const { result, setResult } = useContext(MyContext);
-  return { result, setResult };
 }
 
 // 3/14/22 =====

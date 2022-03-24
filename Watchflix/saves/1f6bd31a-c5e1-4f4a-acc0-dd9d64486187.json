@@ -1,0 +1,14 @@
+{
+  "pos": {
+    "left": 0,
+    "top": 0,
+    "position": "relative"
+  },
+  "img": "/images/dog-happy.png",
+  "sticker": {
+    "b07ec5b4-fb20-4962-b0df-719ba5ccd83a": {
+      "id": "b07ec5b4-fb20-4962-b0df-719ba5ccd83a",
+      "src": "/images/dog-happy.png"
+    }
+  }
+}

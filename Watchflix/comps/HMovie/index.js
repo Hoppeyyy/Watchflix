@@ -12,7 +12,6 @@ import {
   hovBkColor,
   hovPColor,btnColor,
   hBttnBkColor,
-  basicGColor
 } from "@/utils/variables";
 import { movie } from "@/utils/combine";
 
@@ -38,7 +37,6 @@ const Cont = styled.div`
     // max-height: 220px;
     margin-right: 0;
     flex-direction: column;
-    margin-bottom: 5rem;
   }
 `;
 
@@ -90,7 +88,7 @@ const DescCont = styled.div`
 
   @media only screen and (max-width: 600px) {
     width: 100%;
-    border-radius: 0 0 20px 20px;
+    border-radius: 0;
   }
 `;
 const Top = styled.div`
@@ -153,11 +151,6 @@ const GnereTxt = styled.p`
 
 const Desc = styled.p`
   color: ${(props) => props.color};
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-
   @media only screen and (min-width: 600px) {
     padding: 0.8rem;
     text-overflow: ellipsis;
@@ -185,7 +178,7 @@ const BtnCont = styled.div`
   display: flex;
   justify-content: right;
   position: absolute;
-  bottom: 2em;
+  bottom: 3em;
   right: 3em;
 
   @media only screen and (max-width: 600px) {
@@ -287,7 +280,7 @@ const HMovie = ({
             </GnereTxt>
           </SubWrap>
         </Top>
-        <Desc color={basicGColor[theme]} className="hoverTxt">
+        <Desc color={basicColor[theme]} className="hoverTxt">
           {text}
         </Desc>
         <BtnCont>

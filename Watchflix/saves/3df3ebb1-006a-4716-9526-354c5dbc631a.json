@@ -1,0 +1,29 @@
+{
+  "item": {
+    "2112124": {
+      "_id": "6222ad42c8a01a77fcfa44d3",
+      "imdbId": 2112124,
+      "Imdb Link": "http://www.imdb.com/title/tt2112124",
+      "Title": "Chennai Express",
+      "IMDB Score": 6,
+      "Genre": "Action|Comedy|Musical",
+      "Poster": "https://images-na.ssl-images-amazon.com/images/M/MV5BZGFmMzQwNzEtZTIwNy00Nzc4LTk1YzEtYWFmNWUxZDYwODcwL2ltYWdlXkEyXkFqcGdeQXVyNjQ2MjQ5NzM@._V1_UY268_CR1,0,182,268_AL_.jpg",
+      "FIELD1": 301,
+      "show_id": "s302",
+      "type": "Movie",
+      "title": "Chennai Express",
+      "director": "Rohit Shetty",
+      "cast": "Shah Rukh Khan, Deepika Padukone, Nikitin Dheer, Satyaraj, Kamini Kaushal, Lekh Tandon, Mukesh Tiwari",
+      "country": "India",
+      "date_added": "2021-08-05",
+      "release_year": 2013,
+      "rating": "TV-14",
+      "duration": "135",
+      "listed_in": "Action & Adventure, Comedies, International Movies",
+      "description": "What could have been a sad journey turns joyful for Rahul when he falls in love with a woman en route to submerging his grandfather's ashes.",
+      "year_added": 2021,
+      "month_added": 8,
+      "season_count": 0
+    }
+  }
+}
