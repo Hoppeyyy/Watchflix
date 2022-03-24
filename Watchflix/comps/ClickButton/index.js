@@ -121,7 +121,7 @@ const ClickButton = ({
       cwidth={cwidth}
       onClick={togglePopup}
     >
-      {isOpen && <PopUp src={uuid} myurl={uuid} handleClose={togglePopup} />}
+      {isOpen && <PopUp src={uuid} myurl={'http://localhost:3000/result/'+uuid} handleClose={togglePopup} />}
       <ButtonInput
         type={type}
         bkColor={bkColor[theme]}
