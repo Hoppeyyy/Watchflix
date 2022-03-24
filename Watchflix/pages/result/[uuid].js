@@ -9,7 +9,7 @@ import ReviewSection from "@/comps/ReviewSection";
 import styled from "styled-components";
 import Header from "@/comps/Header/index";
 import Header2 from "@/comps/Header/index2";
-import { basicColor, whiteblack, shadow, hBttnBkColor, fShadow, } from "@/utils/variables";
+import { bkColor, hovColor, hovBkDColor,basicColor, whiteblack, shadow, hBttnBkColor, fShadow, } from "@/utils/variables";
 // sticker
 import { TouchBackend } from 'react-dnd-touch-backend'
 import { DndProvider } from 'react-dnd'
@@ -60,7 +60,7 @@ const ButCont = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-top: 50px;
+  margin-top: ${props => props.marginT}px;
   margin-right: 8%;
 
   @media only screen and (min-width: 950px) and (max-width: 1444px) {
@@ -72,7 +72,7 @@ const ButCont = styled.div`
   }
 
   @media only screen and (max-width: 560px) {
-    justify-content: center;
+    sjustify-content: center;
     margin-top: 30px;
   }
 `;
@@ -80,13 +80,53 @@ const ButCont = styled.div`
 const StickerCont = styled.div`
   display:flex;
   justify-content: center;
+  flex-wrap: wrap;
   width:100%;
   padding:2rem;
   background:#C4C4C4;
+  z-index: 1;
 `
 const Text = styled.h3`
 color: ${props => props.basicColor};
 `
+
+const SubmitBtn = styled.button`
+  min-width: 250px;
+  height: 70px;
+  border-radius: 20px;
+  border: none;
+  font-size: 1.5em;
+  padding: 1rem 4rem;
+  border-radius: 35px;
+  border: none;
+  background: ${(props) => props.bgcolor};
+  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.2));
+  cursor: pointer;
+  transition: all 0.3s;
+
+  :hover {
+    background: ${(props) => props.hovpopbg};
+    color: #ffffff;
+    transform: scale(0.95);
+    transition-duration: 0.3s;
+  }
+
+  @media only screen and (min-width: 421px) and (max-width:680px) {
+    min-width: 150px;
+    width: 50%; 
+    padding: 1rem;
+    height: 60px;
+    font-size: 1.25rem;  
+  }
+
+  @media only screen and (max-width:420px) {
+    font-size: 0.875rem; 
+    min-width: 150px;
+    width: 50%; 
+    padding: 1rem;
+    height: 60px;   
+  }
+`;
 const FooterCont = styled.div`
   width: 100%;
   padding: 0 2rem;
@@ -410,7 +450,7 @@ export default function Result() {
               />
             </div>
           ))}
-          <ButCont>
+          <ButCont marginT = '50'>
             <ClickButton src={uuid} cwidth='' />
           </ButCont>
         </PageCont>
@@ -487,7 +527,15 @@ export default function Result() {
             <Sticker src="/images/clown.png"></Sticker>
             <Sticker src="/images/angry.png"></Sticker>
           </StickerCont>
-          <button onClick={HandleStickerSave}>Save</button>
+          <ButCont marginT = '20'>
+            <SubmitBtn 
+              onClick={HandleStickerSave}
+              bgcolor={bkColor[theme]}
+              hovpopbg={hovBkDColor[theme]}
+            >
+              Save
+            </SubmitBtn>
+          </ButCont>
         </DndProvider>
 
         {/*REVIEW SECTION*/}
