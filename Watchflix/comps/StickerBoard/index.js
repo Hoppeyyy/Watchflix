@@ -14,25 +14,47 @@ display:flex;
 flex-direction:column;
 `
 const Top = styled.div`
-width:100%;
-height:10%;
-display:flex;
-flex-direction:row;
-justify-content:space-between;
-border-bottom:5px solid #FFFFFF;
-padding:4rem;
+  width:100%;
+  height:10%;
+  display:flex;
+  flex-wrap: no-wrap;
+  flex-direction:row;
+  justify-content:  space-between;
+  border-bottom:5px solid #FFFFFF;
+  padding: 2rem 8rem;
+  transition: all 0.3s;
+
+  @media only screen and (min-width: 651px) and (max-width: 1200px) {
+    padding: 2rem 5rem;
+  }
+
+  @media only screen and (min-width: 361px) and (max-width: 650px) {
+    padding: 2rem;
+  }
+
+  @media only screen and (max-width: 360px) {
+    padding: 1rem;
+  }
 `
 const Drop = styled.div`
 width:100%;
 height:10%;
 `
 const Text = styled.h3`
-font-size: 36px;
-display: flex;
-align-items: center;
-text-align:center;
-justify-content:center;
-color: #FFFFFF;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  text-align:center;
+  justify-content:center;
+  color: #FFFFFF;
+
+@media only screen and (min-width: 361px) and (max-width: 560px) {
+  font-size: 2em;
+}
+
+@media only screen and (max-width: 360px) {
+  font-size: 1.5em;
+}
 `
 const Bot = styled.div`
 width:100%;
@@ -71,7 +93,7 @@ const StickerBoard = ({
 		>
     <Cont>
     <Drop>
-    {children}
+      {children}
     </Drop>
     <Top>
       <Text>Ost</Text>
