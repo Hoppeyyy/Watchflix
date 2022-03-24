@@ -334,7 +334,9 @@ export default function Result() {
                 alt={item.Title}
                 title={item.Title}
                 director={item.director}
+                year={item.release_year}
                 genre={item.Genre}
+                country={item.country}
                 cast={item.cast}
                 description={item.description}
                 rate={item["IMDB Score"]}
@@ -409,7 +411,7 @@ export default function Result() {
         {/*REVIEW SECTION*/}
        
         <ReviewSection 
-        text="Reviews"        
+          text="Reviews"        
         />
       </BodyCont>
 

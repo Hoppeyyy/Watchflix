@@ -107,6 +107,11 @@ export const bgpopup = {
 //   dark: '#fff'
 // }
 
+export const basicGColor = {
+  light: "#000000",
+  dark:"#c4c4c4",
+}
+
 export const basicColor = {
   light: "#000000",
   dark:"#FFFFFF",
@@ -132,6 +137,16 @@ export const shadow = {
   dark: 'rgba(0, 0, 0, 0.4) 1.95px 1.95px 2.6px'
 }
 
+export const fShadow = {
+  light: 'rgba(0, 0, 0, 0.15) 1.95px -1.95px 2.6px',
+  dark: 'rgba(0, 0, 0, 0.4) 1.95px -1.95px 2.6px'
+}
+
+export const fImg = {
+  light: 'url("/images/icon_toTop_w.svg")',
+  dark: 'url("/images/icon_toTop_b.svg")',
+}
+
 export const nameColor = {
   light: '#E50914',
   dark: '#fff'
@@ -150,6 +165,16 @@ export const inputborder = {
 export const cmtColor = {
   light: '#333',
   dark: '#c4c4c4'
+}
+
+export const barColor = {
+  light: 'url("/images/icon_verBarLight.svg")',
+  dark: 'url("/images/icon_verBarDark.svg")',
+}
+
+export const inputFocus = {
+  light: 'rgba(249, 231, 231, 0.2)',
+  dark: '#fff',
 }
 
 

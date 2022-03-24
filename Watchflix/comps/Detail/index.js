@@ -52,7 +52,7 @@ const Post = styled.img`
 const DetailCont = styled.div`
   max-width: ${(props) => props.detConWidth};
   min-height: ${(props) => props.detConHeight};
-  padding: 3rem;
+  padding: 2.5rem;
   display: flex;
   flex-direction: column;
   justify-contents: center;
@@ -80,6 +80,9 @@ const Detail = ({
   mdetConWidth = "90%",
   title = "undifined",
   director = "undifined",
+  year = "undifined",
+  country = "undifined",
+  rate = "undifined",
   genre = "undifined",
   cast = "undifined",
   description = "undifined",
@@ -102,12 +105,35 @@ const Detail = ({
           movieTitle=""
           text={director}
           conAlign="flex-start"
+          conHeight = '2em'
+        />
+        <DetailTit
+          title="Year"
+          movieTitle=""
+          text={year}
+          conAlign="flex-start"
+          conHeight = '2em'
+        />
+        <DetailTit
+          title="Country"
+          movieTitle=""
+          text={country}
+          conAlign="flex-start"
+          conHeight = '2em'
+        />
+        <DetailTit
+          title="Rate"
+          movieTitle=""
+          text={rate}
+          conAlign="flex-start"
+          conHeight = '2em'
         />
         <DetailTit
           title="Genre"
           movieTitle=""
           text={genre}
           conAlign="flex-start"
+          conHeight = '3em'
         />
         <DetailTit
           title="Cast"
@@ -122,6 +148,7 @@ const Detail = ({
           movieTitle=""
           text={description}
           clamp = '10'
+          conHeight = '3em'
         />
       </DetailCont>
     </Cont>

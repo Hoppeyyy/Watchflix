@@ -13,7 +13,8 @@ const Cont = styled.div`
   justify-contents: flex-start;
   align-items: ${props => props.conAlign};
   box-sizing: border-box;
-  margin-bottom: ${props => props.marginB}
+  margin-bottom: ${props => props.marginB};
+  margin-right: ${props => props.marginR};
 `
 
 const Title = styled.h4`
@@ -66,9 +67,10 @@ const DetailTit = ({
   conHeight = "4.5em",
   conAlign = "center",
   marginB = "2em",
+  marginR,
   minWidth = "8em",
   title = "Title",
-  movieTitle = "Alive",
+  movieTitle = "Undefined",
   text = "",
   clamp = '5',
   txtMarginB = '3'
@@ -84,6 +86,7 @@ const DetailTit = ({
       conHeight = {conHeight}
       conAlign = {conAlign}
       marginB= {marginB}
+      marginR ={marginR}
     >
       {/* <Rect /> */}
       <Title

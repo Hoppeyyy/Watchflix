@@ -27,7 +27,7 @@ const Cont = styled.div`
   flex-direction: column;
   aligh-items: center;
   justify-content: center;
-  margin-bottom: 7rem;
+  margin-bottom: 2rem;
 `;
 
 const HeaderCont = styled.div`
