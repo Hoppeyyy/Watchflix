@@ -19,11 +19,9 @@ Uuid.findOne({uuid:req.body.uuid}, function(err, newuuid){
 }
 
 const getUuid = (req, res)=>{
-  //console.log("uuid",{uuid:req.query.uuid})
   Uuid.findOne({uuid:req.query.uuid})
   .populate("uuid")
   .exec((err,newuuid)=>{
-   //console.log(newuuid)
     res.json(newuuid) 
   })
 }

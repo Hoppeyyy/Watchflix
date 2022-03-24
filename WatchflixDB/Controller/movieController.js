@@ -1,5 +1,6 @@
 const Movie = require('../Models/movieModel')
 
+// problem will ocuur in Heroku due to limited data
 const getMovies = (req, res)=>{
 
   Movie.find({},(err,movies)=>{
@@ -9,11 +10,10 @@ const getMovies = (req, res)=>{
 }
 
 const findMovie = (req, res)=>{
-  //console.log("query",req.query.id)
   Movie.findOne({_id:req.query.id},(err,movie)=>{
     if(err) return res.status(400).send("Requested movie not found")
       res.json(movie) 
-      //console.log("returned movie", movie)
+    
   })
 }
 
