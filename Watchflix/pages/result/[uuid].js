@@ -402,7 +402,9 @@ export default function Result() {
 
         {/*----------------------Watch Party Section----------------------------*/}
         <Divider text="What's Up?"></Divider>
-        <Text>Tell others how you feel about the movie</Text>
+        <Text
+          basicColor={basicColor[theme]}
+        >Tell others how you feel about the movie</Text>
 
             <ReactCont>
               <LikesCont>
