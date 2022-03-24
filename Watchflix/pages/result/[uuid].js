@@ -82,14 +82,12 @@ const ButCont = styled.div`
     margin-top: 30px;
   }
 `;
+
 const StickerCont = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
 `;
-
-const ReactCont = styled.div``
-
 
 const Text = styled.h3``;
 const FooterCont = styled.div`
@@ -97,6 +95,22 @@ const FooterCont = styled.div`
   padding: 0 2rem;
   background-color: ${(props) => props.colbg};
   box-shadow: ${(props) => props.shadow};
+`;
+
+const ReactCont = styled.div`
+  
+`;
+
+const LikesCont = styled.div`
+  display:flex;
+`;
+
+const LikesBtn = styled.button`
+  border-radius:20px;
+  border:none;
+  background-color:#F9E7E7;
+  width:100px;
+  height:50px;
 `;
 
 export default function Result() {
@@ -301,10 +315,10 @@ export default function Result() {
     setIsImageActive(!isImageActive)
   }
 
-  const MouseMoveUpdate = async (x, y) =>{
-   // console.log(x,y)
-    mySoc.emit("mouse_moved", x, y)
-  }
+  // const MouseMoveUpdate = async (x, y) =>{
+  //  // console.log(x,y)
+  //   mySoc.emit("mouse_moved", x, y)
+  // }
 
   // const clickEventHandler = async () => {
   //  setIsImageActive(!isImageActive)
@@ -350,14 +364,17 @@ export default function Result() {
         <Divider text="What's Up?"></Divider>
         <Text>Tell others how you feel about the movie</Text>
 
-            <div>
-
-            <button onClick={SendToIO}>Like</button>
-            {msgs.map((o,i)=><AnimImage src="/images/likes.gif">
+            <ReactCont>
+              <LikesCont>
+              {msgs.map((o,i)=><AnimImage src="/images/likes.gif">
               {o.LikesImg}
-              </AnimImage>)}      
+              </AnimImage>)}  
+              </LikesCont>
 
-          </div>
+            <LikesBtn onClick={SendToIO}>Like</LikesBtn>
+    
+
+          </ReactCont>
 
         {/*STICKER SECTION*/}
         <Divider text="Moodboard"></Divider>
