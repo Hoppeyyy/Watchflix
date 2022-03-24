@@ -3,13 +3,13 @@ import { useDrag, useDrop } from 'react-dnd';
 import styled from 'styled-components';
 
 const Drag = styled.div`
-display:flex;
-z-index:3;
-${({position,left,top})=> (position ===`fixed` || position === `absolute`)&&`
-left:${left}px;
-top:${top}px;
-position:${position};
-`}
+  display:flex;
+  z-index: 20;
+  ${({position,left,top})=> (position ===`fixed` || position === `absolute`)&&`
+  left:${left}px;
+  top:${top}px;
+  position:${position};
+  `}
 `
 const Img = styled.img`
 width:60px;
