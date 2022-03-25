@@ -9,7 +9,7 @@ import ReviewSection from "@/comps/ReviewSection";
 import styled from "styled-components";
 import Header from "@/comps/Header/index";
 import Header2 from "@/comps/Header/index2";
-import { bkColor, hovColor, hovBkDColor,basicColor, whiteblack, shadow, hBttnBkColor, fShadow, } from "@/utils/variables";
+import { bkColor, hovColor, bttnBkColorH, btnColor, basicColor, hovBkDColor, whiteblack, bttnBkColorV, shadow, hBttnBkColor, fShadow, } from "@/utils/variables";
 // sticker
 import { TouchBackend } from 'react-dnd-touch-backend'
 import { DndProvider } from 'react-dnd'
@@ -104,10 +104,11 @@ const SubmitBtn = styled.button`
   filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.2));
   cursor: pointer;
   transition: all 0.3s;
+  color: ${props => props.color};
 
   :hover {
     background: ${(props) => props.hovpopbg};
-    color: #ffffff;
+    color: ${(props) => props.hovColor};
     transform: scale(0.95);
     transition-duration: 0.3s;
   }
@@ -396,7 +397,14 @@ export default function Result() {
             </div>
           ))}
           <ButCont marginT = '50'>
-            <ClickButton src={uuid} cwidth='' />
+            <ClickButton 
+              src={uuid} 
+              cwidth='' 
+              color={basicColor[theme]}
+              bkColor={bkColor[theme]}
+              hovBkColor={bttnBkColorH[theme]}
+              hovColor={btnColor[theme]}
+            />
           </ButCont>
         </PageCont>
 
@@ -414,9 +422,11 @@ export default function Result() {
               </LikesCont>
             <ButCont marginT = '20'>
             <SubmitBtn 
-            onClick={SendToIO}
-            bgcolor={bkColor[theme]}
-            hovpopbg={hovBkDColor[theme]}
+              onClick={SendToIO}
+              color={basicColor[theme]}
+              bgcolor={bkColor[theme]}
+              hovpopbg={hovBkDColor[theme]}
+              hovColor={btnColor[theme]}
             >Like</SubmitBtn>
             </ButCont>
     
@@ -428,7 +438,7 @@ export default function Result() {
         <Divider text="Moodboard"></Divider>
         <Text
           basicColor={basicColor[theme]}
-        >Tell others how you feel about the movie</Text>
+        >Rate the differenet movie elements with emojis</Text>
         <DndProvider backend={TouchBackend} options={{
           enableTouchEvents: false,
           enableMouseEvents: true
@@ -478,8 +488,10 @@ export default function Result() {
           <ButCont marginT = '20'>
             <SubmitBtn 
               onClick={HandleStickerSave}
+              color={basicColor[theme]}
               bgcolor={bkColor[theme]}
               hovpopbg={hovBkDColor[theme]}
+              hovColor={btnColor[theme]}
             >
               Save
             </SubmitBtn>

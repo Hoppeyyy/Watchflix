@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useTheme, useFav } from "@/utils/provider";
 import {
   bkColor,
+  basicColor,
   hovColor,
   hovBkDColor,
   hBttnBkColor,
@@ -35,6 +36,7 @@ const ButtonInput = styled.button`
   justify-content: center;
   box-shadow: ${(props) => props.bshadow};
   cursor: pointer;
+  color: ${props => props.color};
 
   :hover {
     background-color: ${(props) => props.hovBkColor};
@@ -124,6 +126,7 @@ const ClickButton = ({
       {isOpen && <PopUp src={uuid} myurl={'http://localhost:3000/result/'+uuid} handleClose={togglePopup} />}
       <ButtonInput
         type={type}
+        color={basicColor[theme]}
         bkColor={bkColor[theme]}
         radius={radius}
         width={width}
