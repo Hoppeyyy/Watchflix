@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 import NewCommentForm from "../NewCommentForm";
 import {
   bkColor,
+  btnColor,
   nameColor,
   hovBkDColor,
   divcolor,
@@ -255,10 +256,11 @@ const SubmitBtn = styled.button`
   filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.2));
   cursor: pointer;
   transition: all 0.3s;
+  color: ${props => props.color};
 
   :hover {
     background: ${(props) => props.hovpopbg};
-    color: #ffffff;
+    color: ${(props) => props.hovcolor};
     transform: scale(0.95);
     transition-duration: 0.3s;
   }
@@ -453,7 +455,9 @@ const ReviewSection = ({
 
         <ButtonCont>
           <SubmitBtn
+            color={basicColor[theme]}
             bgcolor={bkColor[theme]}
+            hovcolor={btnColor[theme]}
             hovpopbg={hovBkDColor[theme]}
             onClick={handleSubmit}
           >
